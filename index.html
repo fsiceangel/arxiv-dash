@@ -6,6 +6,7 @@
 <title>arXiv Math Dashboard · arXiv 数学论文仪表盘</title>
 <script src="echarts.min.js"></script>
 <script src="data.js"></script>
+<script src="report_data.js"></script>
 <style>
   :root{
     --bg:#0f1117; --panel:#171a23; --panel2:#1d212c; --border:#2a2f3d;
@@ -40,6 +41,38 @@
   .mini .mc{width:100%;height:150px}
   footer{color:var(--muted);font-size:12px;padding:0 28px 30px;max-width:1400px;margin:0 auto;line-height:1.7}
   code{background:#000;padding:1px 5px;border-radius:4px;color:#cdd6f4}
+  /* tabs */
+  .tabs{display:flex;gap:6px;margin-top:14px}
+  .tab{background:transparent;border:1px solid var(--border);border-bottom:none;
+    border-radius:9px 9px 0 0;padding:9px 18px;font-size:14px;color:var(--muted);
+    cursor:pointer;font-family:inherit;font-weight:600;transition:.15s}
+  .tab:hover{color:var(--text)}
+  .tab.active{background:var(--bg);color:var(--text);border-color:var(--accent);
+    box-shadow:inset 0 2px 0 var(--accent)}
+  .view{display:none}
+  .view.active{display:block}
+  /* report */
+  .report{max-width:980px;margin:0 auto;line-height:1.75;font-size:14.5px}
+  .report h2{font-size:21px;margin:30px 0 6px;border-left:3px solid var(--accent);padding-left:10px}
+  .report h2 .zh{color:var(--muted);font-size:16px;font-weight:500;margin-left:8px}
+  .report h3{font-size:16px;margin:22px 0 4px;color:#cdd6f4}
+  .report p{margin:8px 0;color:#d3d8e3}
+  .report .zh-p{color:var(--muted);font-size:13.5px}
+  .report .lead{font-size:15.5px;color:#e6e8ee}
+  .report .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+  .report .kpi .b{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px}
+  .report .kpi .n{font-size:24px;font-weight:700;color:var(--accent)}
+  .report .kpi .n.down{color:var(--accent2)}
+  .report .kpi .l{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+  .report .callout{background:var(--panel2);border:1px solid var(--border);border-left:3px solid var(--accent2);
+    border-radius:8px;padding:12px 16px;margin:16px 0;font-size:13.5px}
+  .report .rchart{width:100%;height:380px;background:var(--panel);border:1px solid var(--border);
+    border-radius:10px;margin:14px 0;padding:10px}
+  .report .cap{font-size:12px;color:var(--muted);margin:-4px 0 18px;text-align:center}
+  .report ul{color:#d3d8e3;font-size:13.8px} .report li{margin:5px 0}
+  .report .cite{background:var(--panel2);border:1px solid var(--border);border-radius:8px;
+    padding:14px 16px;font-size:13px;color:#cdd6f4;margin:10px 0}
+  .report a{color:var(--accent);text-decoration:none} .report a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -51,9 +84,13 @@
     2017年1月至2026年6月，按数学学科分类统计的每月论文数量。<br>
     Source / 数据来源: arXiv listing pages (<code>arxiv.org/list/&lt;cat&gt;/YYYY-MM</code>, "Total of N entries", includes cross-lists).
   </p>
+  <div class="tabs">
+    <button class="tab active" data-view="dash">📊 Dashboards <span class="zh">仪表盘</span></button>
+    <button class="tab" data-view="report">📄 Study: Focus Contraction <span class="zh">研究：聚焦收缩</span></button>
+  </div>
 </header>
 
-<div class="wrap">
+<div class="wrap view active" id="view-dash">
 
   <!-- DASHBOARD 1: NORMALIZED -->
   <div class="card">
@@ -101,13 +138,142 @@
     <div class="grid" id="miniGrid"></div>
   </div>
 
-</div>
+  <footer>
+    Counts are taken from arXiv's public monthly listing pages and include cross-listed papers, so categories should not be summed
+    (a paper may appear in several categories). The most recent month may be partial.
+    <br>数据取自 arXiv 公开的每月列表页，包含交叉列出（cross-list）的论文，因此各分类之间不应直接相加（同一篇论文可能出现在多个分类中）。最近一个月的数据可能尚不完整。
+  </footer>
+</div><!-- /view-dash -->
 
-<footer>
-  Counts are taken from arXiv's public monthly listing pages and include cross-listed papers, so categories should not be summed
-  (a paper may appear in several categories). The most recent month may be partial.
-  <br>数据取自 arXiv 公开的每月列表页，包含交叉列出（cross-list）的论文，因此各分类之间不应直接相加（同一篇论文可能出现在多个分类中）。最近一个月的数据可能尚不完整。
-</footer>
+<!-- ============ REPORT VIEW ============ -->
+<div class="wrap view" id="view-report">
+  <div class="report">
+    <h2>A Comparative Study of “Focus Contraction” in Mathematics
+        <span class="zh">数学领域“聚焦收缩”的对比研究</span></h2>
+    <p class="lead">
+      Does mathematics show the same narrowing of collective focus that
+      <a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao, Xu, Li &amp; Evans (Nature, 2026)</a>
+      documented across the natural sciences in the age of AI? Using the monthly submission
+      record of 32 arXiv mathematics subfields (2017–2026), we test the structural analog of
+      their thesis — and find a <b>mild but monotonic concentration</b> of mathematical
+      activity toward computational, data-rich subfields.
+    </p>
+    <p class="zh-p">
+      在人工智能时代，<a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao、Xu、Li 与 Evans（《自然》2026）</a>
+      记录了自然科学整体研究视野的收缩。数学是否也呈现同样的趋势？我们用 2017–2026 年 32 个 arXiv 数学子领域的每月投稿数据，
+      检验其论点的结构性类比，发现数学活动正<b>温和但持续地</b>向计算型、数据密集型子领域集中。
+    </p>
+
+    <h2>1 · The result we build on <span class="zh">所引用的研究结论</span></h2>
+    <p>
+      Hao et al. analyzed <b>41.3 million</b> natural-science papers and used a language model
+      (F1 = 0.875) to flag AI-augmented research. Their paradox: AI <i>expands</i> individual
+      impact — such authors publish <b>3.02×</b> more papers, earn <b>4.84×</b> more citations,
+      and lead projects <b>1.37 years</b> earlier — yet AI adoption <i>contracts</i> collective
+      science, shrinking the volume of topics studied by <b>4.63%</b> and reducing inter-paper
+      engagement by <b>22%</b>. AI-augmented work moves toward “areas richest in data,” forming
+      “lonely crowds” that automate established fields rather than open new ones.
+    </p>
+    <p class="zh-p">
+      该研究分析了 <b>4130 万</b>篇自然科学论文，用语言模型（F1 = 0.875）识别 AI 辅助研究。其悖论在于：AI <i>扩大</i>了个人影响力
+      ——使用者发表论文数为 <b>3.02 倍</b>、被引为 <b>4.84 倍</b>、提前 <b>1.37 年</b>成为项目负责人——却<i>收缩</i>了科学整体，
+      使研究主题总量减少 <b>4.63%</b>、论文间互动减少 <b>22%</b>。AI 辅助研究趋向“数据最丰富的领域”，形成“孤独的人群”，
+      更多是自动化既有领域，而非开拓新方向。
+    </p>
+
+    <h2>2 · Our question &amp; method <span class="zh">研究问题与方法</span></h2>
+    <p>
+      We cannot observe citations, authorship, or AI use from listing counts, so we test the
+      <b>structural signature</b> of focus contraction: if mathematics were also narrowing, its
+      <b>output should concentrate</b> across subfields over time, and growth should skew toward
+      its most computational / data-rich areas. From the per-month counts we compute, for each
+      year 2017–2025 (2026 partial), the distribution of submissions over the 32 subfields and
+      four concentration measures:
+    </p>
+    <ul>
+      <li><b>Effective number of subfields</b> = 2<sup>H</sup> (H = Shannon entropy, bits) — the
+        count of <i>equally-active</i> subfields the field behaves like. Falling = concentrating.
+        <span class="zh">有效子领域数 = 2^H（H 为香农熵）；下降表示集中。</span></li>
+      <li><b>Pielou evenness</b> = H / log₂(32) — how evenly papers spread across subfields.
+        <span class="zh">Pielou 均匀度。</span></li>
+      <li><b>Top-5 share</b> &amp; <b>HHI</b> (Herfindahl index) — weight of the largest subfields.
+        <span class="zh">前五份额与 HHI 集中度指数。</span></li>
+      <li><b>Data-cluster share</b> — combined share of the ML-adjacent / data-rich cluster
+        (<code>cs.IT</code>, <code>math.OC</code>, <code>math.NA</code>, <code>math.ST</code>,
+        <code>math.PR</code>), the math counterpart of “areas richest in data.”
+        <span class="zh">数据密集子领域（信息论、最优化、数值分析、统计、概率）的合计份额。</span></li>
+    </ul>
+
+    <h2>3 · What we find <span class="zh">研究发现</span></h2>
+    <div class="kpi" id="reportKpi"></div>
+    <div class="rchart" id="rcConc"></div>
+    <div class="cap">Fig 1 · Concentration over time: effective number of subfields (falling) vs. top-5 share (rising).
+      图1 · 集中度趋势：有效子领域数（下降）对比前五份额（上升）。</div>
+    <div class="rchart" id="rcCluster"></div>
+    <div class="cap">Fig 2 · Share of the data-rich / ML-adjacent cluster, 2017–2025.
+      图2 · 数据密集 / ML 相邻子领域份额，2017–2025。</div>
+    <div class="rchart" id="rcGrowth" style="height:620px"></div>
+    <div class="cap">Fig 3 · Growth multiple 2017→2025 by subfield (orange = data-rich cluster).
+      图3 · 各子领域 2017→2025 增长倍数（橙色为数据密集集群）。</div>
+
+    <p>
+      The signature is unmistakable though modest. The effective number of active subfields fell
+      from <b>24.2 to 23.5</b> (≈ −3%), evenness slipped from 0.920 to 0.911, the top-5 share rose
+      from <b>36.6% to 38.8%</b>, and the data-rich cluster grew from <b>26.8% to 30.3%</b> of all
+      submissions. Growth was sharply uneven: <b>Optimization &amp; Control (+128%)</b>,
+      <b>Numerical Analysis (+97%)</b> and <b>Statistics Theory (+95%)</b> — all computational —
+      led the field, while classical/pure areas trailed (<b>Classical Analysis &amp; ODEs −1%</b>,
+      Complex Variables +26%, Operator Algebras +32%, K-Theory +30%). Concentration nudged upward
+      after the 2022–23 LLM inflection (effective subfields 23.9 → 23.5 pre- vs post-2023).
+    </p>
+    <p class="zh-p">
+      信号虽温和却清晰：有效子领域数从 <b>24.2 降至 23.5</b>（约 −3%），均匀度由 0.920 降至 0.911，前五份额由
+      <b>36.6% 升至 38.8%</b>，数据密集集群占比由 <b>26.8% 升至 30.3%</b>。增长高度不均：<b>最优化与控制（+128%）</b>、
+      <b>数值分析（+97%）</b>、<b>统计理论（+95%）</b>等计算型领域领跑，而经典 / 纯数学领域明显落后
+      （<b>经典分析与常微分方程 −1%</b>、复变 +26%、算子代数 +32%、K 理论 +30%）。在 2022–23 年大模型拐点后集中度进一步上升。
+    </p>
+
+    <div class="callout">
+      <b>Interpretation / 解读.</b> The same direction as Hao et al., at smaller magnitude: math’s
+      collective attention is drifting toward optimization, numerics and statistics — exactly the
+      subfields that power, and are powered by, machine learning. The math counterpart of their
+      “areas richest in data.” Pure analysis and algebra are not shrinking in absolute terms, but
+      they are losing <i>relative</i> share. <br>
+      与 Hao 等人方向一致、幅度更小：数学的集体注意力正流向最优化、数值与统计——正是驱动机器学习、也被其驱动的子领域，
+      即其“数据最丰富领域”在数学中的对应。纯分析与代数并未绝对萎缩，但相对份额在下降。
+    </div>
+
+    <h2>4 · Caveats <span class="zh">局限与注意</span></h2>
+    <ul>
+      <li>This is a <b>structural analog, not a replication</b>: we use submission-volume
+        distribution, not citations, authorship, or AI-augmentation detection. We show
+        <i>concentration</i>, not its cause. <span class="zh">这是结构性类比而非复现；显示集中而非成因。</span></li>
+      <li>Counts <b>include cross-lists</b>, so subfields overlap and should not be summed; shares
+        are relative measures. <span class="zh">计数含交叉列出，子领域有重叠，不应相加。</span></li>
+      <li>The data-cluster definition is a <b>defensible heuristic</b>, not a formal taxonomy; and
+        <code>cs.IT</code> itself grew slowly (+9%), so the cluster’s rise is driven by
+        optimization/numerics/statistics. <span class="zh">数据集群为启发式划分；信息论本身增长缓慢。</span></li>
+      <li><code>math.GM</code> (General Mathematics) is a noisy catch-all and is excluded from the
+        narrative despite high growth. 2026 is partial (Jan–Jun).
+        <span class="zh">一般数学为杂项桶，已在叙述中排除；2026 年数据不完整。</span></li>
+    </ul>
+
+    <h2>5 · Citation <span class="zh">引用</span></h2>
+    <div class="cite">
+      Hao, Q., Xu, F., Li, Y. &amp; Evans, J. Artificial intelligence tools expand scientists’
+      impact but contract science’s focus. <i>Nature</i> (2026).
+      <a href="https://doi.org/10.1038/s41586-025-09922-y" target="_blank">doi:10.1038/s41586-025-09922-y</a>
+      · preprint <a href="https://arxiv.org/abs/2412.07727" target="_blank">arXiv:2412.07727</a>.
+    </div>
+    <p class="zh-p" style="margin-top:14px">
+      Analysis by this dashboard: 32 arXiv mathematics subfields, monthly submission counts
+      (incl. cross-lists) from arXiv listing pages, Jan 2017 – Jun 2026. Reproducible via
+      <code>analyze.py</code> in this repository.
+      <br>本仪表盘分析：32 个 arXiv 数学子领域 2017年1月–2026年6月每月投稿（含交叉列出），数据取自 arXiv 列表页，
+      可经仓库内 <code>analyze.py</code> 复现。
+    </p>
+  </div>
+</div><!-- /view-report -->
 
 <script>
 const D = window.ARXIV_DATA;
@@ -248,7 +414,94 @@ document.getElementById('rawCtl').addEventListener('click',e=>{
   if(act==='none')D.series.forEach(s=>rawChart.dispatchAction({type:'legendUnSelect',name:label(s)}));
 });
 
-window.addEventListener('resize',()=>{normChart.resize();rawChart.resize();miniCharts.forEach(c=>c.resize());});
+/* ---------- Tabs + Report ---------- */
+const R = window.REPORT_DATA;
+const reportCharts = [];
+let reportBuilt = false;
+
+const raxis = {textStyle:{color:'#9aa3b2'},axisLine:{lineStyle:{color:'#2a2f3d'}},
+  splitLine:{lineStyle:{color:'#20242f'}}};
+const rtt = {backgroundColor:'#1d212c',borderColor:'#2a2f3d',textStyle:{color:'#e6e8ee'}};
+
+function buildReport(){
+  if(reportBuilt) return; reportBuilt = true;
+  const FY = R.full_years;
+  const m = R.metrics;
+  const m17 = m[2017], m25 = m[2025];
+  const pct = (a,b)=>(((b-a)/a)*100);
+
+  // KPI cards
+  const opt = R.growth.find(g=>g.code==='math.OC');
+  const kpis = [
+    {n:m17.eff_subfields+' → '+m25.eff_subfields, l:'Effective subfields / 有效子领域数 (−'+(-pct(m17.eff_subfields,m25.eff_subfields)).toFixed(1)+'%)', down:true},
+    {n:(m17.top5_share*100).toFixed(1)+'% → '+(m25.top5_share*100).toFixed(1)+'%', l:'Top-5 share / 前五份额', down:false},
+    {n:(m17.data_cluster_share*100).toFixed(1)+'% → '+(m25.data_cluster_share*100).toFixed(1)+'%', l:'Data-rich cluster / 数据密集集群占比', down:false},
+    {n:'+'+((opt.ratio-1)*100).toFixed(0)+'%', l:'Optimization & Control growth 2017→25 / 最优化与控制增幅', down:false},
+  ];
+  document.getElementById('reportKpi').innerHTML = kpis.map(k=>
+    '<div class="b"><div class="n'+(k.down?' down':'')+'">'+k.n+'</div><div class="l">'+k.l+'</div></div>').join('');
+
+  // Fig 1: concentration (dual axis)
+  const c1 = echarts.init(document.getElementById('rcConc'),'dark');
+  c1.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis'},rtt),
+    legend:{top:0,textStyle:{color:'#9aa3b2'},data:['Effective subfields / 有效子领域数','Top-5 share % / 前五份额']},
+    grid:{left:50,right:55,top:40,bottom:36},
+    xAxis:Object.assign({type:'category',data:FY},raxis),
+    yAxis:[Object.assign({type:'value',name:'eff. subfields',min:22.5,max:24.5,nameTextStyle:{color:'#5b9bff'}},raxis),
+           Object.assign({type:'value',name:'top-5 %',min:34,max:42,position:'right',nameTextStyle:{color:'#ff8a5b'}},raxis)],
+    series:[
+      {name:'Effective subfields / 有效子领域数',type:'line',data:FY.map(y=>m[y].eff_subfields),
+        smooth:true,lineStyle:{width:3,color:'#5b9bff'},itemStyle:{color:'#5b9bff'},symbolSize:7},
+      {name:'Top-5 share % / 前五份额',type:'line',yAxisIndex:1,data:FY.map(y=>+(m[y].top5_share*100).toFixed(2)),
+        smooth:true,lineStyle:{width:3,color:'#ff8a5b'},itemStyle:{color:'#ff8a5b'},symbolSize:7}
+    ]});
+  reportCharts.push(c1);
+
+  // Fig 2: data-cluster share
+  const c2 = echarts.init(document.getElementById('rcCluster'),'dark');
+  c2.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis',valueFormatter:v=>v+'%'},rtt),
+    grid:{left:50,right:24,top:24,bottom:36},
+    xAxis:Object.assign({type:'category',data:FY,boundaryGap:false},raxis),
+    yAxis:Object.assign({type:'value',name:'cluster share %',min:25,max:32},raxis),
+    series:[{type:'line',data:FY.map(y=>+(m[y].data_cluster_share*100).toFixed(2)),
+      smooth:true,lineStyle:{width:3,color:'#5bd6a8'},itemStyle:{color:'#5bd6a8'},symbolSize:7,
+      areaStyle:{color:'#5bd6a8',opacity:.15},
+      markLine:{symbol:'none',lineStyle:{color:'#ff8a5b',type:'dashed'},
+        data:[{xAxis:'2022',label:{formatter:'LLM era →',color:'#ff8a5b',position:'insideEndTop'}}]}}]});
+  reportCharts.push(c2);
+
+  // Fig 3: growth bars (sorted asc for horizontal display)
+  const g = R.growth.filter(x=>x.ratio!=null).slice().sort((a,b)=>a.ratio-b.ratio);
+  const c3 = echarts.init(document.getElementById('rcGrowth'),'dark');
+  c3.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},
+      formatter:p=>{const d=g[p[0].dataIndex];return d.code+' · '+d.en+'<br>'+d.y2017+' → '+d.y2025+' papers<br><b>×'+d.ratio+'</b> ('+(d.cagr>=0?'+':'')+d.cagr+'%/yr)';}},rtt),
+    grid:{left:135,right:40,top:10,bottom:30},
+    xAxis:Object.assign({type:'value',name:'× growth 2017→2025'},raxis),
+    yAxis:Object.assign({type:'category',data:g.map(d=>d.code+' '+d.en),axisLabel:{fontSize:10}},raxis),
+    series:[{type:'bar',data:g.map(d=>({value:d.ratio,
+        itemStyle:{color:d.data_cluster?'#ff8a5b':'#5b9bff'}})),
+      barWidth:'62%',
+      markLine:{symbol:'none',lineStyle:{color:'#9aa3b2',type:'dashed'},
+        data:[{xAxis:1,label:{formatter:'×1 (flat)',color:'#9aa3b2'}}]}}]});
+  reportCharts.push(c3);
+}
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  const v = t.dataset.view;
+  document.getElementById('view-'+v).classList.add('active');
+  if(v==='report'){ buildReport(); setTimeout(()=>reportCharts.forEach(c=>c.resize()),30); }
+  else { setTimeout(()=>{normChart.resize();rawChart.resize();miniCharts.forEach(c=>c.resize());},30); }
+  window.scrollTo(0,0);
+}));
+
+window.addEventListener('resize',()=>{normChart.resize();rawChart.resize();
+  miniCharts.forEach(c=>c.resize());reportCharts.forEach(c=>c.resize());});
 </script>
 </body>
 </html>
