@@ -478,14 +478,17 @@ function buildReport(){
   c3.setOption({backgroundColor:'transparent',
     tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},
       formatter:p=>{const d=g[p[0].dataIndex];return d.code+' · '+d.en+'<br>'+d.y2017+' → '+d.y2025+' papers<br><b>×'+d.ratio+'</b> ('+(d.cagr>=0?'+':'')+d.cagr+'%/yr)';}},rtt),
-    grid:{left:135,right:40,top:10,bottom:30},
-    xAxis:Object.assign({type:'value',name:'× growth 2017→2025'},raxis),
-    yAxis:Object.assign({type:'category',data:g.map(d=>d.code+' '+d.en),axisLabel:{fontSize:10}},raxis),
+    grid:{left:180,right:56,top:16,bottom:48},
+    xAxis:Object.assign({type:'value',name:'× growth 2017→2025',nameLocation:'middle',
+      nameGap:28,nameTextStyle:{color:'#9aa3b2'}},raxis),
+    yAxis:Object.assign({type:'category',data:g.map(d=>d.code+' '+d.en),
+      axisLabel:{fontSize:10,margin:8}},raxis),
     series:[{type:'bar',data:g.map(d=>({value:d.ratio,
         itemStyle:{color:d.data_cluster?'#ff8a5b':'#5b9bff'}})),
       barWidth:'62%',
       markLine:{symbol:'none',lineStyle:{color:'#9aa3b2',type:'dashed'},
-        data:[{xAxis:1,label:{formatter:'×1 (flat)',color:'#9aa3b2'}}]}}]});
+        data:[{xAxis:1,label:{formatter:'×1 flat',color:'#9aa3b2',
+          position:'insideEndTop',fontSize:10}}]}}]});
   reportCharts.push(c3);
 }
 
