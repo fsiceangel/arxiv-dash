@@ -214,7 +214,12 @@
       图2 · 数据密集 / ML 相邻子领域份额，2017–2025。</div>
     <div class="rchart" id="rcGrowth" style="height:620px"></div>
     <div class="cap">Fig 3 · Growth multiple 2017→2025 by subfield (orange = data-rich cluster).
-      图3 · 各子领域 2017→2025 增长倍数（橙色为数据密集集群）。</div>
+      <b>Click any bar</b> to expand its year-by-year waterfall below.
+      <br>图3 · 各子领域 2017→2025 增长倍数（橙色为数据密集集群）。<b>点击任一条形</b>可在下方展开其逐年瀑布图。</div>
+    <div id="rcFallWrap" style="display:none">
+      <div class="rchart" id="rcFall" style="height:420px"></div>
+      <div class="cap" id="rcFallCap"></div>
+    </div>
 
     <p>
       The signature is unmistakable though modest. The effective number of active subfields fell
@@ -490,6 +495,55 @@ function buildReport(){
         data:[{xAxis:1,label:{formatter:'×1 flat',color:'#9aa3b2',
           position:'insideEndTop',fontSize:10}}]}}]});
   reportCharts.push(c3);
+
+  // ---- drill-down waterfall on bar click ----
+  const fall = echarts.init(document.getElementById('rcFall'),'dark');
+  reportCharts.push(fall);
+  const FY3 = R.full_years;
+  function showWaterfall(d){
+    const ys = R.yearly[d.code];
+    const base = ys[0];
+    const idx = ys.map(c=>c/base);                       // index, 2017 = 1.0
+    const place=[], inc=[], lbl=[];
+    for(let i=0;i<FY3.length;i++){
+      if(i===0){ place.push(0); inc.push(idx[0]);
+        lbl.push({v:idx[0],up:null,delta:0}); }
+      else{
+        const lo=Math.min(idx[i-1],idx[i]), hi=Math.max(idx[i-1],idx[i]);
+        place.push(lo); inc.push(hi-lo);
+        lbl.push({v:idx[i],up:idx[i]>=idx[i-1],delta:idx[i]-idx[i-1]});
+      }
+    }
+    fall.setOption({backgroundColor:'transparent',
+      title:{text:d.code+' · '+d.en+' / '+d.zh,left:'center',top:4,
+        textStyle:{color:'#e6e8ee',fontSize:14}},
+      tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},
+        formatter:p=>{const i=p[0].dataIndex;const L=lbl[i];
+          return FY3[i]+'<br>'+ys[i]+' papers · index <b>×'+L.v.toFixed(3)+'</b>'+
+            (i===0?' (base)':'<br>'+(L.delta>=0?'+':'')+L.delta.toFixed(3)+' vs '+FY3[i-1]);}},rtt),
+      grid:{left:54,right:60,top:40,bottom:40},
+      xAxis:Object.assign({type:'value',name:'cumulative × (2017 = 1)',nameLocation:'middle',
+        nameGap:26,min:0,nameTextStyle:{color:'#9aa3b2'}},raxis),
+      yAxis:Object.assign({type:'category',data:FY3.map(String),inverse:true,
+        axisLabel:{fontSize:11}},raxis),
+      series:[
+        {name:'base',type:'bar',stack:'wf',data:place,
+          itemStyle:{color:'transparent'},emphasis:{itemStyle:{color:'transparent'}}},
+        {name:'change',type:'bar',stack:'wf',
+          data:inc.map((v,i)=>({value:v,itemStyle:{color:
+            lbl[i].up===null?'#5b9bff':(lbl[i].up?'#5bd6a8':'#ff6b6b')}})),
+          label:{show:true,position:'right',fontSize:10,color:'#cdd6f4',
+            formatter:p=>'×'+lbl[p.dataIndex].v.toFixed(2)}}
+      ]});
+    document.getElementById('rcFallWrap').style.display='block';
+    document.getElementById('rcFallCap').innerHTML =
+      'Fig 3b · '+d.code+' year-by-year waterfall: each step is that year’s change to the growth index '+
+      '(green = up, red = down), accumulating to ×'+d.ratio+' by 2025. '+
+      '图3b · '+d.code+' 逐年瀑布图：每段为当年增长指数的变化（绿升红降），累计至 2025 年的 ×'+d.ratio+'。';
+    setTimeout(()=>fall.resize(),20);
+    document.getElementById('rcFallWrap').scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  c3.on('click', p=>{ if(p.componentType==='series') showWaterfall(g[p.dataIndex]); });
 }
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
