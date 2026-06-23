@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>arXiv Math Dashboard · arXiv 数学论文仪表盘</title>
+<script src="echarts.min.js"></script>
+<script src="data.js"></script>
+<style>
+  :root{
+    --bg:#0f1117; --panel:#171a23; --panel2:#1d212c; --border:#2a2f3d;
+    --text:#e6e8ee; --muted:#9aa3b2; --accent:#5b9bff; --accent2:#ff8a5b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI","Microsoft YaHei",system-ui,Arial,sans-serif;}
+  header{padding:24px 28px 8px;border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#141823,#0f1117);}
+  h1{margin:0;font-size:22px;font-weight:650;letter-spacing:.2px}
+  h1 .zh{color:var(--muted);font-weight:500;font-size:18px;margin-left:8px}
+  .sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+  .wrap{padding:20px 28px 60px;max-width:1400px;margin:0 auto}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    margin:22px 0;padding:18px 18px 8px;box-shadow:0 2px 14px rgba(0,0,0,.25)}
+  .card h2{margin:0 0 2px;font-size:17px;font-weight:600}
+  .card h2 .zh{color:var(--muted);font-weight:500;font-size:15px;margin-left:6px}
+  .card .desc{margin:2px 0 12px;color:var(--muted);font-size:12.5px;line-height:1.6}
+  .chart{width:100%;height:560px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+  button{background:var(--panel2);color:var(--text);border:1px solid var(--border);
+    border-radius:8px;padding:6px 12px;font-size:12.5px;cursor:pointer;
+    font-family:inherit;transition:.15s}
+  button:hover{border-color:var(--accent);color:#fff}
+  button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .mini{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:8px 8px 2px}
+  .mini .t{font-size:12.5px;font-weight:600;padding:2px 4px 0}
+  .mini .t .code{color:var(--accent);font-weight:600;margin-right:6px}
+  .mini .t .zh{color:var(--muted);font-weight:400}
+  .mini .mc{width:100%;height:150px}
+  footer{color:var(--muted);font-size:12px;padding:0 28px 30px;max-width:1400px;margin:0 auto;line-height:1.7}
+  code{background:#000;padding:1px 5px;border-radius:4px;color:#cdd6f4}
+</style>
+</head>
+<body>
+<header>
+  <h1>arXiv Mathematics Submissions Dashboard <span class="zh">arXiv 数学论文投稿仪表盘</span></h1>
+  <p class="sub">
+    Monthly paper counts per Mathematics subject category, Jan 2017 – Jun 2026.
+    <span style="color:#7d8696">|</span>
+    2017年1月至2026年6月，按数学学科分类统计的每月论文数量。<br>
+    Source / 数据来源: arXiv listing pages (<code>arxiv.org/list/&lt;cat&gt;/YYYY-MM</code>, "Total of N entries", includes cross-lists).
+  </p>
+</header>
+
+<div class="wrap">
+
+  <!-- DASHBOARD 1: NORMALIZED -->
+  <div class="card">
+    <h2>1 · Normalized Growth Index <span class="zh">归一化增长指数</span></h2>
+    <p class="desc">
+      Each category's monthly count divided by its January 2017 value (Jan 2017 = <b>1.0</b>).
+      All categories overlaid for direct growth comparison.
+      <br>每个分类的每月数量除以其 2017 年 1 月的数值（2017年1月 = <b>1.0</b>），所有分类叠加显示，便于直接比较增速。
+    </p>
+    <div class="controls" id="normCtl">
+      <button data-act="all" class="active">Show all / 全选</button>
+      <button data-act="none">Hide all / 清空</button>
+      <button data-act="top">Top growers / 增速前列</button>
+      <button data-act="log">Linear ↔ Log Y / 线性↔对数</button>
+    </div>
+    <div id="normChart" class="chart"></div>
+  </div>
+
+  <!-- DASHBOARD 2: RAW (all categories) -->
+  <div class="card">
+    <h2>2 · Raw Monthly Counts — all categories <span class="zh">原始每月数量 · 全部分类</span></h2>
+    <p class="desc">
+      Raw number of papers posted per month in each category (click a legend item to toggle).
+      <br>各分类每月发布的论文原始数量（点击图例可切换显示）。
+    </p>
+    <div class="controls" id="rawCtl">
+      <button data-act="all" class="active">Show all / 全选</button>
+      <button data-act="none">Hide all / 清空</button>
+    </div>
+    <div id="rawChart" class="chart"></div>
+  </div>
+
+  <!-- DASHBOARD 3: SMALL MULTIPLES -->
+  <div class="card">
+    <h2>3 · Per-Category Raw Counts <span class="zh">各分类原始数量（独立面板）</span></h2>
+    <p class="desc">
+      One panel per category — raw monthly count, 2017–2026. Each panel is auto-scaled to its own range.
+      <br>每个分类一个独立面板 — 2017–2026 每月原始数量，纵轴按各自范围自动缩放。
+    </p>
+    <div class="grid" id="miniGrid"></div>
+  </div>
+
+</div>
+
+<footer>
+  Counts are taken from arXiv's public monthly listing pages and include cross-listed papers, so categories should not be summed
+  (a paper may appear in several categories). The most recent month may be partial.
+  <br>数据取自 arXiv 公开的每月列表页，包含交叉列出（cross-list）的论文，因此各分类之间不应直接相加（同一篇论文可能出现在多个分类中）。最近一个月的数据可能尚不完整。
+</footer>
+
+<script>
+const D = window.ARXIV_DATA;
+const MONTHS = D.months;
+const palette = ['#5b9bff','#ff8a5b','#5bd6a8','#d98aff','#ffd45b','#ff6b9d','#7be0ff',
+  '#a0e85b','#ff5b5b','#5b6bff','#ffb15b','#5be0c0','#c05bff','#e8d05b','#ff8ac0',
+  '#8ac0ff','#b0ff8a','#ff7b7b','#8a9bff','#ffc78a','#8af0d8','#d0a0ff','#f0e08a',
+  '#ffb0d0','#a8d0ff','#c8ff9a','#ffa0a0','#a8b0ff','#ffd8a8','#a8f8e0','#e0c0ff'];
+
+function color(i){return palette[i%palette.length];}
+function label(s){return s.code+' · '+s.en+' / '+s.zh;}
+
+const axisCommon = {
+  textStyle:{color:'#9aa3b2'},
+  axisLine:{lineStyle:{color:'#2a2f3d'}},
+  splitLine:{lineStyle:{color:'#20242f'}}
+};
+
+/* ---------- Dashboard 1: normalized ---------- */
+const normChart = echarts.init(document.getElementById('normChart'),'dark');
+let normLog=false;
+function normOption(){
+  return {
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis', confine:true,
+      backgroundColor:'#1d212c',borderColor:'#2a2f3d',textStyle:{color:'#e6e8ee'},
+      order:'valueDesc',
+      formatter:p=>{let h=p[0].axisValue+'<br>';p.slice(0,12).forEach(x=>{
+        if(x.value!=null)h+=x.marker+x.seriesName.split(' · ')[0]+': <b>'+(+x.value).toFixed(2)+'×</b><br>';});
+        if(p.length>12)h+='… (+'+(p.length-12)+')';return h;}},
+    legend:{type:'scroll',top:0,textStyle:{color:'#9aa3b2',fontSize:11},
+      pageTextStyle:{color:'#9aa3b2'},data:D.series.map(label)},
+    grid:{left:48,right:24,top:60,bottom:80},
+    xAxis:Object.assign({type:'category',data:MONTHS,boundaryGap:false},axisCommon),
+    yAxis:Object.assign({type:normLog?'log':'value',name:'× (2017-01 = 1.0)',nameTextStyle:{color:'#9aa3b2'},
+      min:normLog?undefined:0},axisCommon),
+    dataZoom:[{type:'inside'},{type:'slider',bottom:30,height:18,
+      borderColor:'#2a2f3d',textStyle:{color:'#9aa3b2'}}],
+    series:D.series.map((s,i)=>({name:label(s),type:'line',data:s.norm,
+      showSymbol:false,smooth:false,lineStyle:{width:1.3},
+      itemStyle:{color:color(i)},emphasis:{focus:'series',lineStyle:{width:3}}}))
+  };
+}
+normChart.setOption(normOption());
+
+/* ---------- Dashboard 2: raw ---------- */
+const rawChart = echarts.init(document.getElementById('rawChart'),'dark');
+rawChart.setOption({
+  backgroundColor:'transparent',
+  tooltip:{trigger:'axis',confine:true,
+    backgroundColor:'#1d212c',borderColor:'#2a2f3d',textStyle:{color:'#e6e8ee'},order:'valueDesc',
+    formatter:p=>{let h=p[0].axisValue+'<br>';p.slice(0,12).forEach(x=>{
+      if(x.value!=null)h+=x.marker+x.seriesName.split(' · ')[0]+': <b>'+x.value+'</b><br>';});
+      if(p.length>12)h+='… (+'+(p.length-12)+')';return h;}},
+  legend:{type:'scroll',top:0,textStyle:{color:'#9aa3b2',fontSize:11},
+    pageTextStyle:{color:'#9aa3b2'},data:D.series.map(label)},
+  grid:{left:52,right:24,top:60,bottom:80},
+  xAxis:Object.assign({type:'category',data:MONTHS,boundaryGap:false},axisCommon),
+  yAxis:Object.assign({type:'value',name:'papers / 篇',nameTextStyle:{color:'#9aa3b2'},min:0},axisCommon),
+  dataZoom:[{type:'inside'},{type:'slider',bottom:30,height:18,borderColor:'#2a2f3d',textStyle:{color:'#9aa3b2'}}],
+  series:D.series.map((s,i)=>({name:label(s),type:'line',data:s.raw,
+    showSymbol:false,lineStyle:{width:1.3},itemStyle:{color:color(i)},
+    emphasis:{focus:'series',lineStyle:{width:3}}}))
+});
+
+/* ---------- Dashboard 3: small multiples ---------- */
+const grid=document.getElementById('miniGrid');
+const miniCharts=[];
+D.series.forEach((s,i)=>{
+  const card=document.createElement('div');card.className='mini';
+  card.innerHTML='<div class="t"><span class="code">'+s.code+'</span>'+s.en+
+    ' <span class="zh">'+s.zh+'</span></div><div class="mc"></div>';
+  grid.appendChild(card);
+  const c=echarts.init(card.querySelector('.mc'),'dark');
+  c.setOption({
+    backgroundColor:'transparent',
+    grid:{left:38,right:10,top:10,bottom:20},
+    tooltip:{trigger:'axis',confine:true,backgroundColor:'#1d212c',borderColor:'#2a2f3d',
+      textStyle:{color:'#e6e8ee'},
+      formatter:p=>p[0].axisValue+'<br><b>'+(p[0].value==null?'—':p[0].value)+'</b> 篇'},
+    xAxis:Object.assign({type:'category',data:MONTHS,boundaryGap:false,
+      axisLabel:{interval:23,fontSize:9}},axisCommon),
+    yAxis:Object.assign({type:'value',min:0,axisLabel:{fontSize:9}},axisCommon),
+    series:[{type:'line',data:s.raw,showSymbol:false,smooth:false,
+      lineStyle:{width:1.4,color:color(i)},itemStyle:{color:color(i)},
+      areaStyle:{color:color(i),opacity:.12}}]
+  });
+  miniCharts.push(c);
+});
+
+/* ---------- controls ---------- */
+function topGrowers(n){
+  // rank by last available normalized value
+  return D.series.map((s,i)=>{
+    const last=[...s.norm].reverse().find(v=>v!=null)||0;return {i,last};})
+    .sort((a,b)=>b.last-a.last).slice(0,n).map(x=>x.i);
+}
+document.getElementById('normCtl').addEventListener('click',e=>{
+  const act=e.target.dataset.act;if(!act)return;
+  if(act==='log'){normLog=!normLog;normChart.setOption(normOption());
+    e.target.classList.toggle('active',normLog);return;}
+  if(act==='all')D.series.forEach(s=>normChart.dispatchAction({type:'legendSelect',name:label(s)}));
+  if(act==='none')D.series.forEach(s=>normChart.dispatchAction({type:'legendUnSelect',name:label(s)}));
+  if(act==='top'){const keep=new Set(topGrowers(6));
+    D.series.forEach((s,i)=>normChart.dispatchAction({type:keep.has(i)?'legendSelect':'legendUnSelect',name:label(s)}));}
+});
+document.getElementById('rawCtl').addEventListener('click',e=>{
+  const act=e.target.dataset.act;if(!act)return;
+  if(act==='all')D.series.forEach(s=>rawChart.dispatchAction({type:'legendSelect',name:label(s)}));
+  if(act==='none')D.series.forEach(s=>rawChart.dispatchAction({type:'legendUnSelect',name:label(s)}));
+});
+
+window.addEventListener('resize',()=>{normChart.resize();rawChart.resize();miniCharts.forEach(c=>c.resize());});
+</script>
+</body>
+</html>
