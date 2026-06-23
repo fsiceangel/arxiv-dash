@@ -1,0 +1,7 @@
+# local tooling / preview
+.claude/
+__pycache__/
+*.pyc
+
+# harvest run log
+harvest.log
