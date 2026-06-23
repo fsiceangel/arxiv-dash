@@ -467,15 +467,16 @@ function buildReport(){
   const c2 = echarts.init(document.getElementById('rcCluster'),'dark');
   c2.setOption({backgroundColor:'transparent',
     tooltip:Object.assign({trigger:'axis',valueFormatter:v=>v+'%'},rtt),
-    grid:{left:50,right:24,top:24,bottom:36},
+    grid:{left:64,right:24,top:28,bottom:36},
     xAxis:Object.assign({type:'category',data:FY,boundaryGap:false},raxis),
-    yAxis:Object.assign({type:'value',name:'cluster share %',min:25,max:32},raxis),
+    yAxis:Object.assign({type:'value',name:'cluster share %',nameLocation:'middle',
+      nameRotate:90,nameGap:42,nameTextStyle:{color:'#9aa3b2'},min:25,max:32},raxis),
     series:[{type:'line',data:FY.map(y=>+(m[y].data_cluster_share*100).toFixed(2)),
       smooth:true,lineStyle:{width:3,color:'#5bd6a8'},itemStyle:{color:'#5bd6a8'},symbolSize:7,
       areaStyle:{color:'#5bd6a8',opacity:.15},
       markLine:{symbol:'none',lineStyle:{color:'#ff8a5b',type:'dashed'},
-        label:{formatter:'LLM era →',color:'#ff8a5b',position:'insideStartTop',
-          rotate:0,fontSize:11,padding:[0,6,2,0]},
+        label:{formatter:'LLM era →',color:'#ff8a5b',position:'insideEndTop',
+          rotate:0,fontSize:11},
         data:[{xAxis:'2022'}]}}]});
   reportCharts.push(c2);
 
