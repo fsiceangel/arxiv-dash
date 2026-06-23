@@ -11,14 +11,28 @@ python -m http.server 8765
 # then open http://localhost:8765/index.html
 ```
 
-## Dashboards
+## Tabs
+
+### 📊 Dashboards / 仪表盘
 
 1. **Normalized Growth Index / 归一化增长指数** — each category's monthly count divided by its
-   January 2017 value (Jan 2017 = `1.0`), all categories overlaid. Linear/log toggle and a
-   "top growers" filter.
+   January 2017 value (Jan 2017 = `1.0`), all categories overlaid. Linear/log toggle, "top
+   growers" filter, and a 12-month moving-average (MA-12) smoothing toggle.
 2. **Raw Monthly Counts / 原始每月数量** — raw paper counts per month, all categories overlaid,
-   with a time-zoom slider.
-3. **Per-Category Panels / 各分类原始数量** — one small-multiple chart per category.
+   with a time-zoom slider and MA-12 toggle.
+3. **Per-Category Panels / 各分类原始数量** — one small-multiple chart per category, with MA-12 toggle.
+
+### 📄 Study: Focus Contraction / 研究：聚焦收缩
+
+A comparative deep-dive applying the central idea of **Hao, Xu, Li & Evans, *Nature* (2026),
+"Artificial intelligence tools expand scientists' impact but contract science's focus"**
+([doi:10.1038/s41586-025-09922-y](https://doi.org/10.1038/s41586-025-09922-y),
+[arXiv:2412.07727](https://arxiv.org/abs/2412.07727)) to mathematics. Using the submission
+distribution across the 32 subfields, it measures whether math's collective focus is
+concentrating over time (Shannon entropy / effective number of subfields, Pielou evenness,
+top-5 share, HHI) and whether growth skews toward data-rich / ML-adjacent subfields. The
+finding: a mild but monotonic concentration — effective subfields ≈ 24.2 → 23.5, with
+optimization/numerics/statistics leading growth. Reproducible via `analyze.py`.
 
 ## Data
 
