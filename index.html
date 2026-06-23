@@ -474,7 +474,9 @@ function buildReport(){
       smooth:true,lineStyle:{width:3,color:'#5bd6a8'},itemStyle:{color:'#5bd6a8'},symbolSize:7,
       areaStyle:{color:'#5bd6a8',opacity:.15},
       markLine:{symbol:'none',lineStyle:{color:'#ff8a5b',type:'dashed'},
-        data:[{xAxis:'2022',label:{formatter:'LLM era →',color:'#ff8a5b',position:'insideEndTop'}}]}}]});
+        label:{formatter:'LLM era →',color:'#ff8a5b',position:'insideStartTop',
+          rotate:0,fontSize:11,padding:[0,6,2,0]},
+        data:[{xAxis:'2022'}]}}]});
   reportCharts.push(c2);
 
   // Fig 3: growth bars (sorted asc for horizontal display)
