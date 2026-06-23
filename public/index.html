@@ -68,6 +68,7 @@
       <button data-act="none">Hide all / 清空</button>
       <button data-act="top">Top growers / 增速前列</button>
       <button data-act="log">Linear ↔ Log Y / 线性↔对数</button>
+      <button data-act="ma">MA-12 smoothing / 12月移动平均</button>
     </div>
     <div id="normChart" class="chart"></div>
   </div>
@@ -82,6 +83,7 @@
     <div class="controls" id="rawCtl">
       <button data-act="all" class="active">Show all / 全选</button>
       <button data-act="none">Hide all / 清空</button>
+      <button data-act="ma">MA-12 smoothing / 12月移动平均</button>
     </div>
     <div id="rawChart" class="chart"></div>
   </div>
@@ -115,6 +117,16 @@ const palette = ['#5b9bff','#ff8a5b','#5bd6a8','#d98aff','#ffd45b','#ff6b9d','#7
 function color(i){return palette[i%palette.length];}
 function label(s){return s.code+' · '+s.en+' / '+s.zh;}
 
+/* trailing 12-month moving average; first 11 months are null (window not full) */
+function movingAvg(arr,w){
+  return arr.map((_,i)=>{
+    if(i<w-1)return null;
+    let sum=0,n=0;
+    for(let k=i-w+1;k<=i;k++){if(arr[k]!=null){sum+=arr[k];n++;}}
+    return n? +(sum/n).toFixed(4):null;
+  });
+}
+
 const axisCommon = {
   textStyle:{color:'#9aa3b2'},
   axisLine:{lineStyle:{color:'#2a2f3d'}},
@@ -123,7 +135,7 @@ const axisCommon = {
 
 /* ---------- Dashboard 1: normalized ---------- */
 const normChart = echarts.init(document.getElementById('normChart'),'dark');
-let normLog=false;
+let normLog=false, normMA=false;
 function normOption(){
   return {
     backgroundColor:'transparent',
@@ -141,8 +153,9 @@ function normOption(){
       min:normLog?undefined:0},axisCommon),
     dataZoom:[{type:'inside'},{type:'slider',bottom:30,height:18,
       borderColor:'#2a2f3d',textStyle:{color:'#9aa3b2'}}],
-    series:D.series.map((s,i)=>({name:label(s),type:'line',data:s.norm,
-      showSymbol:false,smooth:false,lineStyle:{width:1.3},
+    series:D.series.map((s,i)=>({name:label(s),type:'line',
+      data:normMA?movingAvg(s.norm,12):s.norm,
+      showSymbol:false,smooth:false,lineStyle:{width:normMA?1.8:1.3},
       itemStyle:{color:color(i)},emphasis:{focus:'series',lineStyle:{width:3}}}))
   };
 }
@@ -150,7 +163,8 @@ normChart.setOption(normOption());
 
 /* ---------- Dashboard 2: raw ---------- */
 const rawChart = echarts.init(document.getElementById('rawChart'),'dark');
-rawChart.setOption({
+let rawMA=false;
+function rawOption(){ return {
   backgroundColor:'transparent',
   tooltip:{trigger:'axis',confine:true,
     backgroundColor:'#1d212c',borderColor:'#2a2f3d',textStyle:{color:'#e6e8ee'},order:'valueDesc',
@@ -163,10 +177,12 @@ rawChart.setOption({
   xAxis:Object.assign({type:'category',data:MONTHS,boundaryGap:false},axisCommon),
   yAxis:Object.assign({type:'value',name:'papers / 篇',nameTextStyle:{color:'#9aa3b2'},min:0},axisCommon),
   dataZoom:[{type:'inside'},{type:'slider',bottom:30,height:18,borderColor:'#2a2f3d',textStyle:{color:'#9aa3b2'}}],
-  series:D.series.map((s,i)=>({name:label(s),type:'line',data:s.raw,
-    showSymbol:false,lineStyle:{width:1.3},itemStyle:{color:color(i)},
+  series:D.series.map((s,i)=>({name:label(s),type:'line',
+    data:rawMA?movingAvg(s.raw,12):s.raw,
+    showSymbol:false,lineStyle:{width:rawMA?1.8:1.3},itemStyle:{color:color(i)},
     emphasis:{focus:'series',lineStyle:{width:3}}}))
-});
+}; }
+rawChart.setOption(rawOption());
 
 /* ---------- Dashboard 3: small multiples ---------- */
 const grid=document.getElementById('miniGrid');
@@ -204,6 +220,8 @@ document.getElementById('normCtl').addEventListener('click',e=>{
   const act=e.target.dataset.act;if(!act)return;
   if(act==='log'){normLog=!normLog;normChart.setOption(normOption());
     e.target.classList.toggle('active',normLog);return;}
+  if(act==='ma'){normMA=!normMA;normChart.setOption(normOption());
+    e.target.classList.toggle('active',normMA);return;}
   if(act==='all')D.series.forEach(s=>normChart.dispatchAction({type:'legendSelect',name:label(s)}));
   if(act==='none')D.series.forEach(s=>normChart.dispatchAction({type:'legendUnSelect',name:label(s)}));
   if(act==='top'){const keep=new Set(topGrowers(6));
@@ -211,6 +229,8 @@ document.getElementById('normCtl').addEventListener('click',e=>{
 });
 document.getElementById('rawCtl').addEventListener('click',e=>{
   const act=e.target.dataset.act;if(!act)return;
+  if(act==='ma'){rawMA=!rawMA;rawChart.setOption(rawOption());
+    e.target.classList.toggle('active',rawMA);return;}
   if(act==='all')D.series.forEach(s=>rawChart.dispatchAction({type:'legendSelect',name:label(s)}));
   if(act==='none')D.series.forEach(s=>rawChart.dispatchAction({type:'legendUnSelect',name:label(s)}));
 });
