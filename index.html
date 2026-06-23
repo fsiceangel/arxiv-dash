@@ -95,6 +95,9 @@
       One panel per category — raw monthly count, 2017–2026. Each panel is auto-scaled to its own range.
       <br>每个分类一个独立面板 — 2017–2026 每月原始数量，纵轴按各自范围自动缩放。
     </p>
+    <div class="controls" id="miniCtl">
+      <button data-act="ma">MA-12 smoothing / 12月移动平均</button>
+    </div>
     <div class="grid" id="miniGrid"></div>
   </div>
 
@@ -187,6 +190,12 @@ rawChart.setOption(rawOption());
 /* ---------- Dashboard 3: small multiples ---------- */
 const grid=document.getElementById('miniGrid');
 const miniCharts=[];
+let miniMA=false;
+function miniSeries(s,i){
+  return [{type:'line',data:miniMA?movingAvg(s.raw,12):s.raw,showSymbol:false,smooth:false,
+    lineStyle:{width:1.4,color:color(i)},itemStyle:{color:color(i)},
+    areaStyle:{color:color(i),opacity:miniMA?.18:.12}}];
+}
 D.series.forEach((s,i)=>{
   const card=document.createElement('div');card.className='mini';
   card.innerHTML='<div class="t"><span class="code">'+s.code+'</span>'+s.en+
@@ -202,11 +211,15 @@ D.series.forEach((s,i)=>{
     xAxis:Object.assign({type:'category',data:MONTHS,boundaryGap:false,
       axisLabel:{interval:23,fontSize:9}},axisCommon),
     yAxis:Object.assign({type:'value',min:0,axisLabel:{fontSize:9}},axisCommon),
-    series:[{type:'line',data:s.raw,showSymbol:false,smooth:false,
-      lineStyle:{width:1.4,color:color(i)},itemStyle:{color:color(i)},
-      areaStyle:{color:color(i),opacity:.12}}]
+    series:miniSeries(s,i)
   });
   miniCharts.push(c);
+});
+document.getElementById('miniCtl').addEventListener('click',e=>{
+  if(e.target.dataset.act!=='ma')return;
+  miniMA=!miniMA;
+  miniCharts.forEach((c,i)=>c.setOption({series:miniSeries(D.series[i],i)}));
+  e.target.classList.toggle('active',miniMA);
 });
 
 /* ---------- controls ---------- */
