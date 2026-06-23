@@ -116,9 +116,13 @@ def main():
         "total": {"pre": round(avg("total", pre)), "post": round(avg("total", post))},
     }
 
+    # ---- per-category yearly counts (full years) for the drill-down waterfall ----
+    yearly_cat = {code: [yr[code].get(y, 0) for y in FULL] for code in CODES}
+
     out = {
         "years": YEARS, "full_years": FULL,
         "metrics": metrics, "growth": growth, "split": split,
+        "yearly": yearly_cat,
         "data_cluster": DATA_CLUSTER,
         "data_cluster_names": {c: NAME[c][0] for c in DATA_CLUSTER},
         "n_categories": len(CODES),

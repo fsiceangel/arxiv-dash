@@ -32,7 +32,9 @@ distribution across the 32 subfields, it measures whether math's collective focu
 concentrating over time (Shannon entropy / effective number of subfields, Pielou evenness,
 top-5 share, HHI) and whether growth skews toward data-rich / ML-adjacent subfields. The
 finding: a mild but monotonic concentration — effective subfields ≈ 24.2 → 23.5, with
-optimization/numerics/statistics leading growth. Reproducible via `analyze.py`.
+optimization/numerics/statistics leading growth. **Click any bar in the growth chart (Fig 3)**
+to expand a year-by-year waterfall decomposing that subfield's 2017→2025 growth index (green =
+up year, red = down). Reproducible via `analyze.py`.
 
 ## Data
 
