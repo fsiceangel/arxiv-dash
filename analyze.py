@@ -56,8 +56,9 @@ def gini(vals):
 def main():
     raw = load()
     yr = yearly(raw)
-    YEARS = list(range(2017, 2027))         # 2026 partial
-    FULL = list(range(2017, 2026))          # complete years for trend stats
+    YEARS = sorted({int(ym[:4]) for d in raw.values() for ym in d})  # all years in data
+    FULL = YEARS[:-1]                       # last year is current/partial
+    START, END = FULL[0], FULL[-1]          # growth baseline -> last complete year
 
     # ---- per-year concentration / diversity metrics ----
     metrics = {}   # year -> {...}
@@ -82,16 +83,17 @@ def main():
             "partial": y == 2026,
         }
 
-    # ---- per-category growth 2017 -> 2025 (full years) ----
+    # ---- per-category growth START -> END (full years) ----
+    span = END - START
     growth = []
     for code in CODES:
-        a = yr[code].get(2017, 0)
-        b = yr[code].get(2025, 0)
+        a = yr[code].get(START, 0)
+        b = yr[code].get(END, 0)
         ratio = (b / a) if a else None
-        cagr = ((b / a) ** (1 / 8) - 1) if (a and b) else None
+        cagr = ((b / a) ** (1 / span) - 1) if (a and b and span) else None
         growth.append({
             "code": code, "en": NAME[code][0], "zh": NAME[code][1],
-            "y2017": a, "y2025": b,
+            "y2017": a, "y2025": b,            # keys kept for the report UI (START/END values)
             "ratio": round(ratio, 3) if ratio else None,
             "cagr": round(cagr * 100, 2) if cagr is not None else None,
             "data_cluster": code in DATA_CLUSTER,
@@ -101,8 +103,9 @@ def main():
     # ---- pre/post-LLM split (ChatGPT = late 2022) ----
     def avg(metric, years):
         vals = [metrics[y][metric] for y in years]
-        return sum(vals) / len(vals)
-    pre, post = [2017, 2018, 2019, 2020, 2021, 2022], [2023, 2024, 2025]
+        return sum(vals) / len(vals) if vals else 0
+    pre = [y for y in FULL if y <= 2022]
+    post = [y for y in FULL if y >= 2023]
     split = {
         "pre_years": pre, "post_years": post,
         "eff_subfields": {"pre": round(avg("eff_subfields", pre), 2),

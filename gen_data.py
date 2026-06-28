@@ -51,15 +51,17 @@ def months(start=(2017, 1), end=(2026, 6)):
     return out
 
 def main():
-    MONTHS = months()
     raw = {c[0]: {} for c in CATS}
+    all_months = set()
     with open(os.path.join(HERE, "data.csv"), newline="") as f:
         for row in csv.reader(f):
             if len(row) >= 3 and row[0] in raw and row[1] != "month":
                 try:
                     raw[row[0]][row[1]] = int(row[2])
+                    all_months.add(row[1])
                 except ValueError:
                     pass
+    MONTHS = sorted(all_months)            # derived from data -> new months auto-included
     series = []
     missing = 0
     for code, en, zh in CATS:
