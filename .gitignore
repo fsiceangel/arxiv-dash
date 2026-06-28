@@ -3,5 +3,6 @@
 __pycache__/
 *.pyc
 
-# harvest run log
+# run logs
 harvest.log
+update.log
