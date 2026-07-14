@@ -30,11 +30,17 @@ A comparative deep-dive applying the central idea of **Hao, Xu, Li & Evans, *Nat
 [arXiv:2412.07727](https://arxiv.org/abs/2412.07727)) to mathematics. Using the submission
 distribution across the 32 subfields, it measures whether math's collective focus is
 concentrating over time (Shannon entropy / effective number of subfields, Pielou evenness,
-top-5 share, HHI) and whether growth skews toward data-rich / ML-adjacent subfields. The
-finding: a mild but monotonic concentration — effective subfields ≈ 24.2 → 23.5, with
-optimization/numerics/statistics leading growth. **Click any bar in the growth chart (Fig 3)**
-to expand a year-by-year waterfall decomposing that subfield's 2017→2025 growth index (green =
-up year, red = down). Reproducible via `analyze.py`.
+top-5 share, HHI) and whether growth skews toward data-rich / ML-adjacent subfields —
+then tests the timing formally (`stats_analysis.py`): structural-break search with
+block-bootstrap p-values on the monthly series, multinomial bootstrap CIs on annual
+concentration, and a two-way fixed-effects DiD with a yearly event study for the data-rich
+cluster. The finding: the concentration is real (CIs cleanly separated) but **pandemic-era,
+not LLM-era** — the best break candidate is Oct 2020 (itself insignificant, sup-F p ≈ 0.43),
+the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0. Mathematics is
+so far a contrast to the natural-science pattern, not a confirmation. **Click any bar in the
+growth chart (Fig 3)** to expand a year-by-year waterfall decomposing that subfield's growth
+index (green = up year, red = down). Reproducible via `analyze.py` + `stats_analysis.py`
+(requires numpy).
 
 ## Data
 

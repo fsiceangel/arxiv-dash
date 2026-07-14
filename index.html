@@ -7,6 +7,7 @@
 <script src="echarts.min.js"></script>
 <script src="data.js"></script>
 <script src="report_data.js"></script>
+<script src="stats_data.js"></script>
 <style>
   :root{
     --bg:#0f1117; --panel:#171a23; --panel2:#1d212c; --border:#2a2f3d;
@@ -155,13 +156,18 @@
       <a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao, Xu, Li &amp; Evans (Nature, 2026)</a>
       documented across the natural sciences in the age of AI? Using the monthly submission
       record of 32 arXiv mathematics subfields (2017–2026), we test the structural analog of
-      their thesis — and find a <b>mild but monotonic concentration</b> of mathematical
-      activity toward computational, data-rich subfields.
+      their thesis. We find a <b>real concentration</b> of mathematical activity toward
+      computational, data-rich subfields — but formal tests place its timing in the
+      <b>pandemic era (2019–2021), not the LLM era</b>: the trend plateaued before ChatGPT and
+      shows no significant post-2022 acceleration. Mathematics, so far, is a <b>contrast</b> to
+      the natural-science pattern rather than a confirmation of it.
     </p>
     <p class="zh-p">
       在人工智能时代，<a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao、Xu、Li 与 Evans（《自然》2026）</a>
       记录了自然科学整体研究视野的收缩。数学是否也呈现同样的趋势？我们用 2017–2026 年 32 个 arXiv 数学子领域的每月投稿数据，
-      检验其论点的结构性类比，发现数学活动正<b>温和但持续地</b>向计算型、数据密集型子领域集中。
+      检验其论点的结构性类比。我们发现数学活动确实<b>真实地</b>向计算型、数据密集型子领域集中——但正式统计检验表明其时间点在
+      <b>疫情时期（2019–2021）而非大模型时期</b>：该趋势在 ChatGPT 出现之前已趋于平稳，2022 年后没有显著加速。
+      就目前而言，数学与自然科学的模式形成<b>对照</b>，而非印证。
     </p>
 
     <h2>1 · The result we build on <span class="zh">所引用的研究结论</span></h2>
@@ -203,6 +209,17 @@
         <code>math.PR</code>), the math counterpart of “areas richest in data.”
         <span class="zh">数据密集子领域（信息论、最优化、数值分析、统计、概率）的合计份额。</span></li>
     </ul>
+    <p>
+      Description alone can’t say <i>when</i> the shift happened or whether it is noise, so §4
+      adds formal tests on the <b>monthly</b> series (114 points): a structural-break search that
+      lets the data choose the break date (sup-F with block-bootstrap p-values), multinomial
+      bootstrap confidence intervals on the annual concentration level, and a two-way
+      fixed-effects difference-in-differences with a yearly event study for the data-rich
+      cluster (cluster-robust SEs).
+      <span class="zh">仅有描述无法说明变化<b>何时</b>发生、是否只是噪声，故 §4 在<b>月度</b>序列（114 个点）上加入正式检验：
+      由数据自行选择断点日期的结构性断点搜索（sup-F，块自助法 p 值）、年度集中度的多项自助置信区间，
+      以及针对数据密集集群的双向固定效应双重差分与逐年事件研究（按类别聚类稳健标准误）。</span>
+    </p>
 
     <h2>3 · What we find <span class="zh">研究发现</span></h2>
     <div class="kpi" id="reportKpi"></div>
@@ -228,27 +245,86 @@
       submissions. Growth was sharply uneven: <b>Optimization &amp; Control (+128%)</b>,
       <b>Numerical Analysis (+97%)</b> and <b>Statistics Theory (+95%)</b> — all computational —
       led the field, while classical/pure areas trailed (<b>Classical Analysis &amp; ODEs −1%</b>,
-      Complex Variables +26%, Operator Algebras +32%, K-Theory +30%). Concentration nudged upward
-      after the 2022–23 LLM inflection (effective subfields 23.9 → 23.5 pre- vs post-2023).
+      Complex Variables +26%, Operator Algebras +32%, K-Theory +30%). Whether this timing
+      actually implicates AI is a question description can’t answer — §4 tests it formally.
     </p>
     <p class="zh-p">
       信号虽温和却清晰：有效子领域数从 <b>24.2 降至 23.5</b>（约 −3%），均匀度由 0.920 降至 0.911，前五份额由
       <b>36.6% 升至 38.8%</b>，数据密集集群占比由 <b>26.8% 升至 30.3%</b>。增长高度不均：<b>最优化与控制（+128%）</b>、
       <b>数值分析（+97%）</b>、<b>统计理论（+95%）</b>等计算型领域领跑，而经典 / 纯数学领域明显落后
-      （<b>经典分析与常微分方程 −1%</b>、复变 +26%、算子代数 +32%、K 理论 +30%）。在 2022–23 年大模型拐点后集中度进一步上升。
+      （<b>经典分析与常微分方程 −1%</b>、复变 +26%、算子代数 +32%、K 理论 +30%）。这一时间线是否真的指向 AI，
+      需要 §4 的正式检验来回答。
     </p>
 
     <div class="callout">
-      <b>Interpretation / 解读.</b> The same direction as Hao et al., at smaller magnitude: math’s
-      collective attention is drifting toward optimization, numerics and statistics — exactly the
-      subfields that power, and are powered by, machine learning. The math counterpart of their
+      <b>Interpretation / 解读.</b> Directionally like Hao et al., at smaller magnitude: math’s
+      collective attention has drifted toward optimization, numerics and statistics — the
+      subfields that power, and are powered by, machine learning; the math counterpart of their
       “areas richest in data.” Pure analysis and algebra are not shrinking in absolute terms, but
-      they are losing <i>relative</i> share. <br>
-      与 Hao 等人方向一致、幅度更小：数学的集体注意力正流向最优化、数值与统计——正是驱动机器学习、也被其驱动的子领域，
-      即其“数据最丰富领域”在数学中的对应。纯分析与代数并未绝对萎缩，但相对份额在下降。
+      they have lost <i>relative</i> share. The crucial question — did this happen <i>because of</i>
+      the AI era? — is answered by the tests below, and the answer is mostly no. <br>
+      方向上与 Hao 等人一致、幅度更小：数学的集体注意力已流向最优化、数值与统计——正是驱动机器学习、也被其驱动的子领域，
+      即其“数据最丰富领域”在数学中的对应。纯分析与代数并未绝对萎缩，但相对份额在下降。关键问题——这是否<i>因为</i>
+      AI 时代而发生？——由下方检验回答，答案基本是否定的。
     </div>
 
-    <h2>4 · Caveats <span class="zh">局限与注意</span></h2>
+    <h2>4 · Statistical tests — is this an AI story? <span class="zh">统计检验：这是 AI 的故事吗？</span></h2>
+    <p>
+      <b>No break where AI would put one.</b> A structural-break search over the monthly
+      effective-subfields series lets the data pick the most likely break date. It picks
+      <b id="stBreakMonth">—</b> — squarely in the pandemic, not the LLM era — and even that
+      candidate is <b>not significant</b> (sup-F <span id="stSupF">—</span>, block-bootstrap
+      p = <span id="stPBoot">—</span>): the decline is gradual, not event-shaped. Forcing the
+      break at ChatGPT’s release scores F = <span id="stFllm">—</span>, far weaker than the
+      COVID-era candidate’s F = <span id="stFcovid">—</span>.
+      <span class="zh">对月度有效子领域序列做结构性断点搜索，让数据自行选择最可能的断点日期：结果落在<b>疫情期而非大模型期</b>，
+      且该候选断点本身亦<b>不显著</b>——下降是渐进的，而非事件式的。将断点强行放在 ChatGPT 发布日，其 F 值远弱于疫情期候选。</span>
+    </p>
+    <p>
+      <b>Real, then flat.</b> Multinomial bootstrap confidence intervals show the concentration
+      is far beyond sampling noise — the 2017 and 2021 intervals don’t come close to overlapping —
+      but the 2021 and 2025 intervals <i>do</i> overlap almost entirely: the contraction happened
+      by 2021 and has since <b>plateaued</b>. Post-2023 levels sit
+      <span id="stGap">—</span> effective subfields below the pre-COVID trend projection — a
+      persistent level shift, not a continuing slide.
+      <span class="zh">多项自助置信区间显示，集中化远超抽样噪声——2017 与 2021 年的区间完全分离；但 2021 与 2025 年的区间几乎完全重叠：
+      收缩在 2021 年前已完成，此后<b>趋于平稳</b>。2023 年后的水平低于疫情前趋势外推值，是持续的水平位移，而非继续下滑。</span>
+    </p>
+    <div class="rchart" id="rcMonthly"></div>
+    <div class="cap">Fig 4 · Monthly effective number of subfields, with the 2017–19 trend projection (dashed)
+      and the COVID / ChatGPT dates marked. 图4 · 月度有效子领域数，虚线为 2017–19 趋势外推，标注疫情与 ChatGPT 时点。</div>
+    <p>
+      <b>The cluster’s rise predates LLMs.</b> A two-way fixed-effects difference-in-differences
+      (log monthly counts; category and month fixed effects; SEs clustered by category) puts the
+      data-rich cluster <span id="stDid">—</span> above the rest after ChatGPT — but only
+      marginally (p = <span id="stDidP">—</span>), and the yearly event study (base 2022) shows
+      why: the cluster’s relative growth accumulated <b>steadily from 2017 to 2021</b>, including
+      a significant COVID-period boost (p = <span id="stCovP">—</span>), then went <b>flat after
+      2022</b> — post-LLM coefficients are statistically indistinguishable from zero. The one
+      hint of something new: partial-year 2026 ticks up <span id="st2026">—</span>
+      (p = <span id="st2026P">—</span>) — worth monitoring, not yet a finding.
+      <span class="zh">双向固定效应双重差分（对数月度计数；类别与月份固定效应；按类别聚类标准误）显示，ChatGPT 之后数据密集集群仅
+      边际性地高于其他领域；逐年事件研究（以 2022 为基准）揭示了原因：该集群的相对增长在 <b>2017–2021 年间稳步累积</b>
+      （疫情期有显著提升），<b>2022 年后转平</b>——大模型时代各年系数与零无法区分。唯一的新信号是 2026 年（不完整年份）的边际上扬——
+      值得关注，但尚不构成结论。</span>
+    </p>
+    <div class="rchart" id="rcEvent"></div>
+    <div class="cap">Fig 5 · Event study: data-rich cluster vs rest, yearly coefficients on log counts
+      (base 2022, whiskers = 95% CI, cluster-robust). 图5 · 事件研究：数据密集集群相对其他领域的逐年系数
+      （以 2022 为基准，须线为 95% 置信区间，聚类稳健）。</div>
+    <div class="callout">
+      <b>Verdict / 结论.</b> Mathematics’ focus contraction is real — and it is a <b>pandemic-era
+      story that persisted</b>, not an LLM-era story. Where Hao et al. find AI adoption actively
+      narrowing natural science, math’s narrowing predates ChatGPT and has not (yet) accelerated
+      since. If AI is reshaping mathematics, it is so far holding the field at its
+      COVID-era concentration rather than deepening it — a genuine contrast worth watching as
+      2026 completes. <br>
+      数学的聚焦收缩是真实的——但它是一个<b>延续至今的疫情时期故事</b>，而非大模型时期的故事。Hao 等人发现 AI 的采用正在
+      主动收窄自然科学，而数学的收窄先于 ChatGPT，且此后（暂时）没有加速。如果说 AI 正在重塑数学，那么到目前为止，
+      它是把该领域维持在疫情期形成的集中度上，而非使其加深——这一对照值得在 2026 年完整数据出炉后继续观察。
+    </div>
+
+    <h2>5 · Caveats <span class="zh">局限与注意</span></h2>
     <ul>
       <li>This is a <b>structural analog, not a replication</b>: we use submission-volume
         distribution, not citations, authorship, or AI-augmentation detection. We show
@@ -261,9 +337,15 @@
       <li><code>math.GM</code> (General Mathematics) is a noisy catch-all and is excluded from the
         narrative despite high growth. 2026 is partial (Jan–Jun).
         <span class="zh">一般数学为杂项桶，已在叙述中排除；2026 年数据不完整。</span></li>
+      <li>Statistical caveats: only 5 treated categories in the DiD (cluster-robust SEs are
+        conservative but few clusters is few clusters); the monthly entropy series is
+        autocorrelated (addressed with a moving-block bootstrap, block = 12); “no significant
+        break” bounds the evidence, it does not prove absence.
+        <span class="zh">统计局限：双重差分仅 5 个处理组类别；月度熵序列存在自相关（以块自助法处理，块长 12）；
+        “无显著断点”是证据的界定，并非不存在的证明。</span></li>
     </ul>
 
-    <h2>5 · Citation <span class="zh">引用</span></h2>
+    <h2>6 · Citation <span class="zh">引用</span></h2>
     <div class="cite">
       Hao, Q., Xu, F., Li, Y. &amp; Evans, J. Artificial intelligence tools expand scientists’
       impact but contract science’s focus. <i>Nature</i> (2026).
@@ -570,6 +652,92 @@ function buildReport(){
     document.getElementById('rcFallWrap').scrollIntoView({behavior:'smooth',block:'nearest'});
   }
   c3.on('click', p=>{ if(p.componentType==='series') showWaterfall(g[p.dataIndex]); });
+
+  // ---- §4: statistical tests ----
+  const S = window.STATS_DATA;
+  if(S){
+    const EN_M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const fmtYm=ym=>EN_M[+ym.slice(5)-1]+' '+ym.slice(0,4);
+    const pctOf=b=>((Math.exp(b)-1)*100).toFixed(1)+'%';
+    const put=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt;};
+    put('stBreakMonth',fmtYm(S.break.month));
+    put('stSupF',S.break.supF); put('stPBoot',S.break.p_boot);
+    put('stFllm',S.break.F_llm_2022_12); put('stFcovid',S.break.F_covid_2020_03);
+    put('stGap',Math.abs(S.pretrend_gap_post2023).toFixed(2));
+    put('stDid','+'+pctOf(S.did.treat_post.coef)); put('stDidP',S.did.treat_post.p);
+    put('stCovP',S.did.treat_covid.p);
+    if(S.event_study['2026']){
+      put('st2026','+'+pctOf(S.event_study['2026'].coef));
+      put('st2026P',S.event_study['2026'].p);
+    }
+
+    // Fig 4: monthly effective subfields + pre-trend projection
+    const c4 = echarts.init(document.getElementById('rcMonthly'),'dark');
+    c4.setOption({backgroundColor:'transparent',
+      tooltip:Object.assign({trigger:'axis'},rtt),
+      legend:{top:0,textStyle:{color:'#9aa3b2'},
+        data:['Effective subfields (monthly) / 月度有效子领域数','2017–19 trend projection / 趋势外推']},
+      grid:{left:52,right:26,top:40,bottom:40},
+      xAxis:Object.assign({type:'category',data:S.months,boundaryGap:false,
+        axisLabel:{interval:11}},raxis),
+      yAxis:Object.assign({type:'value',min:22,max:25.5,name:'eff. subfields',
+        nameTextStyle:{color:'#9aa3b2'}},raxis),
+      series:[
+        {name:'Effective subfields (monthly) / 月度有效子领域数',type:'line',data:S.E_monthly,
+          showSymbol:false,lineStyle:{width:1.6,color:'#5b9bff'},itemStyle:{color:'#5b9bff'},
+          markLine:{symbol:'none',
+            data:[
+              {xAxis:'2020-03',lineStyle:{color:'#ffd45b',type:'dashed'},
+                label:{formatter:'COVID',color:'#ffd45b',rotate:0,position:'insideEndTop',fontSize:11}},
+              {xAxis:'2022-12',lineStyle:{color:'#ff8a5b',type:'dashed'},
+                label:{formatter:'ChatGPT',color:'#ff8a5b',rotate:0,position:'insideEndTop',fontSize:11}}
+            ]}},
+        {name:'2017–19 trend projection / 趋势外推',type:'line',data:S.proj_pre_trend,
+          showSymbol:false,lineStyle:{width:1.6,color:'#9aa3b2',type:'dashed'},
+          itemStyle:{color:'#9aa3b2'}}
+      ]});
+    reportCharts.push(c4);
+
+    // Fig 5: event study with 95% CI whiskers (base 2022 = 0)
+    const yrs=['2017','2018','2019','2020','2021','2022','2023','2024','2025','2026']
+      .filter(y=>y==='2022'||S.event_study[y]);
+    const pts=yrs.map(y=>y==='2022'?0:+(S.event_study[y].coef*100).toFixed(2));
+    const ci=yrs.map((y,i)=>{
+      if(y==='2022')return [i,0,0];
+      const e=S.event_study[y];
+      return [i,+((e.coef-1.96*e.se)*100).toFixed(2),+((e.coef+1.96*e.se)*100).toFixed(2)];
+    });
+    const c5 = echarts.init(document.getElementById('rcEvent'),'dark');
+    c5.setOption({backgroundColor:'transparent',
+      tooltip:Object.assign({trigger:'axis',
+        formatter:p=>{const i=p[0].dataIndex,y=yrs[i];
+          if(y==='2022')return '2022 · base year / 基准年';
+          const e=S.event_study[y];
+          return y+(y==='2026'?' (partial/不完整)':'')+'<br>coef <b>'+
+            (e.coef>=0?'+':'')+(e.coef*100).toFixed(1)+'</b> log-pts (≈'+pctOf(e.coef)+
+            ')<br>95% CI ['+ci[i][1]+', '+ci[i][2]+'] · p='+e.p;}},rtt),
+      grid:{left:52,right:26,top:24,bottom:40},
+      xAxis:Object.assign({type:'category',data:yrs},raxis),
+      yAxis:Object.assign({type:'value',name:'log points ×100 (≈%)',
+        nameTextStyle:{color:'#9aa3b2'}},raxis),
+      series:[
+        {type:'custom',z:1,renderItem:(params,api)=>{
+            const i=api.value(0),lo=api.coord([i,api.value(1)]),hi=api.coord([i,api.value(2)]);
+            if(yrs[i]==='2022')return null;
+            const w=6,st={stroke:'#9aa3b2',lineWidth:1.4};
+            return {type:'group',children:[
+              {type:'line',shape:{x1:lo[0],y1:lo[1],x2:hi[0],y2:hi[1]},style:st},
+              {type:'line',shape:{x1:lo[0]-w,y1:lo[1],x2:lo[0]+w,y2:lo[1]},style:st},
+              {type:'line',shape:{x1:hi[0]-w,y1:hi[1],x2:hi[0]+w,y2:hi[1]},style:st}]};},
+          data:ci,encode:{x:0,y:[1,2]}},
+        {type:'scatter',z:2,data:pts.map((v,i)=>({value:v,
+            itemStyle:{color:yrs[i]==='2022'?'#9aa3b2':(v>=0?'#5bd6a8':'#ff8a5b')}})),
+          symbolSize:11},
+        {type:'line',z:0,data:yrs.map(()=>0),showSymbol:false,silent:true,
+          lineStyle:{color:'#2a2f3d',width:1}}
+      ]});
+    reportCharts.push(c5);
+  }
 }
 
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
