@@ -36,11 +36,17 @@ block-bootstrap p-values on the monthly series, multinomial bootstrap CIs on ann
 concentration, and a two-way fixed-effects DiD with a yearly event study for the data-rich
 cluster. The finding: the concentration is real (CIs cleanly separated) but **pandemic-era,
 not LLM-era** — the best break candidate is Oct 2020 (itself insignificant, sup-F p ≈ 0.43),
-the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0. Mathematics is
-so far a contrast to the natural-science pattern, not a confirmation. **Click any bar in the
-growth chart (Fig 3)** to expand a year-by-year waterfall decomposing that subfield's growth
-index (green = up year, red = down). Reproducible via `analyze.py` + `stats_analysis.py`
-(requires numpy).
+the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0. Paper-level
+evidence from the Kaggle arXiv metadata snapshot (`process_metadata.py`, ~449k unique math
+papers) adds the mechanism: AI-related content in the data-rich cluster grew 2.9% → 13.5% of
+papers (steepest 2017–2020), and subfield growth correlates with rising AI share (Spearman
+0.425, permutation p ≈ 0.016) — while co-listing engagement between subfields *rose* (the
+opposite of the natural-science "lonely crowds" pattern). Mathematics reads as an early
+deep-learning adopter that plateaued, not a field currently narrowed by generative AI.
+**Click any bar in the growth chart (Fig 3)** to expand a year-by-year waterfall decomposing
+that subfield's growth index (green = up year, red = down). Reproducible via `analyze.py` +
+`stats_analysis.py` + `process_metadata.py` (numpy; the metadata script needs the Kaggle
+snapshot: `kaggle datasets download Cornell-University/arxiv --unzip -p meta/`).
 
 ## Data
 
