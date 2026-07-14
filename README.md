@@ -47,7 +47,10 @@ began: 30 of 32 subfields up >10% YoY in H1 2026 (median +22.5% vs +1.8% baselin
 combinatorics (+41%, z≈5.8 vs its own history), logic and dynamical systems rather than the
 data-rich cluster, and only weakly correlated with measured AI-as-topic share — consistent
 with AI arriving as a *production tool* rather than a research topic (a hypothesis the report
-flags as testable with full-text/acknowledgment analysis).
+flags as testable with full-text/acknowledgment analysis). A 13-category non-math control
+group (`controls.py`) shows the same anomaly across theoretical CS, physics and statistics
+(e.g. statistical mechanics z≈8.6, CS logic z≈4.9) while AI-core categories (cs.LG/CV/CL) sit
+on or below their own trend — math is one instance of a surge across theoretical science.
 **Click any bar in the growth chart (Fig 3)** to expand a year-by-year waterfall decomposing
 that subfield's growth index (green = up year, red = down). Reproducible via `analyze.py` +
 `stats_analysis.py` + `process_metadata.py` (numpy; the metadata script needs the Kaggle
