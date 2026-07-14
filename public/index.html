@@ -9,6 +9,7 @@
 <script src="report_data.js"></script>
 <script src="stats_data.js"></script>
 <script src="meta_data.js"></script>
+<script src="controls_data.js"></script>
 <style>
   :root{
     --bg:#0f1117; --panel:#171a23; --panel2:#1d212c; --border:#2a2f3d;
@@ -413,6 +414,21 @@
     <div class="rchart" id="rcSurge" style="height:640px"></div>
     <div class="cap">Fig 10 · H1 2026 vs H1 2025 growth by subfield, colored by 2026 AI-related share; dashed line =
       median prior-year baseline. 图10 · 各子领域 2026 上半年同比增长，按 2026 年 AI 相关占比着色；虚线为上一年基线中位数。</div>
+    <p id="ctrlPara">
+      <b>Is this math-specific, or arXiv-wide?</b> As a control, we harvested 13 non-math
+      categories the same way — AI-core CS (cs.LG, cs.CL, cs.CV), non-AI CS (complexity,
+      algorithms, programming languages, logic), theoretical physics (hep-th, gr-qc, quant-ph,
+      statistical mechanics) and econ/statistics — and computed the same H1-2026 YoY ratio and
+      per-field z-score against each field's own history. <span id="ctrlVerdict">—</span>
+      <span class="zh">这是数学独有的现象，还是 arXiv 整体现象？作为对照，我们以同样方法采集了 13 个非数学分类
+      ——AI 核心计算机科学（机器学习、计算语言、计算机视觉）、非 AI 计算机科学（复杂性、算法、编程语言、逻辑）、
+      理论物理（高能理论、广义相对论、量子物理、统计力学）与经济/统计——并计算同样的 2026 上半年同比及各领域相对
+      自身历史的 z 分数。<span id="ctrlVerdictZh">—</span></span>
+    </p>
+    <div class="rchart" id="rcCtrl" style="height:460px"></div>
+    <div class="cap">Fig 11 · H1 2026 YoY growth: 13 non-math control categories vs the math median (dashed);
+      labels show each field’s z-score vs its own history. 图11 · 2026 上半年同比增长：13 个非数学对照分类
+      对比数学中位数（虚线）；标签为各领域相对自身历史的 z 分数。</div>
     <p>
       Does the surge track measured AI content? Only weakly: the rank correlation between a
       subfield’s 2026 surge and its 2026 AI-related share is
@@ -434,12 +450,16 @@
       2026</b>: a broad, accelerating, field-wide output surge that our subfield-level breakdown
       dates precisely and that is <i>not</i> concentrated in the historically AI-heavy subfields.
       If this is the LLM era arriving in mathematics, it is arriving <b>everywhere at once</b> —
-      as a production technology, not a topic — and 2026’s complete data will be the first real
-      test of whether it also renews the concentration dynamics.<br>
+      as a production technology, not a topic. The control group widens the lens: the same
+      anomaly appears across theoretical CS, physics and statistics while AI’s own categories
+      sit on trend — <b>math is one instance of a surge across theoretical science</b>. 2026’s
+      complete data will be the first real test of whether it also renews the concentration
+      dynamics.<br>
       §4–5 的结论——深度学习时代的集中化随后进入平台期——准确描述了 2017–2025。但该平台期<b>已于 2026 年 2 月结束</b>：
       一场广泛、加速、全领域的产出涌升，分领域拆解将其时间精确定位，且它<i>并不</i>集中于历史上 AI 浓度高的子领域。
-      如果这是大模型时代抵达数学，它是以<b>生产技术而非研究主题</b>的方式同时抵达所有领域——
-      2026 年完整数据将首次真正检验它是否也会重启集中化动态。
+      如果这是大模型时代抵达数学，它是以<b>生产技术而非研究主题</b>的方式同时抵达所有领域。
+      对照组进一步拓宽了视野：同样的异常出现在理论计算机、物理与统计之中，而 AI 自身的分类却处于趋势线上——
+      <b>数学只是理论科学整体涌升的一个实例</b>。2026 年完整数据将首次真正检验它是否也会重启集中化动态。
     </div>
 
     <h2>7 · Caveats <span class="zh">局限与注意</span></h2>
@@ -470,12 +490,14 @@
         且更多度量“作为主题的 AI”而非“作为工具的 AI”；共同列出弱于其基于引用的互动度量；
         元数据按论文首版日期计年，与列表页计数略有差异。</span></li>
       <li>§6 caveats: H1 2026 is compared like-for-like against H1 of prior years, but the year
-        is incomplete and late cross-lists still accrue; we cannot rule out arXiv-wide or
-        policy-driven causes (submission-rate changes, moderation shifts) without a non-math
-        comparison group; the AI-as-tool interpretation is a hypothesis, not a measured result.
-        <span class="zh">§6 局限：2026 上半年与往年上半年同口径比较，但年份不完整且交叉列出仍在累积；
-        没有非数学对照组，无法排除 arXiv 整体或政策性原因（投稿率变化、审核调整）；
-        “作为工具的 AI”解释是假说，而非已测量的结果。</span></li>
+        is incomplete and late cross-lists still accrue. The control group shows the surge is
+        arXiv-wide across theory fields, which rules out math-specific causes but not an
+        arXiv-wide policy change — though the AI-core categories sitting on/below trend argues
+        against a pure policy artifact. The AI-as-tool interpretation remains a hypothesis, not
+        a measured result.
+        <span class="zh">§6 局限：2026 上半年与往年上半年同口径比较，但年份不完整且交叉列出仍在累积。
+        对照组显示涌升在理论学科间普遍存在，排除了数学特有的原因，但不能完全排除 arXiv 整体政策变化——
+        不过 AI 核心分类处于或低于自身趋势，不支持纯政策性假象。“作为工具的 AI”解释仍是假说，而非已测量的结果。</span></li>
     </ul>
 
     <h2>8 · Citation <span class="zh">引用</span></h2>
@@ -1020,6 +1042,53 @@ function buildReport(){
               position:'insideEndTop'},
             data:[{xAxis:+baseMed.toFixed(1)}]}}]});
       reportCharts.push(c10);
+
+      // Fig 11: non-math controls vs math median
+      const CD = window.CONTROLS_DATA;
+      if(CD && CD.controls && CD.controls.length){
+        put('ctrlVerdict',
+          'The answer: it is arXiv-wide — every control is up 14–43% — but with telling '+
+          'structure. The anomaly relative to each field’s own history sits in the '+
+          'theory-heavy fields (CS logic z = 4.9, complexity z = 3.7, statistical mechanics '+
+          'z = 8.6, general relativity z = 6.8, quantum physics z = 4.4), while the AI-core '+
+          'categories are on or below their own trend (cs.LG z = 0.3, cs.CV z = −0.9, '+
+          'cs.CL z = −1.0). A surge specific to pen-and-paper fields — and absent precisely '+
+          'where AI is the topic — points away from an arXiv policy artifact and toward a '+
+          'production-side change common to theoretical research.');
+        put('ctrlVerdictZh',
+          '答案：这是 arXiv 整体现象——所有对照分类均增长 14–43%——但结构耐人寻味。相对各领域自身历史的异常'+
+          '集中在理论性强的领域（计算机逻辑 z=4.9、计算复杂性 z=3.7、统计力学 z=8.6、广义相对论 z=6.8、'+
+          '量子物理 z=4.4），而 AI 核心分类却处于或低于自身趋势（机器学习 z=0.3、计算机视觉 z=−0.9、'+
+          '计算语言 z=−1.0）。涌升恰恰出现在纸笔理论领域、又恰恰在以 AI 为主题的领域缺席——'+
+          '这指向理论研究共同的生产端变化，而非 arXiv 政策性假象。');
+        const mathMed=(arr=>{const s=arr.slice().sort((a,b)=>a-b);
+          return s[Math.floor(s.length/2)];})(MD.surge.map(s=>(s.r26-1)*100));
+        const GCOLOR={ai:'#ff5b5b',cs:'#5b9bff',phys:'#5bd6a8',econ:'#ffd45b'};
+        const GLABEL={ai:'AI-core CS',cs:'non-AI CS',phys:'physics',econ:'econ/stat'};
+        const ctl=[...CD.controls].sort((a,b)=>(a.r26-b.r26));
+        const c11=echarts.init(document.getElementById('rcCtrl'),'dark');
+        c11.setOption({backgroundColor:'transparent',
+          tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},
+            formatter:p=>{const d=ctl[p[0].dataIndex];
+              return d.code+' · '+d.en+' ('+GLABEL[d.group]+')<br>H1 2026 YoY: <b>'+
+                (d.r26>=1?'+':'')+((d.r26-1)*100).toFixed(1)+'%</b><br>own-history z: <b>'+
+                d.z+'</b><br>prior-year median: '+((d.base_med-1)*100).toFixed(1)+'%';}},rtt),
+          grid:{left:150,right:64,top:16,bottom:46},
+          xAxis:Object.assign({type:'value',name:'H1 2026 YoY %',nameLocation:'middle',
+            nameGap:28,nameTextStyle:{color:'#9aa3b2'}},raxis),
+          yAxis:Object.assign({type:'category',data:ctl.map(d=>d.code),
+            axisLabel:{fontSize:10}},raxis),
+          series:[{type:'bar',barWidth:'62%',
+            data:ctl.map(d=>({value:+((d.r26-1)*100).toFixed(1),
+              itemStyle:{color:GCOLOR[d.group]}})),
+            label:{show:true,position:'right',fontSize:9,color:'#9aa3b2',
+              formatter:p=>'z='+ctl[p.dataIndex].z},
+            markLine:{symbol:'none',lineStyle:{color:'#ff8a5b',type:'dashed'},
+              label:{formatter:'math median',color:'#ff8a5b',fontSize:10,rotate:0,
+                position:'insideEndTop'},
+              data:[{xAxis:+mathMed.toFixed(1)}]}}]});
+        reportCharts.push(c11);
+      }
     }
   }
 }
