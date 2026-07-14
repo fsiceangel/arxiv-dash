@@ -12,7 +12,7 @@ to update.log.
 """
 import csv, os, subprocess, sys
 from datetime import date
-import harvest, gen_data, analyze
+import harvest, gen_data, analyze, stats_analysis
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSV = os.path.join(HERE, "data.csv")
@@ -72,7 +72,8 @@ def main():
 
     gen_data.main()
     analyze.main()
-    for fn in ("data.js", "report_data.js"):
+    stats_analysis.main()
+    for fn in ("data.js", "report_data.js", "stats_data.js"):
         with open(os.path.join(HERE, fn), "rb") as a, \
              open(os.path.join(HERE, "public", fn), "wb") as b:
             b.write(a.read())
