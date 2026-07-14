@@ -142,6 +142,61 @@ def main():
     # dedup robustness: effective subfields on primary categories, annual
     dedup_E = {yy: round(2 ** shannon_bits(prim_n[yy]), 2) for yy in YEARS}
 
+    # per-subfield AI-share series (for the adoption heatmap)
+    ai_sub = {}
+    for c in CATS:
+        ai_sub[c] = {yy: (round(sub_ai[yy][c] / sub_n[yy][c], 4) if sub_n[yy][c] else None)
+                     for yy in YEARS}
+
+    # ---- 2026 surge per subfield (from data.csv listing counts) ----
+    # H1 (Jan-Jun) YoY log-ratio, z-scored against that subfield's own
+    # H1-YoY history (2018/17 .. 2025/24).
+    import csv as _csv
+    monthly = {}
+    with open(os.path.join(HERE, "data.csv"), newline="") as f:
+        for row in _csv.reader(f):
+            if len(row) >= 3 and row[1] != "month":
+                monthly.setdefault(row[0], {})[row[1]] = int(row[2])
+    def h1(c, y):
+        return sum(monthly[c].get(f"{y}-{m:02d}", 0) for m in range(1, 7))
+    surge = []
+    for c in CATS:
+        base = []
+        for y in range(2018, 2026):
+            a, b = h1(c, y - 1), h1(c, y)
+            if a and b:
+                base.append(math.log(b / a))
+        a25, a26 = h1(c, 2025), h1(c, 2026)
+        if not (a25 and a26 and len(base) >= 5):
+            continue
+        lr = math.log(a26 / a25)
+        mu = sum(base) / len(base)
+        sd = (sum((x - mu) ** 2 for x in base) / (len(base) - 1)) ** 0.5
+        surge.append({
+            "code": c, "cluster": c in DATA_CLUSTER,
+            "r26": round(a26 / a25, 3),
+            "base_med": round(math.exp(sorted(base)[len(base) // 2]), 3),
+            "z": round((lr - mu) / sd, 2) if sd else None,
+            "ai26": ai_sub[c]["2026"], "ai25": ai_sub[c]["2025"],
+        })
+    # correlation: surge log-ratio ~ AI share 2026
+    xs = np.array([math.log(s["r26"]) for s in surge])
+    ys = np.array([s["ai26"] if s["ai26"] is not None else 0.0 for s in surge])
+    def _pear(a, b):
+        a = (a - a.mean()) / a.std(); b = (b - b.mean()) / b.std()
+        return float((a * b).mean())
+    def _spear(a, b):
+        return _pear(np.argsort(np.argsort(a)).astype(float),
+                     np.argsort(np.argsort(b)).astype(float))
+    sr_p, sr_s = _pear(ys, xs), _spear(ys, xs)
+    rng2 = np.random.default_rng(7)
+    sp_p = float(np.mean([abs(_pear(rng2.permutation(ys), xs)) >= abs(sr_p)
+                          for _ in range(10000)]))
+    sp_s = float(np.mean([abs(_spear(rng2.permutation(ys), xs)) >= abs(sr_s)
+                          for _ in range(10000)]))
+    surge_corr = {"pearson": round(sr_p, 3), "p_pearson": round(sp_p, 4),
+                  "spearman": round(sr_s, 3), "p_spearman": round(sp_s, 4)}
+
     out = {
         "years": YEARS,
         "engagement": engagement,
@@ -151,6 +206,9 @@ def main():
                  "spearman": round(r_s, 3), "p_spearman": round(perm_s, 4)},
         "dedup_eff_subfields": dedup_E,
         "n_papers_kept": n_kept,
+        "ai_sub": ai_sub,
+        "surge": surge,
+        "surge_corr": surge_corr,
     }
     with open(os.path.join(HERE, "meta_data.js"), "w", encoding="utf-8") as f:
         f.write("window.META_DATA = ")
@@ -170,6 +228,10 @@ def main():
     print("dedup effective subfields:", {y: dedup_E[y] for y in ('2017','2021','2025')})
     top = sorted(points, key=lambda p: -p["d_ai"])[:5]
     print("top dAI:", [(p['code'], p['d_ai'], p['growth']) for p in top])
+    print(f"surge~ai26 corr: pearson={sr_p:.3f} (p={sp_p:.4f}) "
+          f"spearman={sr_s:.3f} (p={sp_s:.4f})")
+    tops = sorted(surge, key=lambda s: -s["r26"])[:6]
+    print("top 2026 surge:", [(s['code'], s['r26'], 'z='+str(s['z']), 'ai26='+str(s['ai26'])) for s in tops])
 
 if __name__ == "__main__":
     main()
