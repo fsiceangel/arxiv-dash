@@ -79,9 +79,9 @@
 <header>
   <h1>arXiv Mathematics Submissions Dashboard <span class="zh">arXiv 数学论文投稿仪表盘</span></h1>
   <p class="sub">
-    Monthly paper counts per Mathematics subject category, Jan 2017 – Jun 2026.
+    Monthly paper counts per Mathematics subject category, <span id="rangeEn">Jan 2017 – Jun 2026</span>.
     <span style="color:#7d8696">|</span>
-    2017年1月至2026年6月，按数学学科分类统计的每月论文数量。<br>
+    <span id="rangeZh">2017年1月至2026年6月</span>，按数学学科分类统计的每月论文数量。<br>
     Source / 数据来源: arXiv listing pages (<code>arxiv.org/list/&lt;cat&gt;/YYYY-MM</code>, "Total of N entries", includes cross-lists).
   </p>
   <div class="tabs">
@@ -272,8 +272,8 @@
     </div>
     <p class="zh-p" style="margin-top:14px">
       Analysis by this dashboard: 32 arXiv mathematics subfields, monthly submission counts
-      (incl. cross-lists) from arXiv listing pages, Jan 2017 – Jun 2026. Reproducible via
-      <code>analyze.py</code> in this repository.
+      (incl. cross-lists) from arXiv listing pages, <span id="rangeEn2">Jan 2017 – Jun 2026</span>.
+      Reproducible via <code>analyze.py</code> in this repository.
       <br>本仪表盘分析：32 个 arXiv 数学子领域 2017年1月–2026年6月每月投稿（含交叉列出），数据取自 arXiv 列表页，
       可经仓库内 <code>analyze.py</code> 复现。
     </p>
@@ -290,6 +290,18 @@ const palette = ['#5b9bff','#ff8a5b','#5bd6a8','#d98aff','#ffd45b','#ff6b9d','#7
 
 function color(i){return palette[i%palette.length];}
 function label(s){return s.code+' · '+s.en+' / '+s.zh;}
+
+/* header date range derived from data so it never goes stale */
+(function(){
+  const EN_M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtEn=ym=>EN_M[+ym.slice(5)-1]+' '+ym.slice(0,4);
+  const fmtZh=ym=>ym.slice(0,4)+'年'+(+ym.slice(5))+'月';
+  const a=MONTHS[0], b=MONTHS[MONTHS.length-1];
+  const en=fmtEn(a)+' – '+fmtEn(b), zh=fmtZh(a)+'至'+fmtZh(b);
+  for(const [id,txt] of [['rangeEn',en],['rangeEn2',en],['rangeZh',zh]]){
+    const el=document.getElementById(id); if(el) el.textContent=txt;
+  }
+})();
 
 /* trailing 12-month moving average; first 11 months are null (window not full) */
 function movingAvg(arr,w){
