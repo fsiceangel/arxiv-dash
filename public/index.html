@@ -8,6 +8,7 @@
 <script src="data.js"></script>
 <script src="report_data.js"></script>
 <script src="stats_data.js"></script>
+<script src="meta_data.js"></script>
 <style>
   :root{
     --bg:#0f1117; --panel:#171a23; --panel2:#1d212c; --border:#2a2f3d;
@@ -324,7 +325,71 @@
       它是把该领域维持在疫情期形成的集中度上，而非使其加深——这一对照值得在 2026 年完整数据出炉后继续观察。
     </div>
 
-    <h2>5 · Caveats <span class="zh">局限与注意</span></h2>
+    <h2>5 · Mechanism &amp; engagement — paper-level evidence
+        <span class="zh">机制与互动：论文层面的证据</span></h2>
+    <p>
+      Listing counts can’t see inside papers. Using the Kaggle arXiv metadata snapshot
+      (<span id="mN">—</span> unique papers listing at least one of the 32 subfields,
+      2017–2026), we add two paper-level tests: a conservative keyword classifier for
+      AI/ML-related content on titles+abstracts, and the co-listing network between subfields —
+      the closest available analog of Hao et al.’s inter-paper engagement.
+      <span class="zh">列表计数无法看到论文内部。基于 Kaggle 的 arXiv 元数据快照（2017–2026 年间列有 32 个子领域之一的唯一论文），
+      我们加入两项论文层面的检验：对标题+摘要的保守 AI/ML 关键词分类器，以及子领域间的共同列出网络——
+      这是 Hao 等人论文间互动指标最接近的可得类比。</span>
+    </p>
+    <p>
+      <b>The mechanism is real — and it is the deep-learning wave, not the LLM wave.</b>
+      AI-related content in the data-rich cluster more than quadrupled, from
+      <span id="mAi17">—</span> of papers in 2017 to <span id="mAi25">—</span> in 2025, while
+      the other 27 subfields stayed below <span id="mRest25">—</span>. Across all 32 subfields,
+      2017→2025 growth correlates significantly with the rise in AI share
+      (Spearman ρ = <span id="mCorrS">—</span>, permutation p = <span id="mCorrSP">—</span>;
+      Pearson r = <span id="mCorrP">—</span>, p = <span id="mCorrPP">—</span>) — the subfields
+      that grew are the subfields whose papers became AI papers. But the steepest climb in AI
+      share was <b>2017–2020</b>, precisely matching §4’s timing: mathematics’ concentration
+      tracks the <i>deep-learning</i> era, which predates ChatGPT.
+      <span class="zh"><b>机制是真实的——但它是深度学习浪潮，而非大模型浪潮。</b>数据密集集群中 AI 相关论文占比翻了两番以上，
+      其余 27 个子领域始终很低。在全部 32 个子领域中，2017→2025 增长与 AI 占比升幅显著相关——增长的子领域正是论文
+      变成 AI 论文的子领域。但 AI 占比攀升最陡的阶段是 <b>2017–2020</b>，与 §4 的时间证据完全吻合：
+      数学的集中化对应<i>深度学习</i>时代，早于 ChatGPT。</span>
+    </p>
+    <div class="rchart" id="rcAiShare"></div>
+    <div class="cap">Fig 6 · Share of AI/ML-related papers: data-rich cluster vs the other 27 subfields (2026 partial).
+      图6 · AI/ML 相关论文占比：数据密集集群对比其余 27 个子领域（2026 年不完整）。</div>
+    <div class="rchart" id="rcScatter" style="height:440px"></div>
+    <div class="cap">Fig 7 · Subfield growth (2017→2025, metadata-based) vs change in AI share; orange = data-rich cluster.
+      图7 · 子领域增长（2017→2025，基于元数据）对比 AI 占比变化；橙色为数据密集集群。</div>
+    <p>
+      <b>Engagement moves opposite to the natural sciences.</b> Where Hao et al. find AI adoption
+      reducing engagement between papers by 22%, math’s subfields became <i>more</i> interconnected:
+      the average paper listed <span id="mMean17">—</span> of our subfields in 2017 and
+      <span id="mMean25">—</span> in 2025, and the share of papers spanning ≥2 subfields rose from
+      <span id="mMulti17">—</span> to <span id="mMulti25">—</span> — with, once again, the entire
+      rise occurring by 2020–21 and a plateau since. No “lonely crowds” signature here. Robustness:
+      counting each paper once by primary category, the effective number of subfields still falls
+      (<span id="mDedup17">—</span> → <span id="mDedup25">—</span>), so §3–4’s concentration is not
+      a cross-listing artifact.
+      <span class="zh"><b>互动趋势与自然科学相反。</b>Hao 等人发现 AI 采用使论文间互动减少 22%，而数学子领域间反而<i>更加</i>互联：
+      每篇论文平均列出的子领域数与跨 ≥2 个子领域的论文占比均在上升——且升幅同样在 2020–21 年前完成、其后趋平。
+      这里没有“孤独人群”的特征。稳健性：按主分类为每篇论文只计一次，有效子领域数仍在下降，
+      说明 §3–4 的集中化并非交叉列出的统计假象。</span>
+    </p>
+    <div class="rchart" id="rcEngage"></div>
+    <div class="cap">Fig 8 · Co-listing engagement between subfields: share of papers spanning ≥2 subfields (left)
+      and mean subfields per paper (right). 图8 · 子领域间共同列出：跨 ≥2 子领域论文占比（左轴）与每篇论文平均子领域数（右轴）。</div>
+    <div class="callout">
+      <b>Refined verdict / 综合结论.</b> Putting §4 and §5 together: mathematics absorbed the
+      <b>deep-learning wave (2017–2021)</b> — its computational subfields grew as their papers
+      became AI papers, concentrating the field and shifting its center of mass — and then
+      stabilized. The LLM era has, so far, neither deepened the concentration nor produced the
+      engagement collapse seen in the natural sciences. Math looks like an <b>early adopter that
+      plateaued</b>, not a field currently being narrowed by generative AI. <br>
+      综合 §4 与 §5：数学吸收了<b>深度学习浪潮（2017–2021）</b>——计算型子领域因其论文变为 AI 论文而增长，
+      使整个领域集中并移动了重心——随后趋于稳定。到目前为止，大模型时代既没有加深这种集中，
+      也没有出现自然科学中的互动崩塌。数学更像一个<b>已进入平台期的早期采用者</b>，而非正被生成式 AI 收窄的领域。
+    </div>
+
+    <h2>6 · Caveats <span class="zh">局限与注意</span></h2>
     <ul>
       <li>This is a <b>structural analog, not a replication</b>: we use submission-volume
         distribution, not citations, authorship, or AI-augmentation detection. We show
@@ -343,9 +408,17 @@
         break” bounds the evidence, it does not prove absence.
         <span class="zh">统计局限：双重差分仅 5 个处理组类别；月度熵序列存在自相关（以块自助法处理，块长 12）；
         “无显著断点”是证据的界定，并非不存在的证明。</span></li>
+      <li>§5 caveats: the AI classifier is a conservative keyword list, not Hao et al.’s
+        fine-tuned language model (F1 = 0.875) — it undercounts subtle AI usage and measures
+        AI as <i>topic</i> more than AI as <i>tool</i>; co-listing is a weaker engagement notion
+        than their citation-based measure; metadata uses each paper’s first-version date, so
+        yearly counts differ slightly from the listing-page counts.
+        <span class="zh">§5 局限：AI 分类器为保守的关键词列表而非其微调语言模型（F1 = 0.875），会低估隐性 AI 使用，
+        且更多度量“作为主题的 AI”而非“作为工具的 AI”；共同列出弱于其基于引用的互动度量；
+        元数据按论文首版日期计年，与列表页计数略有差异。</span></li>
     </ul>
 
-    <h2>6 · Citation <span class="zh">引用</span></h2>
+    <h2>7 · Citation <span class="zh">引用</span></h2>
     <div class="cite">
       Hao, Q., Xu, F., Li, Y. &amp; Evans, J. Artificial intelligence tools expand scientists’
       impact but contract science’s focus. <i>Nature</i> (2026).
@@ -737,6 +810,92 @@ function buildReport(){
           lineStyle:{color:'#2a2f3d',width:1}}
       ]});
     reportCharts.push(c5);
+  }
+
+  // ---- §5: paper-level mechanism & engagement ----
+  const MD = window.META_DATA;
+  if(MD){
+    const put=(id,txt)=>{const el=document.getElementById(id);if(el)el.textContent=txt;};
+    const pc=v=>(v*100).toFixed(1)+'%';
+    const yrsM = MD.years;
+    put('mN', MD.n_papers_kept.toLocaleString());
+    put('mAi17', pc(MD.ai_series.cluster['2017']));
+    put('mAi25', pc(MD.ai_series.cluster['2025']));
+    put('mRest25', pc(MD.ai_series.rest['2025']));
+    put('mCorrS', MD.corr.spearman); put('mCorrSP', MD.corr.p_spearman);
+    put('mCorrP', MD.corr.pearson); put('mCorrPP', MD.corr.p_pearson);
+    put('mMean17', MD.engagement['2017'].mean_subfields.toFixed(2));
+    put('mMean25', MD.engagement['2025'].mean_subfields.toFixed(2));
+    put('mMulti17', pc(MD.engagement['2017'].multi_share));
+    put('mMulti25', pc(MD.engagement['2025'].multi_share));
+    put('mDedup17', MD.dedup_eff_subfields['2017']);
+    put('mDedup25', MD.dedup_eff_subfields['2025']);
+
+    // Fig 6: AI share, cluster vs rest
+    const c6 = echarts.init(document.getElementById('rcAiShare'),'dark');
+    c6.setOption({backgroundColor:'transparent',
+      tooltip:Object.assign({trigger:'axis',valueFormatter:v=>v+'%'},rtt),
+      legend:{top:0,textStyle:{color:'#9aa3b2'},
+        data:['Data-rich cluster / 数据密集集群','Other 27 subfields / 其余27个子领域']},
+      grid:{left:56,right:26,top:40,bottom:40},
+      xAxis:Object.assign({type:'category',data:yrsM,boundaryGap:false},raxis),
+      yAxis:Object.assign({type:'value',name:'AI-related share %',
+        nameTextStyle:{color:'#9aa3b2'}},raxis),
+      series:[
+        {name:'Data-rich cluster / 数据密集集群',type:'line',
+          data:yrsM.map(y=>+(MD.ai_series.cluster[y]*100).toFixed(2)),
+          smooth:true,lineStyle:{width:3,color:'#ff8a5b'},itemStyle:{color:'#ff8a5b'},
+          symbolSize:7,areaStyle:{color:'#ff8a5b',opacity:.10},
+          markLine:{symbol:'none',lineStyle:{color:'#9aa3b2',type:'dashed'},
+            label:{formatter:'ChatGPT',color:'#9aa3b2',rotate:0,position:'insideEndTop',fontSize:11},
+            data:[{xAxis:'2022'}]}},
+        {name:'Other 27 subfields / 其余27个子领域',type:'line',
+          data:yrsM.map(y=>+(MD.ai_series.rest[y]*100).toFixed(2)),
+          smooth:true,lineStyle:{width:3,color:'#5b9bff'},itemStyle:{color:'#5b9bff'},symbolSize:7}
+      ]});
+    reportCharts.push(c6);
+
+    // Fig 7: scatter growth vs delta AI share
+    const c7 = echarts.init(document.getElementById('rcScatter'),'dark');
+    c7.setOption({backgroundColor:'transparent',
+      tooltip:Object.assign({trigger:'item',
+        formatter:p=>{const d=MD.points[p.dataIndex];
+          return d.code+'<br>growth ×'+d.growth+'<br>AI share '+pc(d.ai17)+' → '+pc(d.ai25)+
+            ' (Δ '+(d.d_ai>=0?'+':'')+(d.d_ai*100).toFixed(1)+'pp)';}},rtt),
+      grid:{left:56,right:30,top:24,bottom:44},
+      xAxis:Object.assign({type:'value',name:'Δ AI share 2017→2025 (pp)',nameLocation:'middle',
+        nameGap:28,nameTextStyle:{color:'#9aa3b2'},
+        axisLabel:{formatter:v=>(v*100).toFixed(0)}},raxis),
+      yAxis:Object.assign({type:'value',name:'growth ×',nameTextStyle:{color:'#9aa3b2'},
+        min:0.8},raxis),
+      series:[{type:'scatter',symbolSize:13,
+        data:MD.points.map(d=>({value:[d.d_ai,d.growth],
+          itemStyle:{color:d.cluster?'#ff8a5b':'#5b9bff'},
+          label:{show:true,position:'top',fontSize:9,color:'#9aa3b2',
+            formatter:d.code.replace('math.','').replace('cs.','')}}))}]});
+    reportCharts.push(c7);
+
+    // Fig 8: engagement (multi share % + mean subfields per paper)
+    const c8 = echarts.init(document.getElementById('rcEngage'),'dark');
+    c8.setOption({backgroundColor:'transparent',
+      tooltip:Object.assign({trigger:'axis'},rtt),
+      legend:{top:0,textStyle:{color:'#9aa3b2'},
+        data:['≥2 subfields share % / 跨2+子领域占比','Mean subfields per paper / 每篇平均子领域数']},
+      grid:{left:56,right:60,top:40,bottom:40},
+      xAxis:Object.assign({type:'category',data:yrsM,boundaryGap:false},raxis),
+      yAxis:[Object.assign({type:'value',name:'≥2 share %',min:22,max:30,
+          nameTextStyle:{color:'#5bd6a8'}},raxis),
+        Object.assign({type:'value',name:'mean subfields',min:1.28,max:1.40,position:'right',
+          nameTextStyle:{color:'#d98aff'}},raxis)],
+      series:[
+        {name:'≥2 subfields share % / 跨2+子领域占比',type:'line',
+          data:yrsM.map(y=>+(MD.engagement[y].multi_share*100).toFixed(2)),
+          smooth:true,lineStyle:{width:3,color:'#5bd6a8'},itemStyle:{color:'#5bd6a8'},symbolSize:7},
+        {name:'Mean subfields per paper / 每篇平均子领域数',type:'line',yAxisIndex:1,
+          data:yrsM.map(y=>MD.engagement[y].mean_subfields),
+          smooth:true,lineStyle:{width:3,color:'#d98aff'},itemStyle:{color:'#d98aff'},symbolSize:7}
+      ]});
+    reportCharts.push(c8);
   }
 }
 

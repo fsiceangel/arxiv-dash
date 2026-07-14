@@ -6,3 +6,6 @@ __pycache__/
 # run logs
 harvest.log
 update.log
+
+# Kaggle metadata snapshot (5+ GB, not committed)
+meta/
