@@ -76,6 +76,17 @@
   .report .cite{background:var(--panel2);border:1px solid var(--border);border-radius:8px;
     padding:14px 16px;font-size:13px;color:#cdd6f4;margin:10px 0}
   .report a{color:var(--accent);text-decoration:none} .report a:hover{text-decoration:underline}
+  .report .abstract{background:var(--panel2);border:1px solid var(--border);border-radius:10px;
+    padding:16px 20px;margin:18px 0;font-size:13.5px;line-height:1.75}
+  .report .abstract .h{font-weight:700;font-size:13px;letter-spacing:.06em;color:var(--accent);
+    text-transform:uppercase;margin-bottom:6px}
+  .report .vline{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+  .report h3.sub{font-size:16.5px;margin:26px 0 4px;color:#e6e8ee;font-weight:600}
+  .report .refs{font-size:12.5px;color:#cdd6f4;line-height:1.8}
+  .report .refs li{margin:6px 0}
+  .report .mono{font-family:Consolas,monospace;font-size:12px;background:#000;
+    padding:8px 12px;border-radius:6px;display:block;margin:8px 0;color:#cdd6f4;
+    white-space:pre-wrap;line-height:1.6}
 </style>
 </head>
 <body>
@@ -151,90 +162,236 @@
 <!-- ============ REPORT VIEW ============ -->
 <div class="wrap view" id="view-report">
   <div class="report">
-    <h2>A Comparative Study of “Focus Contraction” in Mathematics
-        <span class="zh">数学领域“聚焦收缩”的对比研究</span></h2>
-    <p class="lead">
-      Does mathematics show the same narrowing of collective focus that
-      <a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao, Xu, Li &amp; Evans (Nature, 2026)</a>
-      documented across the natural sciences in the age of AI? Using the monthly submission
-      record of 32 arXiv mathematics subfields (2017–2026), we test the structural analog of
-      their thesis. We find a <b>real concentration</b> of mathematical activity toward
-      computational, data-rich subfields — but formal tests place its timing in the
-      <b>pandemic era (2019–2021), not the LLM era</b>: the trend plateaued before ChatGPT and
-      shows no significant post-2022 acceleration. Mathematics, so far, is a <b>contrast</b> to
-      the natural-science pattern rather than a confirmation of it.
+    <h2 style="border-left:none;padding-left:0;font-size:23px">
+      Focus Contraction in Mathematics? Timing, Mechanism, and the 2026 Inflection
+      <span class="zh" style="display:block;margin-left:0;margin-top:4px">数学的聚焦收缩？——时间、机制与 2026 年拐点</span></h2>
+    <p class="vline">
+      A comparative test of Hao, Xu, Li &amp; Evans (<i>Nature</i>, 2026) on 32 arXiv mathematics
+      subfields · Working paper, July 2026 · Data through June 2026 ·
+      Code &amp; data: <a href="https://github.com/fsiceangel/arxiv-dash" target="_blank">github.com/fsiceangel/arxiv-dash</a>
+    </p>
+    <div class="abstract">
+      <div class="h">Abstract</div>
+      Hao, Xu, Li &amp; Evans (<i>Nature</i>, 2026) report that AI adoption expands individual
+      scientists’ impact while contracting science’s collective focus. We test whether
+      mathematics exhibits the same contraction using three sources: monthly submission counts
+      for 32 arXiv mathematics subfields (114 months, January 2017 – June 2026), paper-level
+      metadata for 448,970 unique papers, and a 13-category non-mathematics control group.
+      Concentration is real: the effective number of active subfields fell from 24.2 to 23.5
+      (multinomial-bootstrap 95% CIs disjoint), with growth concentrated in data-rich subfields
+      (optimization +128%, numerical analysis +97%, statistics theory +95%, 2017→2025). Its
+      timing, however, implicates the deep-learning era rather than the LLM era: a
+      structural-break search selects October 2020 — itself insignificant (sup-F, block-bootstrap
+      p = 0.43); the F-statistic at ChatGPT’s release is 1.68 against 5.41 at the COVID onset —
+      concentration plateaued by 2021, and post-2022 event-study coefficients for the data-rich
+      cluster are statistically indistinguishable from zero. Paper-level evidence supplies the
+      mechanism: subfield growth correlates with rising AI-related content (Spearman ρ = 0.425,
+      permutation p = 0.016), which quadrupled in the data-rich cluster (2.9% → 13.5%) with its
+      steepest rise in 2017–2020, while inter-subfield co-listing <i>rose</i> — the opposite of
+      the engagement decline reported for the natural sciences. Finally, we document a sharp,
+      field-wide output surge beginning February 2026 (median +22.5% year-over-year against a
+      +1.8% baseline; 30 of 32 subfields above +10%), led by combinatorics (z = 5.8) and logic
+      rather than AI-adjacent subfields, and present across theoretical physics and non-AI
+      computer science while absent in AI-core categories — consistent with generative AI
+      arriving in theoretical science as a production technology rather than a research topic.
+      Mathematics thus reads, so far, as a contrast to the natural-science pattern rather than a
+      confirmation of it.
+    </div>
+    <div class="abstract">
+      <div class="h">摘要</div>
+      Hao、Xu、Li 与 Evans（《自然》2026）报告：AI 的采用扩大了科学家个人的影响力，却收缩了科学整体的研究视野。
+      我们基于三类数据检验数学是否呈现同样的收缩：32 个 arXiv 数学子领域的每月投稿数（114 个月，2017 年 1 月–2026 年 6 月）、
+      448,970 篇唯一论文的元数据，以及 13 个非数学分类的对照组。集中化是真实的：活跃子领域的有效数目从 24.2 降至 23.5
+      （多项自助 95% 置信区间不相交），增长集中于数据密集子领域（最优化 +128%、数值分析 +97%、统计理论 +95%，2017→2025）。
+      但其时间点指向深度学习时代而非大模型时代：结构性断点搜索选中 2020 年 10 月——其本身并不显著（sup-F，块自助 p = 0.43）；
+      ChatGPT 发布时点的 F 统计量为 1.68，而疫情起点为 5.41——集中化在 2021 年前已趋平稳，数据密集集群 2022 年后的
+      事件研究系数与零无法区分。论文层面的证据提供了机制：子领域增长与 AI 相关内容的上升显著相关（Spearman ρ = 0.425，
+      置换检验 p = 0.016），数据密集集群的 AI 相关占比翻了两番（2.9% → 13.5%），且攀升最陡的阶段为 2017–2020；
+      与此同时子领域间共同列出<i>上升</i>——与自然科学报告的互动下降相反。最后，我们记录了 2026 年 2 月开始的一场急剧、
+      全领域的产出涌升（同比中位数 +22.5%，基线 +1.8%；32 个子领域中 30 个超过 +10%），由组合数学（z = 5.8）与数理逻辑
+      而非 AI 相邻子领域领跑，并同样出现在理论物理与非 AI 计算机科学中、却在 AI 核心分类中缺席——
+      与生成式 AI 以生产技术而非研究主题的方式抵达理论科学相一致。就目前而言，数学是自然科学模式的对照，而非印证。
+    </div>
+
+    <h2>1 · Introduction <span class="zh">引言</span></h2>
+    <p>
+      Hao, Xu, Li &amp; Evans [1] analyze <b>41.3 million</b> natural-science papers, flagging
+      AI-augmented research with a fine-tuned language model (F1 = 0.875 against expert labels).
+      They document a paradox: AI <i>expands</i> individual impact — AI-augmented authors publish
+      3.02× more papers, earn 4.84× more citations, and lead projects 1.37 years earlier — yet
+      AI adoption <i>contracts</i> collective science, shrinking the volume of topics studied by
+      4.63% and reducing inter-paper engagement by 22%. AI-augmented work migrates toward “areas
+      richest in data,” forming “lonely crowds” that automate established fields rather than
+      open new ones. Their corpus covers biology, medicine, chemistry, physics, materials
+      science and geology; <b>mathematics is not among the six disciplines studied</b>, and it
+      differs from all of them in the respect their mechanism turns on: most of mathematics has
+      no data-rich empirical frontier for AI to exploit.
     </p>
     <p class="zh-p">
-      在人工智能时代，<a href="https://www.nature.com/articles/s41586-025-09922-y" target="_blank">Hao、Xu、Li 与 Evans（《自然》2026）</a>
-      记录了自然科学整体研究视野的收缩。数学是否也呈现同样的趋势？我们用 2017–2026 年 32 个 arXiv 数学子领域的每月投稿数据，
-      检验其论点的结构性类比。我们发现数学活动确实<b>真实地</b>向计算型、数据密集型子领域集中——但正式统计检验表明其时间点在
-      <b>疫情时期（2019–2021）而非大模型时期</b>：该趋势在 ChatGPT 出现之前已趋于平稳，2022 年后没有显著加速。
-      就目前而言，数学与自然科学的模式形成<b>对照</b>，而非印证。
+      Hao、Xu、Li 与 Evans [1] 分析了 <b>4130 万</b>篇自然科学论文，用微调语言模型（对专家标注 F1 = 0.875）识别 AI 辅助研究，
+      并记录了一个悖论：AI <i>扩大</i>了个人影响力——AI 辅助作者发表论文数为 3.02 倍、被引 4.84 倍、提前 1.37 年主持项目——
+      却<i>收缩</i>了科学整体：研究主题总量减少 4.63%、论文间互动减少 22%。AI 辅助研究涌向“数据最丰富的领域”，
+      形成只自动化既有领域、不开拓新方向的“孤独人群”。其语料覆盖生物、医学、化学、物理、材料与地质六个学科；
+      <b>数学不在其中</b>——而数学恰恰在其机制的关键之处与这六者不同：数学的大部分领域并没有可供 AI 开采的数据密集型经验前沿。
+    </p>
+    <p>
+      This paper asks whether mathematics nonetheless exhibits the same collective contraction,
+      and makes four contributions: (i) a descriptive account of concentration across the 32
+      arXiv mathematics subfields, 2017–2026 (§4.1); (ii) formal timing evidence — a
+      structural-break search with bootstrap inference, bootstrap confidence intervals on annual
+      concentration, and a two-way fixed-effects event study — showing the contraction is
+      pandemic-era, not LLM-era (§4.2); (iii) paper-level mechanism and engagement evidence from
+      448,970 papers (§4.3); and (iv) documentation of a field-wide output surge beginning
+      February 2026, benchmarked against a 13-category non-mathematics control group (§4.4).
+      <span class="zh">本文检验数学是否仍呈现同样的整体收缩，并做出四点贡献：(i) 2017–2026 年 32 个 arXiv 数学子领域
+      集中化的描述性刻画（§4.1）；(ii) 正式的时间证据——带自助推断的结构性断点搜索、年度集中度的自助置信区间、
+      双向固定效应事件研究——表明收缩发生于疫情期而非大模型期（§4.2）；(iii) 来自 448,970 篇论文的
+      机制与互动证据（§4.3）；(iv) 记录 2026 年 2 月开始的全领域产出涌升，并以 13 个非数学分类对照组作基准（§4.4）。</span>
     </p>
 
-    <h2>1 · The result we build on <span class="zh">所引用的研究结论</span></h2>
+    <h2>2 · Data <span class="zh">数据</span></h2>
     <p>
-      Hao et al. analyzed <b>41.3 million</b> natural-science papers and used a language model
-      (F1 = 0.875) to flag AI-augmented research. Their paradox: AI <i>expands</i> individual
-      impact — such authors publish <b>3.02×</b> more papers, earn <b>4.84×</b> more citations,
-      and lead projects <b>1.37 years</b> earlier — yet AI adoption <i>contracts</i> collective
-      science, shrinking the volume of topics studied by <b>4.63%</b> and reducing inter-paper
-      engagement by <b>22%</b>. AI-augmented work moves toward “areas richest in data,” forming
-      “lonely crowds” that automate established fields rather than open new ones.
+      <b>Monthly submission counts.</b> For each of the 32 mathematics subject categories
+      (the <code>math.*</code> set plus <code>cs.IT</code> and <code>math-ph</code>, following
+      arXiv’s Mathematics listing) we record the “Total of N entries” figure from arXiv’s public
+      monthly listing pages (<code>arxiv.org/list/&lt;cat&gt;/YYYY-MM</code>), January 2017 –
+      June 2026: 32 × 114 = 3,648 category-months with no missing cells. Counts include
+      cross-listed papers, so a paper contributes to every category it lists and categories must
+      not be summed; all share-based measures are unaffected by this convention, and §4.3
+      reports a robustness check counting each paper once.
+      <span class="zh"><b>每月投稿数。</b>对 32 个数学学科分类，我们记录 arXiv 公开每月列表页的“Total of N entries”，
+      2017 年 1 月–2026 年 6 月，共 3,648 个分类-月，无缺失。计数含交叉列出，论文会计入其列出的每个分类，
+      故各分类不可相加；基于份额的度量不受影响，§4.3 报告了每篇论文只计一次的稳健性检验。</span>
     </p>
-    <p class="zh-p">
-      该研究分析了 <b>4130 万</b>篇自然科学论文，用语言模型（F1 = 0.875）识别 AI 辅助研究。其悖论在于：AI <i>扩大</i>了个人影响力
-      ——使用者发表论文数为 <b>3.02 倍</b>、被引为 <b>4.84 倍</b>、提前 <b>1.37 年</b>成为项目负责人——却<i>收缩</i>了科学整体，
-      使研究主题总量减少 <b>4.63%</b>、论文间互动减少 <b>22%</b>。AI 辅助研究趋向“数据最丰富的领域”，形成“孤独的人群”，
-      更多是自动化既有领域，而非开拓新方向。
+    <p>
+      <b>Paper-level metadata.</b> From the arXiv metadata snapshot [3] (retrieved 13 July 2026)
+      we keep every paper listing at least one of the 32 subfields with a first-version date in
+      2017–2026: <b>448,970 unique papers</b> with full category lists, primary category, title
+      and abstract. Years are assigned by first-version date, so paper-level annual counts
+      differ slightly from listing-page counts.
+      <span class="zh"><b>论文级元数据。</b>取自 arXiv 元数据快照 [3]（2026 年 7 月 13 日获取），保留首版日期在 2017–2026 年、
+      列有 32 个子领域之一的全部论文：<b>448,970 篇唯一论文</b>，含完整分类、主分类、标题与摘要。年份按首版日期划分，
+      故与列表页计数略有差异。</span>
+    </p>
+    <p>
+      <b>Control group.</b> Thirteen non-mathematics categories harvested identically
+      (2019–2026): AI-core computer science (<code>cs.LG</code>, <code>cs.CL</code>,
+      <code>cs.CV</code>); non-AI computer science (<code>cs.CC</code>, <code>cs.DS</code>,
+      <code>cs.PL</code>, <code>cs.LO</code>); theoretical physics (<code>hep-th</code>,
+      <code>gr-qc</code>, <code>quant-ph</code>, <code>cond-mat.stat-mech</code>); and
+      economics/statistics (<code>econ.TH</code>, <code>stat.ME</code>).
+      <span class="zh"><b>对照组。</b>以同样方法采集的 13 个非数学分类（2019–2026）：AI 核心计算机科学、非 AI 计算机科学、
+      理论物理与经济/统计。</span>
     </p>
 
-    <h2>2 · Our question &amp; method <span class="zh">研究问题与方法</span></h2>
+    <h2>3 · Methods <span class="zh">方法</span></h2>
     <p>
-      We cannot observe citations, authorship, or AI use from listing counts, so we test the
-      <b>structural signature</b> of focus contraction: if mathematics were also narrowing, its
-      <b>output should concentrate</b> across subfields over time, and growth should skew toward
-      its most computational / data-rich areas. From the per-month counts we compute, for each
-      year 2017–2025 (2026 partial), the distribution of submissions over the 32 subfields and
-      four concentration measures:
+      <b>Concentration measures.</b> Let p<sub>i,t</sub> be subfield i’s share of all listings in
+      period t. We report Shannon entropy H<sub>t</sub> = −Σ<sub>i</sub> p<sub>i,t</sub> log₂
+      p<sub>i,t</sub> and, as our headline measure, the <b>effective number of subfields</b>
+      E<sub>t</sub> = 2<sup>H<sub>t</sub></sup> — the number of equally active subfields the
+      field behaves like; falling E<sub>t</sub> means concentration. We also report Pielou
+      evenness J<sub>t</sub> = H<sub>t</sub>/log₂ 32 [8], the Herfindahl–Hirschman index, the
+      top-5 share, and the combined share of a pre-registered <b>data-rich cluster</b>
+      (<code>cs.IT</code>, <code>math.OC</code>, <code>math.NA</code>, <code>math.ST</code>,
+      <code>math.PR</code>) — the mathematics counterpart of “areas richest in data” [1].
+      <span class="zh"><b>集中度度量。</b>设 p<sub>i,t</sub> 为子领域 i 在期 t 的份额。我们报告香农熵 H<sub>t</sub>
+      及主指标<b>有效子领域数</b> E<sub>t</sub> = 2^H<sub>t</sub>（下降即集中化），并报告 Pielou 均匀度 [8]、HHI、
+      前五份额，以及预先设定的<b>数据密集集群</b>（信息论、最优化、数值分析、统计理论、概率）合计份额——
+      即文献 [1] 中“数据最丰富领域”在数学中的对应。</span>
     </p>
-    <ul>
-      <li><b>Effective number of subfields</b> = 2<sup>H</sup> (H = Shannon entropy, bits) — the
-        count of <i>equally-active</i> subfields the field behaves like. Falling = concentrating.
-        <span class="zh">有效子领域数 = 2^H（H 为香农熵）；下降表示集中。</span></li>
-      <li><b>Pielou evenness</b> = H / log₂(32) — how evenly papers spread across subfields.
-        <span class="zh">Pielou 均匀度。</span></li>
-      <li><b>Top-5 share</b> &amp; <b>HHI</b> (Herfindahl index) — weight of the largest subfields.
-        <span class="zh">前五份额与 HHI 集中度指数。</span></li>
-      <li><b>Data-cluster share</b> — combined share of the ML-adjacent / data-rich cluster
-        (<code>cs.IT</code>, <code>math.OC</code>, <code>math.NA</code>, <code>math.ST</code>,
-        <code>math.PR</code>), the math counterpart of “areas richest in data.”
-        <span class="zh">数据密集子领域（信息论、最优化、数值分析、统计、概率）的合计份额。</span></li>
-    </ul>
     <p>
-      Description alone can’t say <i>when</i> the shift happened or whether it is noise, so §4
-      adds formal tests on the <b>monthly</b> series (114 points): a structural-break search that
-      lets the data choose the break date (sup-F with block-bootstrap p-values), multinomial
-      bootstrap confidence intervals on the annual concentration level, and a two-way
-      fixed-effects difference-in-differences with a yearly event study for the data-rich
-      cluster (cluster-robust SEs).
-      <span class="zh">仅有描述无法说明变化<b>何时</b>发生、是否只是噪声，故 §4 在<b>月度</b>序列（114 个点）上加入正式检验：
-      由数据自行选择断点日期的结构性断点搜索（sup-F，块自助法 p 值）、年度集中度的多项自助置信区间，
-      以及针对数据密集集群的双向固定效应双重差分与逐年事件研究（按类别聚类稳健标准误）。</span>
+      <b>Structural-break search.</b> On the monthly series E<sub>t</sub> (114 points) we fit
+      E<sub>t</sub> = α + βt + 𝟙{t ≥ τ}(γ + δt) + ε<sub>t</sub> and compute the Chow-type
+      F-statistic for each candidate τ in the central 70% of the sample, taking the supremum
+      (Quandt–Andrews [4,5]). Because ε<sub>t</sub> is autocorrelated, the p-value for sup-F is
+      obtained by a moving-block bootstrap (block length 12, B = 500, seed 42 [6]) under the
+      single-trend null. We additionally report F(τ) at two hypothesized dates: the COVID onset
+      (March 2020) and ChatGPT’s release (December 2022).
+      <span class="zh"><b>结构性断点搜索。</b>在月度序列 E<sub>t</sub> 上拟合带断点的分段线性趋势，对样本中部 70% 的每个候选
+      断点计算 Chow 型 F 统计量并取上确界（Quandt–Andrews [4,5]）。因残差自相关，sup-F 的 p 值由无断点原假设下的
+      移动块自助法获得（块长 12，B = 500，种子 42 [6]）。另报告两个先验时点的 F 值：疫情起点（2020-03）与
+      ChatGPT 发布（2022-12）。</span>
+    </p>
+    <p>
+      <b>Bootstrap confidence intervals.</b> For each year we resample the 32-category count
+      vector from a multinomial with that year’s total and shares (B = 2,000, seed 42) and
+      report percentile 95% intervals for E.
+      <span class="zh"><b>自助置信区间。</b>逐年按当年总数与份额做多项重抽样（B = 2,000，种子 42），
+      报告 E 的百分位 95% 区间。</span>
+    </p>
+    <p>
+      <b>Difference-in-differences and event study.</b> On log monthly counts (log max(n,1)) we
+      estimate log n<sub>c,t</sub> = α<sub>c</sub> + λ<sub>t</sub> + β·(D<sub>c</sub>×Post<sub>t</sub>)
+      + θ·(D<sub>c</sub>×Covid<sub>t</sub>) + ε<sub>c,t</sub>, where D<sub>c</sub> marks the
+      5-category data-rich cluster, Post<sub>t</sub> = 𝟙{t ≥ Dec 2022}, Covid<sub>t</sub> =
+      𝟙{Mar 2020 ≤ t ≤ Dec 2021}; α<sub>c</sub>, λ<sub>t</sub> are category and month fixed
+      effects. Standard errors are clustered by category (G = 32, small-sample factor
+      G/(G−1)) [7]. The event study replaces Post with year dummies interacted with
+      D<sub>c</sub>, base year 2022.
+      <span class="zh"><b>双重差分与事件研究。</b>对对数月度计数估计双向固定效应模型：类别与月份固定效应，
+      处理组为 5 个数据密集分类，Post 为 2022 年 12 月起，另含疫情期交互控制；标准误按类别聚类（G = 32，
+      小样本修正 G/(G−1)）[7]。事件研究以 2022 年为基准年，用逐年交互项替代 Post。</span>
+    </p>
+    <p>
+      <b>AI-content classifier.</b> A paper is flagged AI-related if its title or abstract
+      matches any of the following (case-insensitive except <code>LLM</code>):
+      <span class="mono">machine learning · deep learning · neural network · neural operator ·
+reinforcement learning · artificial intelligence · language model · generative adversarial ·
+autoencoder · graph neural · deep neural · convolutional neural · physics-informed neural ·
+attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</span>
+      This is deliberately conservative and measures AI as <i>topic</i>; it cannot detect AI
+      used as a <i>tool</i> (§4.4). Per subfield-year we compute the AI-related share; the
+      growth–adoption association is the correlation between a subfield’s 2017→2025 growth and
+      its change in AI share, with two-sided permutation p-values (10,000 draws, seed 42).
+      <span class="zh"><b>AI 内容分类器。</b>标题或摘要命中上述关键词之一即标记为 AI 相关（除 LLM 外不区分大小写）。
+      该分类器刻意保守，度量“作为主题的 AI”，无法识别“作为工具的 AI”（§6）。按子领域-年计算 AI 相关占比；
+      增长与采用的关联为子领域 2017→2025 增长与其 AI 占比变化的相关系数，p 值来自双侧置换检验（10,000 次，种子 42）。</span>
+    </p>
+    <p>
+      <b>Engagement.</b> For each paper we count the subfields it lists among the 32; we track
+      the yearly mean, the share listing ≥ 2, and the effective number of distinct subfield
+      pairs 2<sup>H(pairs)</sup>. This is a co-listing notion of engagement — weaker than the
+      citation-based measure of [1], but computable without citation data.
+      <span class="zh"><b>互动。</b>统计每篇论文列出的子领域数：年均值、跨 ≥2 个子领域的占比、以及子领域对的有效数目。
+      这是基于共同列出的互动概念——弱于文献 [1] 的引用度量，但无需引用数据即可计算。</span>
+    </p>
+    <p>
+      <b>2026 surge scores.</b> For each category, the H1 (January–June) year-over-year log
+      ratio for 2026 is z-scored against that category’s own H1-YoY history (mathematics:
+      2018–2025; controls: 2020–2025). The same statistic is computed identically for the 13
+      control categories.
+      <span class="zh"><b>2026 涌升分数。</b>对每个分类，将 2026 年上半年同比对数比率相对该分类自身的上半年同比历史
+      （数学：2018–2025；对照：2020–2025）标准化为 z 分数；对照组按完全相同方法计算。</span>
+    </p>
+    <p>
+      All analyses use Python 3.12 / NumPy 2.2 with fixed seeds; the pipeline
+      (<code>harvest.py</code>, <code>analyze.py</code>, <code>stats_analysis.py</code>,
+      <code>process_metadata.py</code>, <code>controls.py</code>) is in the repository.
+      <span class="zh">全部分析基于 Python 3.12 / NumPy 2.2，随机种子固定；完整流程见仓库脚本。</span>
     </p>
 
-    <h2>3 · What we find <span class="zh">研究发现</span></h2>
+    <h2>4 · Results <span class="zh">结果</span></h2>
+    <h3 class="sub">4.1 · Concentration and composition, 2017–2025
+      <span class="zh">集中化与构成，2017–2025</span></h3>
+    <p>
+      For each complete year we compute the §3 concentration measures over the 32-subfield
+      distribution. Headline estimates (2017 → 2025, complete years):
+      <span class="zh">对每个完整年份计算 §3 定义的集中度度量。主要估计（2017 → 2025，完整年份）：</span>
+    </p>
     <div class="kpi" id="reportKpi"></div>
     <div class="rchart" id="rcConc"></div>
-    <div class="cap">Fig 1 · Concentration over time: effective number of subfields (falling) vs. top-5 share (rising).
-      图1 · 集中度趋势：有效子领域数（下降）对比前五份额（上升）。</div>
+    <div class="cap">Figure 1. Annual concentration, complete years 2017–2025: effective number of subfields
+      E (left axis, falling) and top-5 share (right axis, rising). Source: listing counts.
+      图1 · 年度集中度（2017–2025 完整年份）：有效子领域数 E（左轴，下降）与前五份额（右轴，上升）。</div>
     <div class="rchart" id="rcCluster"></div>
-    <div class="cap">Fig 2 · Share of the data-rich / ML-adjacent cluster, 2017–2025.
-      图2 · 数据密集 / ML 相邻子领域份额，2017–2025。</div>
+    <div class="cap">Figure 2. Combined share of the data-rich cluster (cs.IT, math.OC, math.NA, math.ST,
+      math.PR), complete years 2017–2025. Dashed line marks ChatGPT’s release.
+      图2 · 数据密集集群合计份额（2017–2025 完整年份）；虚线为 ChatGPT 发布时点。</div>
     <div class="rchart" id="rcGrowth" style="height:620px"></div>
-    <div class="cap">Fig 3 · Growth multiple 2017→2025 by subfield (orange = data-rich cluster).
-      <b>Click any bar</b> to expand its year-by-year waterfall below.
-      <br>图3 · 各子领域 2017→2025 增长倍数（橙色为数据密集集群）。<b>点击任一条形</b>可在下方展开其逐年瀑布图。</div>
+    <div class="cap">Figure 3. Growth multiple 2017→2025 by subfield (orange = data-rich cluster).
+      Interactive: <b>click any bar</b> to expand a year-by-year waterfall of that subfield’s growth index.
+      <br>图3 · 各子领域 2017→2025 增长倍数（橙色为数据密集集群）。交互：<b>点击任一条形</b>展开其逐年瀑布图。</div>
     <div id="rcFallWrap" style="display:none">
       <div class="rchart" id="rcFall" style="height:420px"></div>
       <div class="cap" id="rcFallCap"></div>
@@ -248,14 +405,14 @@
       <b>Numerical Analysis (+97%)</b> and <b>Statistics Theory (+95%)</b> — all computational —
       led the field, while classical/pure areas trailed (<b>Classical Analysis &amp; ODEs −1%</b>,
       Complex Variables +26%, Operator Algebras +32%, K-Theory +30%). Whether this timing
-      actually implicates AI is a question description can’t answer — §4 tests it formally.
+      actually implicates AI is a question description cannot answer — §4.2 tests it formally.
     </p>
     <p class="zh-p">
       信号虽温和却清晰：有效子领域数从 <b>24.2 降至 23.5</b>（约 −3%），均匀度由 0.920 降至 0.911，前五份额由
       <b>36.6% 升至 38.8%</b>，数据密集集群占比由 <b>26.8% 升至 30.3%</b>。增长高度不均：<b>最优化与控制（+128%）</b>、
       <b>数值分析（+97%）</b>、<b>统计理论（+95%）</b>等计算型领域领跑，而经典 / 纯数学领域明显落后
       （<b>经典分析与常微分方程 −1%</b>、复变 +26%、算子代数 +32%、K 理论 +30%）。这一时间线是否真的指向 AI，
-      需要 §4 的正式检验来回答。
+      需要 §4.2 的正式检验来回答。
     </p>
 
     <div class="callout">
@@ -264,13 +421,14 @@
       subfields that power, and are powered by, machine learning; the math counterpart of their
       “areas richest in data.” Pure analysis and algebra are not shrinking in absolute terms, but
       they have lost <i>relative</i> share. The crucial question — did this happen <i>because of</i>
-      the AI era? — is answered by the tests below, and the answer is mostly no. <br>
+      the AI era? — is answered in §4.2, and the answer is mostly no. <br>
       方向上与 Hao 等人一致、幅度更小：数学的集体注意力已流向最优化、数值与统计——正是驱动机器学习、也被其驱动的子领域，
       即其“数据最丰富领域”在数学中的对应。纯分析与代数并未绝对萎缩，但相对份额在下降。关键问题——这是否<i>因为</i>
       AI 时代而发生？——由下方检验回答，答案基本是否定的。
     </div>
 
-    <h2>4 · Statistical tests — is this an AI story? <span class="zh">统计检验：这是 AI 的故事吗？</span></h2>
+    <h3 class="sub">4.2 · Timing: is the contraction an AI-era event?
+      <span class="zh">时间检验：收缩是 AI 时代的事件吗？</span></h3>
     <p>
       <b>No break where AI would put one.</b> A structural-break search over the monthly
       effective-subfields series lets the data pick the most likely break date. It picks
@@ -293,7 +451,7 @@
       收缩在 2021 年前已完成，此后<b>趋于平稳</b>。2023 年后的水平低于疫情前趋势外推值，是持续的水平位移，而非继续下滑。</span>
     </p>
     <div class="rchart" id="rcMonthly"></div>
-    <div class="cap">Fig 4 · Monthly effective number of subfields, with the 2017–19 trend projection (dashed)
+    <div class="cap">Figure 4. Monthly effective number of subfields, with the 2017–19 trend projection (dashed)
       and the COVID / ChatGPT dates marked. 图4 · 月度有效子领域数，虚线为 2017–19 趋势外推，标注疫情与 ChatGPT 时点。</div>
     <p>
       <b>The cluster’s rise predates LLMs.</b> A two-way fixed-effects difference-in-differences
@@ -311,11 +469,11 @@
       值得关注，但尚不构成结论。</span>
     </p>
     <div class="rchart" id="rcEvent"></div>
-    <div class="cap">Fig 5 · Event study: data-rich cluster vs rest, yearly coefficients on log counts
+    <div class="cap">Figure 5. Event study: data-rich cluster vs rest, yearly coefficients on log counts
       (base 2022, whiskers = 95% CI, cluster-robust). 图5 · 事件研究：数据密集集群相对其他领域的逐年系数
       （以 2022 为基准，须线为 95% 置信区间，聚类稳健）。</div>
     <div class="callout">
-      <b>Verdict / 结论.</b> Mathematics’ focus contraction is real — and it is a <b>pandemic-era
+      <b>Summary / 小结.</b> Mathematics’ focus contraction is real — and it is a <b>pandemic-era
       story that persisted</b>, not an LLM-era story. Where Hao et al. find AI adoption actively
       narrowing natural science, math’s narrowing predates ChatGPT and has not (yet) accelerated
       since. If AI is reshaping mathematics, it is so far holding the field at its
@@ -326,8 +484,8 @@
       它是把该领域维持在疫情期形成的集中度上，而非使其加深——这一对照值得在 2026 年完整数据出炉后继续观察。
     </div>
 
-    <h2>5 · Mechanism &amp; engagement — paper-level evidence
-        <span class="zh">机制与互动：论文层面的证据</span></h2>
+    <h3 class="sub">4.3 · Mechanism and engagement: paper-level evidence
+        <span class="zh">机制与互动：论文层面的证据</span></h3>
     <p>
       Listing counts can’t see inside papers. Using the Kaggle arXiv metadata snapshot
       (<span id="mN">—</span> unique papers listing at least one of the 32 subfields,
@@ -355,10 +513,10 @@
       数学的集中化对应<i>深度学习</i>时代，早于 ChatGPT。</span>
     </p>
     <div class="rchart" id="rcAiShare"></div>
-    <div class="cap">Fig 6 · Share of AI/ML-related papers: data-rich cluster vs the other 27 subfields (2026 partial).
+    <div class="cap">Figure 6. Share of AI/ML-related papers: data-rich cluster vs the other 27 subfields (2026 partial).
       图6 · AI/ML 相关论文占比：数据密集集群对比其余 27 个子领域（2026 年不完整）。</div>
     <div class="rchart" id="rcScatter" style="height:440px"></div>
-    <div class="cap">Fig 7 · Subfield growth (2017→2025, metadata-based) vs change in AI share; orange = data-rich cluster.
+    <div class="cap">Figure 7. Subfield growth (2017→2025, metadata-based) vs change in AI share; orange = data-rich cluster.
       图7 · 子领域增长（2017→2025，基于元数据）对比 AI 占比变化；橙色为数据密集集群。</div>
     <p>
       <b>Engagement moves opposite to the natural sciences.</b> Where Hao et al. find AI adoption
@@ -368,51 +526,51 @@
       <span id="mMulti17">—</span> to <span id="mMulti25">—</span> — with, once again, the entire
       rise occurring by 2020–21 and a plateau since. No “lonely crowds” signature here. Robustness:
       counting each paper once by primary category, the effective number of subfields still falls
-      (<span id="mDedup17">—</span> → <span id="mDedup25">—</span>), so §3–4’s concentration is not
-      a cross-listing artifact.
+      (<span id="mDedup17">—</span> → <span id="mDedup25">—</span>), so the concentration in
+      §4.1–4.2 is not a cross-listing artifact.
       <span class="zh"><b>互动趋势与自然科学相反。</b>Hao 等人发现 AI 采用使论文间互动减少 22%，而数学子领域间反而<i>更加</i>互联：
       每篇论文平均列出的子领域数与跨 ≥2 个子领域的论文占比均在上升——且升幅同样在 2020–21 年前完成、其后趋平。
       这里没有“孤独人群”的特征。稳健性：按主分类为每篇论文只计一次，有效子领域数仍在下降，
-      说明 §3–4 的集中化并非交叉列出的统计假象。</span>
+      说明 §4.1–4.2 的集中化并非交叉列出的统计假象。</span>
     </p>
     <div class="rchart" id="rcEngage"></div>
-    <div class="cap">Fig 8 · Co-listing engagement between subfields: share of papers spanning ≥2 subfields (left)
+    <div class="cap">Figure 8. Co-listing engagement between subfields: share of papers spanning ≥2 subfields (left)
       and mean subfields per paper (right). 图8 · 子领域间共同列出：跨 ≥2 子领域论文占比（左轴）与每篇论文平均子领域数（右轴）。</div>
     <div class="callout">
-      <b>Refined verdict / 综合结论.</b> Putting §4 and §5 together: mathematics absorbed the
+      <b>Summary / 小结.</b> Putting §4.2 and §4.3 together: mathematics absorbed the
       <b>deep-learning wave (2017–2021)</b> — its computational subfields grew as their papers
       became AI papers, concentrating the field and shifting its center of mass — and then
       stabilized. The LLM era has, so far, neither deepened the concentration nor produced the
       engagement collapse seen in the natural sciences. Math looks like an <b>early adopter that
-      plateaued</b>, not a field currently being narrowed by generative AI — though §6 shows the
-      plateau itself ends in early 2026. <br>
-      综合 §4 与 §5：数学吸收了<b>深度学习浪潮（2017–2021）</b>——计算型子领域因其论文变为 AI 论文而增长，
+      plateaued</b>, not a field currently being narrowed by generative AI — though §4.4 shows
+      the plateau itself ends in early 2026. <br>
+      综合 §4.2 与 §4.3：数学吸收了<b>深度学习浪潮（2017–2021）</b>——计算型子领域因其论文变为 AI 论文而增长，
       使整个领域集中并移动了重心——随后趋于稳定。到目前为止，大模型时代既没有加深这种集中，
       也没有出现自然科学中的互动崩塌。数学更像一个<b>已进入平台期的早期采用者</b>，而非正被生成式 AI 收窄的领域——
-      不过 §6 显示，这个平台期本身在 2026 年初宣告结束。
+      不过 §4.4 显示，这个平台期本身在 2026 年初宣告结束。
     </div>
 
-    <h2>6 · The 2026 inflection — a subfield-level view
-        <span class="zh">2026年的拐点：分领域视角</span></h2>
+    <h3 class="sub">4.4 · The 2026 inflection and the control group
+        <span class="zh">2026 年拐点与对照组</span></h3>
     <p>
       <b>Something changed in February 2026.</b> Year-over-year, first-half 2026 submissions are
       up in <b>30 of 32 subfields</b> by more than 10%, with a median of <b>+22.5%</b> — against
       a <b>+1.8%</b> median the year before. The onset is visible from February and strengthens
       through June. And the leaders are <i>not</i> the data-rich cluster: <b>Combinatorics
       (+41%)</b>, <b>Logic (+38%)</b> and <b>Dynamical Systems (+35%)</b> head the list — the
-      surge is <b>field-wide</b>, which is precisely why §4’s cluster-vs-rest design could not
+      surge is <b>field-wide</b>, which is precisely why §4.2’s cluster-vs-rest design could not
       see it (a shift common to all subfields is absorbed by the month fixed effects; only the
       cluster’s extra +8% surfaced there).
       <span class="zh"><b>2026 年 2 月起出现了变化。</b>2026 年上半年同比，32 个子领域中有 <b>30 个</b>增长超过 10%，
       中位数达 <b>+22.5%</b>——而前一年同期中位数仅 +1.8%。增长自 2 月起可见并逐月增强。且领跑者<i>并非</i>数据密集集群：
       <b>组合数学（+41%）</b>、<b>数理逻辑（+38%）</b>、<b>动力系统（+35%）</b>居前——这是一场<b>全领域</b>的涌升，
-      这也正是 §4 的“集群对比其余”设计无法察觉它的原因（全领域共同的变化被月份固定效应吸收，只有集群相对多出的 +8% 显现）。</span>
+      这也正是 §4.2 的“集群对比其余”设计无法察觉它的原因（全领域共同的变化被月份固定效应吸收，只有集群相对多出的 +8% 显现）。</span>
     </p>
     <div class="rchart" id="rcHeat" style="height:640px"></div>
-    <div class="cap">Fig 9 · AI/ML-related share of papers by subfield and year — adoption timing differs sharply by field
+    <div class="cap">Figure 9. AI/ML-related share of papers by subfield and year — adoption timing differs sharply by field
       (2026 partial). 图9 · 各子领域逐年 AI/ML 相关论文占比——各领域采用时间差异显著（2026 年不完整）。</div>
     <div class="rchart" id="rcSurge" style="height:640px"></div>
-    <div class="cap">Fig 10 · H1 2026 vs H1 2025 growth by subfield, colored by 2026 AI-related share; dashed line =
+    <div class="cap">Figure 10. H1 2026 vs H1 2025 growth by subfield, colored by 2026 AI-related share; dashed line =
       median prior-year baseline. 图10 · 各子领域 2026 上半年同比增长，按 2026 年 AI 相关占比着色；虚线为上一年基线中位数。</div>
     <p id="ctrlPara">
       <b>Is this math-specific, or arXiv-wide?</b> As a control, we harvested 13 non-math
@@ -426,7 +584,7 @@
       自身历史的 z 分数。<span id="ctrlVerdictZh">—</span></span>
     </p>
     <div class="rchart" id="rcCtrl" style="height:460px"></div>
-    <div class="cap">Fig 11 · H1 2026 YoY growth: 13 non-math control categories vs the math median (dashed);
+    <div class="cap">Figure 11. H1 2026 YoY growth: 13 non-math control categories vs the math median (dashed);
       labels show each field’s z-score vs its own history. 图11 · 2026 上半年同比增长：13 个非数学对照分类
       对比数学中位数（虚线）；标签为各领域相对自身历史的 z 分数。</div>
     <p>
@@ -445,7 +603,7 @@
       该假说可检验，但仅靠计数不行：需要全文或致谢分析，这是自然的下一步。</span>
     </p>
     <div class="callout">
-      <b>Amended verdict / 修订结论.</b> §4–5’s conclusion — a deep-learning-era concentration
+      <b>Summary / 小结.</b> §4.2–4.3’s conclusion — a deep-learning-era concentration
       that plateaued — described 2017–2025 accurately. But the plateau <b>ended in February
       2026</b>: a broad, accelerating, field-wide output surge that our subfield-level breakdown
       dates precisely and that is <i>not</i> concentrated in the historically AI-heavy subfields.
@@ -455,14 +613,56 @@
       sit on trend — <b>math is one instance of a surge across theoretical science</b>. 2026’s
       complete data will be the first real test of whether it also renews the concentration
       dynamics.<br>
-      §4–5 的结论——深度学习时代的集中化随后进入平台期——准确描述了 2017–2025。但该平台期<b>已于 2026 年 2 月结束</b>：
+      §4.2–4.3 的结论——深度学习时代的集中化随后进入平台期——准确描述了 2017–2025。但该平台期<b>已于 2026 年 2 月结束</b>：
       一场广泛、加速、全领域的产出涌升，分领域拆解将其时间精确定位，且它<i>并不</i>集中于历史上 AI 浓度高的子领域。
       如果这是大模型时代抵达数学，它是以<b>生产技术而非研究主题</b>的方式同时抵达所有领域。
       对照组进一步拓宽了视野：同样的异常出现在理论计算机、物理与统计之中，而 AI 自身的分类却处于趋势线上——
       <b>数学只是理论科学整体涌升的一个实例</b>。2026 年完整数据将首次真正检验它是否也会重启集中化动态。
     </div>
 
-    <h2>7 · Caveats <span class="zh">局限与注意</span></h2>
+    <h2>5 · Discussion <span class="zh">讨论</span></h2>
+    <p>
+      Three findings organize the evidence. <b>First</b>, mathematics did concentrate — the
+      effective number of subfields fell ~3% with disjoint confidence intervals, growth
+      accrued disproportionately to the data-rich cluster, and the pattern survives
+      primary-category deduplication. <b>Second</b>, every timing instrument places that
+      concentration in 2017–2021 — the deep-learning era — not after ChatGPT: the break search
+      finds no significant break anywhere and prefers late 2020 to late 2022 by a factor of
+      three in F; annual concentration is statistically flat 2021–2025; post-2022 event-study
+      coefficients are zero; and the AI-content series that plausibly drove the shift rose
+      fastest in 2017–2020. <b>Third</b>, mathematics lacks the engagement collapse central to
+      the natural-science account [1]: co-listing between subfields rose while concentration
+      proceeded. On the evidence through 2025, mathematics is a <b>counterexample to the
+      generality</b> of the contraction mechanism — a field can absorb AI, concentrate toward
+      its data-rich subfields, and yet become more internally connected.
+      <span class="zh">证据由三项发现组织。<b>其一</b>，数学确实集中化了——有效子领域数下降约 3% 且置信区间不相交，
+      增长不成比例地流向数据密集集群，并且该模式在主分类去重后依然成立。<b>其二</b>，所有时间工具都将该集中化定位于
+      2017–2021（深度学习时代）而非 ChatGPT 之后：断点搜索在任何位置都未发现显著断点，且其对 2020 年末的偏好在 F 值上
+      三倍于 2022 年末；年度集中度在 2021–2025 间统计上持平；2022 年后事件研究系数为零；而可能驱动此变化的 AI 内容序列
+      攀升最快的阶段是 2017–2020。<b>其三</b>，数学缺少自然科学叙事 [1] 的核心要素——互动崩塌：集中化推进的同时，
+      子领域间共同列出反而上升。就 2025 年及之前的证据而言，数学是该收缩机制普适性的<b>反例</b>——
+      一个领域可以吸收 AI、向数据密集子领域集中，却在内部变得更加互联。</span>
+    </p>
+    <p>
+      The February 2026 inflection reopens the question. Its signature — sudden, field-wide,
+      largest in pen-and-paper subfields, shared by theoretical physics and non-AI computer
+      science, absent in AI-core categories — fits a change in how theoretical research is
+      <i>produced</i> rather than in what it is <i>about</i>. If LLM assistance is the cause,
+      the natural-science playbook may not predict what follows: the first-order effect in
+      mathematics is output expansion everywhere, not migration toward data. Distinguishing the
+      tool channel from alternatives (arXiv-wide policy shifts, submission behavior) requires
+      paper-level evidence beyond metadata — full-text and acknowledgment analysis, and
+      citation-based engagement — which we leave to future work, along with embedding-based
+      topic-volume measurement to make our concentration estimates directly comparable to the
+      4.63% figure of [1].
+      <span class="zh">2026 年 2 月的拐点重启了这一问题。其特征——突发、全领域、在纸笔子领域最强、同现于理论物理与
+      非 AI 计算机科学、在 AI 核心分类缺席——符合理论研究<i>生产方式</i>的变化，而非研究<i>主题</i>的变化。
+      若 LLM 辅助是其原因，自然科学的剧本未必能预测后续：AI 在数学中的一阶效应是全面的产出扩张，而非向数据的迁移。
+      区分工具渠道与替代解释（arXiv 整体政策变化、投稿行为）需要元数据之外的论文级证据——全文与致谢分析、
+      基于引用的互动度量——我们将其与基于嵌入的主题体积测量（使我们的集中度估计可与 [1] 的 4.63% 直接比较）一并留作后续工作。</span>
+    </p>
+
+    <h2>6 · Limitations <span class="zh">局限</span></h2>
     <ul>
       <li>This is a <b>structural analog, not a replication</b>: we use submission-volume
         distribution, not citations, authorship, or AI-augmentation detection. We show
@@ -481,39 +681,57 @@
         break” bounds the evidence, it does not prove absence.
         <span class="zh">统计局限：双重差分仅 5 个处理组类别；月度熵序列存在自相关（以块自助法处理，块长 12）；
         “无显著断点”是证据的界定，并非不存在的证明。</span></li>
-      <li>§5 caveats: the AI classifier is a conservative keyword list, not Hao et al.’s
+      <li>§4.3: the AI classifier is a conservative keyword list, not Hao et al.’s
         fine-tuned language model (F1 = 0.875) — it undercounts subtle AI usage and measures
         AI as <i>topic</i> more than AI as <i>tool</i>; co-listing is a weaker engagement notion
         than their citation-based measure; metadata uses each paper’s first-version date, so
         yearly counts differ slightly from the listing-page counts.
-        <span class="zh">§5 局限：AI 分类器为保守的关键词列表而非其微调语言模型（F1 = 0.875），会低估隐性 AI 使用，
+        <span class="zh">§4.3：AI 分类器为保守的关键词列表而非其微调语言模型（F1 = 0.875），会低估隐性 AI 使用，
         且更多度量“作为主题的 AI”而非“作为工具的 AI”；共同列出弱于其基于引用的互动度量；
         元数据按论文首版日期计年，与列表页计数略有差异。</span></li>
-      <li>§6 caveats: H1 2026 is compared like-for-like against H1 of prior years, but the year
+      <li>§4.4: H1 2026 is compared like-for-like against H1 of prior years, but the year
         is incomplete and late cross-lists still accrue. The control group shows the surge is
         arXiv-wide across theory fields, which rules out math-specific causes but not an
         arXiv-wide policy change — though the AI-core categories sitting on/below trend argues
         against a pure policy artifact. The AI-as-tool interpretation remains a hypothesis, not
         a measured result.
-        <span class="zh">§6 局限：2026 上半年与往年上半年同口径比较，但年份不完整且交叉列出仍在累积。
+        <span class="zh">§4.4：2026 上半年与往年上半年同口径比较，但年份不完整且交叉列出仍在累积。
         对照组显示涌升在理论学科间普遍存在，排除了数学特有的原因，但不能完全排除 arXiv 整体政策变化——
         不过 AI 核心分类处于或低于自身趋势，不支持纯政策性假象。“作为工具的 AI”解释仍是假说，而非已测量的结果。</span></li>
     </ul>
 
-    <h2>8 · Citation <span class="zh">引用</span></h2>
-    <div class="cite">
-      Hao, Q., Xu, F., Li, Y. &amp; Evans, J. Artificial intelligence tools expand scientists’
-      impact but contract science’s focus. <i>Nature</i> (2026).
-      <a href="https://doi.org/10.1038/s41586-025-09922-y" target="_blank">doi:10.1038/s41586-025-09922-y</a>
-      · preprint <a href="https://arxiv.org/abs/2412.07727" target="_blank">arXiv:2412.07727</a>.
+    <h2>References <span class="zh">参考文献</span></h2>
+    <ol class="refs">
+      <li>Hao, Q., Xu, F., Li, Y. &amp; Evans, J. Artificial intelligence tools expand
+        scientists’ impact but contract science’s focus. <i>Nature</i> (2026).
+        <a href="https://doi.org/10.1038/s41586-025-09922-y" target="_blank">doi:10.1038/s41586-025-09922-y</a>;
+        preprint <a href="https://arxiv.org/abs/2412.07727" target="_blank">arXiv:2412.07727</a>.</li>
+      <li>arXiv.org. Monthly listing pages, <code>https://arxiv.org/list/&lt;category&gt;/&lt;YYYY-MM&gt;</code>
+        (accessed January 2017 – July 2026 window; harvested June–July 2026).</li>
+      <li>Cornell University. arXiv Dataset (metadata snapshot). Kaggle, CC0.
+        <a href="https://www.kaggle.com/datasets/Cornell-University/arxiv" target="_blank">kaggle.com/datasets/Cornell-University/arxiv</a>
+        (retrieved 13 July 2026).</li>
+      <li>Quandt, R.E. Tests of the hypothesis that a linear regression system obeys two
+        separate regimes. <i>J. Am. Stat. Assoc.</i> <b>55</b>, 324–330 (1960).</li>
+      <li>Andrews, D.W.K. Tests for parameter instability and structural change with unknown
+        change point. <i>Econometrica</i> <b>61</b>, 821–856 (1993).</li>
+      <li>Künsch, H.R. The jackknife and the bootstrap for general stationary observations.
+        <i>Ann. Statist.</i> <b>17</b>, 1217–1241 (1989).</li>
+      <li>Cameron, A.C. &amp; Miller, D.L. A practitioner’s guide to cluster-robust inference.
+        <i>J. Hum. Resour.</i> <b>50</b>, 317–372 (2015).</li>
+      <li>Pielou, E.C. The measurement of diversity in different types of biological
+        collections. <i>J. Theor. Biol.</i> <b>13</b>, 131–144 (1966).</li>
+    </ol>
+    <div class="cite" style="margin-top:16px">
+      <b>Reproducibility / 可复现性.</b> All data and code are in the repository
+      (<a href="https://github.com/fsiceangel/arxiv-dash" target="_blank">github.com/fsiceangel/arxiv-dash</a>):
+      <code>harvest.py</code>/<code>retry.py</code> (listing counts), <code>controls.py</code>
+      (control group), <code>process_metadata.py</code> (paper-level, requires [3]),
+      <code>analyze.py</code> + <code>stats_analysis.py</code> (all statistics; fixed seeds).
+      Dashboard data cover <span id="rangeEn2">Jan 2017 – Jun 2026</span> and refresh daily;
+      the statistics quoted in the text are computed on complete months/years as specified in §3.
+      <br>全部数据与代码见仓库；正文所引统计量按 §3 规范在完整月份/年份上计算，仪表盘数据每日刷新。
     </div>
-    <p class="zh-p" style="margin-top:14px">
-      Analysis by this dashboard: 32 arXiv mathematics subfields, monthly submission counts
-      (incl. cross-lists) from arXiv listing pages, <span id="rangeEn2">Jan 2017 – Jun 2026</span>.
-      Reproducible via <code>analyze.py</code> in this repository.
-      <br>本仪表盘分析：32 个 arXiv 数学子领域 2017年1月–2026年6月每月投稿（含交叉列出），数据取自 arXiv 列表页，
-      可经仓库内 <code>analyze.py</code> 复现。
-    </p>
   </div>
 </div><!-- /view-report -->
 
@@ -800,7 +1018,7 @@ function buildReport(){
       ]});
     document.getElementById('rcFallWrap').style.display='block';
     document.getElementById('rcFallCap').innerHTML =
-      'Fig 3b · '+d.code+' year-by-year waterfall: each step is that year’s change to the growth index '+
+      'Figure 3 (drill-down). '+d.code+' year-by-year waterfall: each step is that year’s change to the growth index '+
       '(green = up, red = down), accumulating to ×'+d.ratio+' by 2025. '+
       '图3b · '+d.code+' 逐年瀑布图：每段为当年增长指数的变化（绿升红降），累计至 2025 年的 ×'+d.ratio+'。';
     setTimeout(()=>fall.resize(),20);
