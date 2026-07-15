@@ -292,7 +292,7 @@
       E<sub>t</sub> = 2<sup>H<sub>t</sub></sup> — the number of equally active subfields the
       field behaves like; falling E<sub>t</sub> means concentration. We also report Pielou
       evenness J<sub>t</sub> = H<sub>t</sub>/log₂ 32 [8], the Herfindahl–Hirschman index, the
-      top-5 share, and the combined share of a pre-registered <b>data-rich cluster</b>
+      top-5 share, and the combined share of a pre-specified <b>data-rich cluster</b>
       (<code>cs.IT</code>, <code>math.OC</code>, <code>math.NA</code>, <code>math.ST</code>,
       <code>math.PR</code>) — the mathematics counterpart of “areas richest in data” [1].
       <span class="zh"><b>集中度度量。</b>设 p<sub>i,t</sub> 为子领域 i 在期 t 的份额。我们报告香农熵 H<sub>t</sub>
@@ -571,7 +571,8 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       (2026 partial). 图9 · 各子领域逐年 AI/ML 相关论文占比——各领域采用时间差异显著（2026 年不完整）。</div>
     <div class="rchart" id="rcSurge" style="height:640px"></div>
     <div class="cap">Figure 10. H1 2026 vs H1 2025 growth by subfield, colored by 2026 AI-related share; dashed line =
-      median prior-year baseline. 图10 · 各子领域 2026 上半年同比增长，按 2026 年 AI 相关占比着色；虚线为上一年基线中位数。</div>
+      median of the subfields’ historical H1 year-over-year growth (2018–2025).
+      图10 · 各子领域 2026 上半年同比增长，按 2026 年 AI 相关占比着色；虚线为各子领域历史上半年同比增长（2018–2025）的中位数。</div>
     <p id="ctrlPara">
       <b>Is this math-specific, or arXiv-wide?</b> As a control, we harvested 13 non-math
       categories the same way — AI-core CS (cs.LG, cs.CL, cs.CV), non-AI CS (complexity,
@@ -693,11 +694,14 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
         is incomplete and late cross-lists still accrue. The control group shows the surge is
         arXiv-wide across theory fields, which rules out math-specific causes but not an
         arXiv-wide policy change — though the AI-core categories sitting on/below trend argues
-        against a pure policy artifact. The AI-as-tool interpretation remains a hypothesis, not
-        a measured result.
+        against a pure policy artifact. The surge z-scores are computed against short baseline
+        histories (8 H1-YoY observations for mathematics, 6 for controls), so they order the
+        anomalies reliably but their absolute magnitudes should be read qualitatively. The
+        AI-as-tool interpretation remains a hypothesis, not a measured result.
         <span class="zh">§4.4：2026 上半年与往年上半年同口径比较，但年份不完整且交叉列出仍在累积。
         对照组显示涌升在理论学科间普遍存在，排除了数学特有的原因，但不能完全排除 arXiv 整体政策变化——
-        不过 AI 核心分类处于或低于自身趋势，不支持纯政策性假象。“作为工具的 AI”解释仍是假说，而非已测量的结果。</span></li>
+        不过 AI 核心分类处于或低于自身趋势，不支持纯政策性假象。涌升 z 分数基于较短的基线历史（数学 8 个、对照 6 个
+        上半年同比观测），其排序可靠，但绝对数值应作定性解读。“作为工具的 AI”解释仍是假说，而非已测量的结果。</span></li>
     </ul>
 
     <h2>References <span class="zh">参考文献</span></h2>
@@ -1236,8 +1240,9 @@ function buildReport(){
       const shade=v=>{ // 0..0.16 -> blue..orange
         const t=Math.max(0,Math.min(1,(v||0)/0.16));
         return 'rgb('+lerp(91,255,t)+','+lerp(155,138,t)+','+lerp(255,91,t)+')';};
-      const baseMed=(arr=>{const s=arr.slice().sort((a,b)=>a-b);
-        return s[Math.floor(s.length/2)];})(sg.map(s=>(s.base_med-1)*100));
+      const median=arr=>{const s=arr.slice().sort((a,b)=>a-b),n=s.length;
+        return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2;};
+      const baseMed=median(sg.map(s=>(s.base_med-1)*100));
       const c10=echarts.init(document.getElementById('rcSurge'),'dark');
       c10.setOption({backgroundColor:'transparent',
         tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'},
@@ -1256,7 +1261,7 @@ function buildReport(){
           label:{show:true,position:'right',fontSize:9,color:'#9aa3b2',
             formatter:p=>'z='+sg[p.dataIndex].z},
           markLine:{symbol:'none',lineStyle:{color:'#9aa3b2',type:'dashed'},
-            label:{formatter:'prior-year median',color:'#9aa3b2',fontSize:10,rotate:0,
+            label:{formatter:'historical median',color:'#9aa3b2',fontSize:10,rotate:0,
               position:'insideEndTop'},
             data:[{xAxis:+baseMed.toFixed(1)}]}}]});
       reportCharts.push(c10);
@@ -1279,8 +1284,7 @@ function buildReport(){
           '量子物理 z=4.4），而 AI 核心分类却处于或低于自身趋势（机器学习 z=0.3、计算机视觉 z=−0.9、'+
           '计算语言 z=−1.0）。涌升恰恰出现在纸笔理论领域、又恰恰在以 AI 为主题的领域缺席——'+
           '这指向理论研究共同的生产端变化，而非 arXiv 政策性假象。');
-        const mathMed=(arr=>{const s=arr.slice().sort((a,b)=>a-b);
-          return s[Math.floor(s.length/2)];})(MD.surge.map(s=>(s.r26-1)*100));
+        const mathMed=median(MD.surge.map(s=>(s.r26-1)*100));
         const GCOLOR={ai:'#ff5b5b',cs:'#5b9bff',phys:'#5bd6a8',econ:'#ffd45b'};
         const GLABEL={ai:'AI-core CS',cs:'non-AI CS',phys:'physics',econ:'econ/stat'};
         const ctl=[...CD.controls].sort((a,b)=>(a.r26-b.r26));
