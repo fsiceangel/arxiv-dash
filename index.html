@@ -180,11 +180,12 @@
       Concentration is real: the effective number of active subfields fell from 24.2 to 23.5
       (multinomial-bootstrap 95% CIs disjoint), with growth concentrated in data-rich subfields
       (optimization +128%, numerical analysis +97%, statistics theory +95%, 2017→2025). Its
-      timing, however, implicates the deep-learning era rather than the LLM era: a
-      structural-break search selects October 2020 — itself insignificant (sup-F, block-bootstrap
-      p = 0.43); the F-statistic at ChatGPT’s release is 1.68 against 5.41 at the COVID onset —
-      concentration plateaued by 2021, and post-2022 event-study coefficients for the data-rich
-      cluster are statistically indistinguishable from zero. Paper-level evidence supplies the
+      timing, however, implicates the deep-learning era rather than the chat era: a
+      structural-break search (candidate window through December 2024) selects October 2020 —
+      itself insignificant (sup-F, block-bootstrap p = 0.43); the F-statistic at ChatGPT’s
+      release is 1.68 against 5.41 at the COVID onset — concentration plateaued by 2021, and
+      post-2022 event-study coefficients for the data-rich cluster are statistically
+      indistinguishable from zero through 2025. Paper-level evidence supplies the
       mechanism: subfield growth correlates with rising AI-related content (Spearman ρ = 0.425,
       permutation p = 0.016), which quadrupled in the data-rich cluster (2.9% → 13.5%) with its
       steepest rise in 2017–2020, while inter-subfield co-listing <i>rose</i> — the opposite of
@@ -194,8 +195,12 @@
       rather than AI-adjacent subfields, and present across theoretical physics and non-AI
       computer science while absent in AI-core categories — consistent with generative AI
       arriving in theoretical science as a production technology rather than a research topic.
-      Mathematics thus reads, so far, as a contrast to the natural-science pattern rather than a
-      confirmation of it.
+      End-of-sample predictive tests date an LLM-era break to 2026: output (F = 5.85) and
+      concentration (F = 2.66) both deviate from the 2021–2025 plateau trend (p &lt; 0.001).
+      Mathematics thus contrasts with the natural-science pattern throughout the chat era; the
+      LLM era’s imprint arrives in 2026, and its character — production-side and field-wide
+      rather than data-seeking and topic-side — differs from the contraction described for the
+      natural sciences.
     </div>
     <div class="abstract">
       <div class="h">摘要</div>
@@ -203,14 +208,17 @@
       我们基于三类数据检验数学是否呈现同样的收缩：32 个 arXiv 数学子领域的每月投稿数（114 个月，2017 年 1 月–2026 年 6 月）、
       448,970 篇唯一论文的元数据，以及 13 个非数学分类的对照组。集中化是真实的：活跃子领域的有效数目从 24.2 降至 23.5
       （多项自助 95% 置信区间不相交），增长集中于数据密集子领域（最优化 +128%、数值分析 +97%、统计理论 +95%，2017→2025）。
-      但其时间点指向深度学习时代而非大模型时代：结构性断点搜索选中 2020 年 10 月——其本身并不显著（sup-F，块自助 p = 0.43）；
-      ChatGPT 发布时点的 F 统计量为 1.68，而疫情起点为 5.41——集中化在 2021 年前已趋平稳，数据密集集群 2022 年后的
-      事件研究系数与零无法区分。论文层面的证据提供了机制：子领域增长与 AI 相关内容的上升显著相关（Spearman ρ = 0.425，
+      但其时间点指向深度学习时代而非聊天模型时代：结构性断点搜索（候选窗口至 2024 年 12 月）选中 2020 年 10 月——
+      其本身并不显著（sup-F，块自助 p = 0.43）；ChatGPT 发布时点的 F 统计量为 1.68，而疫情起点为 5.41——
+      集中化在 2021 年前已趋平稳，数据密集集群 2022 年后直至 2025 年的事件研究系数与零无法区分。论文层面的证据提供了机制：子领域增长与 AI 相关内容的上升显著相关（Spearman ρ = 0.425，
       置换检验 p = 0.016），数据密集集群的 AI 相关占比翻了两番（2.9% → 13.5%），且攀升最陡的阶段为 2017–2020；
       与此同时子领域间共同列出<i>上升</i>——与自然科学报告的互动下降相反。最后，我们记录了 2026 年 2 月开始的一场急剧、
       全领域的产出涌升（同比中位数 +22.5%，基线 +1.8%；32 个子领域中 30 个超过 +10%），由组合数学（z = 5.8）与数理逻辑
       而非 AI 相邻子领域领跑，并同样出现在理论物理与非 AI 计算机科学中、却在 AI 核心分类中缺席——
-      与生成式 AI 以生产技术而非研究主题的方式抵达理论科学相一致。就目前而言，数学是自然科学模式的对照，而非印证。
+      与生成式 AI 以生产技术而非研究主题的方式抵达理论科学相一致。样本末端预测检验将大模型时代的断点定位于 2026 年：
+      产出（F = 5.85）与集中度（F = 2.66）双双偏离 2021–2025 平台期趋势（p &lt; 0.001）。因此，在聊天模型时代，
+      数学始终是自然科学模式的对照；大模型时代的印记于 2026 年到来，且其特征——生产端的、全领域的，
+      而非寻找数据的、主题端的——不同于自然科学所记录的收缩。
     </div>
 
     <h2>1 · Introduction <span class="zh">引言</span></h2>
@@ -312,6 +320,19 @@
       断点计算 Chow 型 F 统计量并取上确界（Quandt–Andrews [4,5]）。因残差自相关，sup-F 的 p 值由无断点原假设下的
       移动块自助法获得（块长 12，B = 500，种子 42 [6]）。另报告两个先验时点的 F 值：疫情起点（2020-03）与
       ChatGPT 发布（2022-12）。</span>
+    </p>
+    <p>
+      <b>End-of-sample predictive-failure test.</b> The sup-F trimming excludes the final 15% of
+      the sample, so a break near the end cannot be detected by the search. We therefore fit the
+      linear trend on the plateau window (January 2021 – December 2025) and apply a Chow-type
+      predictive test to the six months of 2026: F is the mean squared out-of-sample deviation
+      over the in-sample residual variance, with the p-value from a moving-block bootstrap of
+      in-sample residuals (m = 6, B = 2,000, seed 42). The test is run on both E<sub>t</sub> and
+      log total monthly output.
+      <span class="zh"><b>样本末端预测失效检验。</b>sup-F 的截尾排除了样本最后 15%，故搜索无法探测靠近末端的断点。
+      为此我们在平台期窗口（2021 年 1 月–2025 年 12 月）拟合线性趋势，对 2026 年的六个月做 Chow 型预测检验：
+      F 为样本外均方偏离与样本内残差方差之比，p 值来自样本内残差的移动块自助法（m = 6，B = 2,000，种子 42）。
+      检验同时施加于 E<sub>t</sub> 与对数月度总产出。</span>
     </p>
     <p>
       <b>Bootstrap confidence intervals.</b> For each year we resample the 32-category count
@@ -430,15 +451,31 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
     <h3 class="sub">4.2 · Timing: is the contraction an AI-era event?
       <span class="zh">时间检验：收缩是 AI 时代的事件吗？</span></h3>
     <p>
-      <b>No break where AI would put one.</b> A structural-break search over the monthly
+      <b>No break where chat-era AI would put one.</b> A structural-break search over the monthly
       effective-subfields series lets the data pick the most likely break date. It picks
       <b id="stBreakMonth">—</b> — squarely in the pandemic, not the LLM era — and even that
       candidate is <b>not significant</b> (sup-F <span id="stSupF">—</span>, block-bootstrap
-      p = <span id="stPBoot">—</span>): the decline is gradual, not event-shaped. Forcing the
-      break at ChatGPT’s release scores F = <span id="stFllm">—</span>, far weaker than the
-      COVID-era candidate’s F = <span id="stFcovid">—</span>.
+      p = <span id="stPBoot">—</span>): through 2025, the decline is gradual, not event-shaped.
+      Forcing the break at ChatGPT’s release scores F = <span id="stFllm">—</span>, far weaker
+      than the COVID-era candidate’s F = <span id="stFcovid">—</span>.
       <span class="zh">对月度有效子领域序列做结构性断点搜索，让数据自行选择最可能的断点日期：结果落在<b>疫情期而非大模型期</b>，
-      且该候选断点本身亦<b>不显著</b>——下降是渐进的，而非事件式的。将断点强行放在 ChatGPT 发布日，其 F 值远弱于疫情期候选。</span>
+      且该候选断点本身亦<b>不显著</b>——就 2025 年及之前而言，下降是渐进的，而非事件式的。将断点强行放在 ChatGPT 发布日，
+      其 F 值远弱于疫情期候选。</span>
+    </p>
+    <p>
+      <b>Through 2024 — but not beyond.</b> By construction the search trims the final 15% of
+      candidates, so its verdict covers break dates through <b id="stCandEnd">—</b> only; it is
+      silent about the end of the sample. The end-of-sample predictive test (§3) is not. Fitting
+      the 2021–2025 plateau trend and testing the six months of 2026 jointly:
+      <b>output breaks decisively above trend</b> (F = <span id="predTF">—</span>,
+      p &lt; 0.001; mean deviation +<span id="predTD">—</span> log points) and
+      <b>concentration breaks below it</b> (F = <span id="predEF">—</span>, p &lt; 0.001;
+      −<span id="predED">—</span> effective subfields). An LLM-era break does exist in this
+      data — it arrived in <b>2026</b>, not 2023, and §4.4 characterizes it.
+      <span class="zh"><b>覆盖至 2024 年——但不止于此。</b>按构造，搜索截去了最后 15% 的候选断点，其结论只覆盖到
+      2024 年末，对样本末端保持沉默。而 §3 的样本末端预测检验并不沉默：以 2021–2025 平台期趋势拟合并对 2026 年
+      六个月做联合检验——<b>产出决定性地突破趋势上方</b>（p &lt; 0.001），<b>集中度突破趋势下方</b>（p &lt; 0.001）。
+      大模型时代的断点在这份数据中确实存在——它到来于 <b>2026 年</b>而非 2023 年，§4.4 对其加以刻画。</span>
     </p>
     <p>
       <b>Real, then flat.</b> Multinomial bootstrap confidence intervals show the concentration
@@ -473,15 +510,14 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       (base 2022, whiskers = 95% CI, cluster-robust). 图5 · 事件研究：数据密集集群相对其他领域的逐年系数
       （以 2022 为基准，须线为 95% 置信区间，聚类稳健）。</div>
     <div class="callout">
-      <b>Summary / 小结.</b> Mathematics’ focus contraction is real — and it is a <b>pandemic-era
-      story that persisted</b>, not an LLM-era story. Where Hao et al. find AI adoption actively
-      narrowing natural science, math’s narrowing predates ChatGPT and has not (yet) accelerated
-      since. If AI is reshaping mathematics, it is so far holding the field at its
-      COVID-era concentration rather than deepening it — a genuine contrast worth watching as
-      2026 completes. <br>
-      数学的聚焦收缩是真实的——但它是一个<b>延续至今的疫情时期故事</b>，而非大模型时期的故事。Hao 等人发现 AI 的采用正在
-      主动收窄自然科学，而数学的收窄先于 ChatGPT，且此后（暂时）没有加速。如果说 AI 正在重塑数学，那么到目前为止，
-      它是把该领域维持在疫情期形成的集中度上，而非使其加深——这一对照值得在 2026 年完整数据出炉后继续观察。
+      <b>Summary / 小结.</b> Mathematics’ 2017–2025 focus contraction is real — and it is a
+      <b>pandemic-era story that persisted</b>, not a chat-era story: the narrowing predates
+      ChatGPT and did not accelerate through 2025. But the end-of-sample test shows the plateau
+      breaks in <b>2026</b>, on output and concentration alike — the LLM era’s imprint on
+      mathematics begins there, and §4.4 examines its anatomy. <br>
+      数学 2017–2025 年的聚焦收缩是真实的——它是一个<b>延续下来的疫情时期故事</b>，而非聊天模型时期的故事：
+      收窄先于 ChatGPT，且直到 2025 年都没有加速。但样本末端检验显示，平台期在 <b>2026 年</b>被打破——产出与集中度
+      双双突破趋势。大模型时代在数学上的印记自此开始，§4.4 剖析其构造。
     </div>
 
     <h3 class="sub">4.3 · Mechanism and engagement: paper-level evidence
@@ -603,6 +639,21 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       而这两个领域恰是 2025–26 年 LLM 辅助解题公开亮相之处——更符合“工具渠道”而非“主题渠道”。
       该假说可检验，但仅靠计数不行：需要全文或致谢分析，这是自然的下一步。</span>
     </p>
+    <p>
+      <b>The inflection is not only about volume.</b> Two further 2026 signals: (i) concentration
+      deviates too — H1 2026 sits 0.39 effective subfields <i>below</i> the 2021–2025 plateau
+      trend (predictive p &lt; 0.001, §4.2), so the concentration dynamics that stalled in 2021
+      show first signs of resuming; and (ii) AI as a <i>topic</i> is now spreading into the pure
+      subfields: the non-cluster AI-related share rose from 1.38% to 1.57% in half a year — the
+      largest increment on record — with Category Theory jumping from 1.2% to 3.7% (Fig 9, top
+      rows vs bottom rows). Whichever channel dominates, 2026 is the first year in this data in
+      which the LLM era is visible in mathematics’ output, composition, and topics at once.
+      <span class="zh"><b>拐点不止于数量。</b>2026 年还有两个信号：(i) 集中度同样偏离——2026 上半年比 2021–2025
+      平台期趋势低 0.39 个有效子领域（预测检验 p &lt; 0.001，§4.2），2021 年停滞的集中化动态出现恢复的初步迹象；
+      (ii) 作为<i>主题</i>的 AI 正在向纯数学子领域扩散：非集群 AI 相关占比半年内从 1.38% 升至 1.57%——历史最大增幅——
+      其中范畴论从 1.2% 跃至 3.7%（图9）。无论哪个渠道占主导，2026 年都是这份数据中大模型时代首次同时
+      显现于数学的产出、构成与主题的一年。</span>
+    </p>
     <div class="callout">
       <b>Summary / 小结.</b> §4.2–4.3’s conclusion — a deep-learning-era concentration
       that plateaued — described 2017–2025 accurately. But the plateau <b>ended in February
@@ -611,14 +662,14 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       If this is the LLM era arriving in mathematics, it is arriving <b>everywhere at once</b> —
       as a production technology, not a topic. The control group widens the lens: the same
       anomaly appears across theoretical CS, physics and statistics while AI’s own categories
-      sit on trend — <b>math is one instance of a surge across theoretical science</b>. 2026’s
-      complete data will be the first real test of whether it also renews the concentration
-      dynamics.<br>
+      sit on trend — <b>math is one instance of a surge across theoretical science</b>. The
+      predictive test already shows concentration deviating alongside output; 2026’s complete
+      data will show whether that persists.<br>
       §4.2–4.3 的结论——深度学习时代的集中化随后进入平台期——准确描述了 2017–2025。但该平台期<b>已于 2026 年 2 月结束</b>：
       一场广泛、加速、全领域的产出涌升，分领域拆解将其时间精确定位，且它<i>并不</i>集中于历史上 AI 浓度高的子领域。
       如果这是大模型时代抵达数学，它是以<b>生产技术而非研究主题</b>的方式同时抵达所有领域。
       对照组进一步拓宽了视野：同样的异常出现在理论计算机、物理与统计之中，而 AI 自身的分类却处于趋势线上——
-      <b>数学只是理论科学整体涌升的一个实例</b>。2026 年完整数据将首次真正检验它是否也会重启集中化动态。
+      <b>数学只是理论科学整体涌升的一个实例</b>。预测检验已显示集中度与产出一同偏离；2026 年完整数据将检验其是否持续。
     </div>
 
     <h2>5 · Discussion <span class="zh">讨论</span></h2>
@@ -645,20 +696,32 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       一个领域可以吸收 AI、向数据密集子领域集中，却在内部变得更加互联。</span>
     </p>
     <p>
-      The February 2026 inflection reopens the question. Its signature — sudden, field-wide,
-      largest in pen-and-paper subfields, shared by theoretical physics and non-AI computer
-      science, absent in AI-core categories — fits a change in how theoretical research is
-      <i>produced</i> rather than in what it is <i>about</i>. If LLM assistance is the cause,
-      the natural-science playbook may not predict what follows: the first-order effect in
-      mathematics is output expansion everywhere, not migration toward data. Distinguishing the
+      The February 2026 inflection reopens the question — and answers the natural objection
+      that “no LLM-era break” sits oddly with the visibility of AI-for-mathematics in 2025–26.
+      The break exists; it is simply not where the natural-science chronology would place it.
+      Its signature — sudden, field-wide, largest in pen-and-paper subfields, shared by
+      theoretical physics and non-AI computer science, absent in AI-core categories — fits a
+      change in how theoretical research is <i>produced</i> rather than in what it is
+      <i>about</i>, and its timing coincides with the public arrival of reasoning-grade AI for
+      mathematics (formalization systems and LLM-assisted problem solving) rather than with
+      chat assistants. Two accompanying signals — the resumption of concentration (−0.39
+      effective subfields vs the plateau trend) and the record spread of AI-as-topic into pure
+      subfields — suggest the composition of mathematics, not just its volume, is beginning to
+      move again. If LLM assistance is the cause, the natural-science playbook may not predict
+      what follows: the first-order effect in mathematics is output expansion everywhere, not
+      migration toward data. Distinguishing the
       tool channel from alternatives (arXiv-wide policy shifts, submission behavior) requires
       paper-level evidence beyond metadata — full-text and acknowledgment analysis, and
       citation-based engagement — which we leave to future work, along with embedding-based
       topic-volume measurement to make our concentration estimates directly comparable to the
       4.63% figure of [1].
-      <span class="zh">2026 年 2 月的拐点重启了这一问题。其特征——突发、全领域、在纸笔子领域最强、同现于理论物理与
-      非 AI 计算机科学、在 AI 核心分类缺席——符合理论研究<i>生产方式</i>的变化，而非研究<i>主题</i>的变化。
-      若 LLM 辅助是其原因，自然科学的剧本未必能预测后续：AI 在数学中的一阶效应是全面的产出扩张，而非向数据的迁移。
+      <span class="zh">2026 年 2 月的拐点重启了这一问题——也回应了一个自然的质疑：“没有大模型时代断点”与 2025–26 年
+      AI4Math 的火热景象似乎相悖。断点是存在的，只是不在自然科学时间线所预期的位置。其特征——突发、全领域、
+      在纸笔子领域最强、同现于理论物理与非 AI 计算机科学、在 AI 核心分类缺席——符合理论研究<i>生产方式</i>的变化，
+      而非研究<i>主题</i>的变化；其时点与面向数学的推理级 AI（形式化系统与 LLM 辅助解题）的公开亮相重合，
+      而非与聊天助手重合。两个伴随信号——集中化的恢复（相对平台期趋势 −0.39 个有效子领域）与 AI 主题向纯数学子领域
+      的创纪录扩散——表明数学的构成而不仅是数量正重新开始变动。若 LLM 辅助是其原因，自然科学的剧本未必能预测后续：
+      AI 在数学中的一阶效应是全面的产出扩张，而非向数据的迁移。
       区分工具渠道与替代解释（arXiv 整体政策变化、投稿行为）需要元数据之外的论文级证据——全文与致谢分析、
       基于引用的互动度量——我们将其与基于嵌入的主题体积测量（使我们的集中度估计可与 [1] 的 4.63% 直接比较）一并留作后续工作。</span>
     </p>
@@ -1040,6 +1103,13 @@ function buildReport(){
     put('stBreakMonth',fmtYm(S.break.month));
     put('stSupF',S.break.supF); put('stPBoot',S.break.p_boot);
     put('stFllm',S.break.F_llm_2022_12); put('stFcovid',S.break.F_covid_2020_03);
+    if(S.pred_2026){
+      put('stCandEnd',fmtYm(S.pred_2026.cand_window_end));
+      put('predTF',S.pred_2026.log_total.F);
+      put('predTD',(S.pred_2026.log_total.mean_dev*100).toFixed(1));
+      put('predEF',S.pred_2026.E.F);
+      put('predED',Math.abs(S.pred_2026.E.mean_dev).toFixed(2));
+    }
     put('stGap',Math.abs(S.pretrend_gap_post2023).toFixed(2));
     put('stDid','+'+pctOf(S.did.treat_post.coef)); put('stDidP',S.did.treat_post.p);
     put('stCovP',S.did.treat_covid.p);

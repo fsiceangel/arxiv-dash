@@ -36,7 +36,10 @@ block-bootstrap p-values on the monthly series, multinomial bootstrap CIs on ann
 concentration, and a two-way fixed-effects DiD with a yearly event study for the data-rich
 cluster. The finding: the concentration is real (CIs cleanly separated) but **pandemic-era,
 not LLM-era** — the best break candidate is Oct 2020 (itself insignificant, sup-F p ≈ 0.43),
-the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0. Paper-level
+the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0 through
+2025. The LLM-era break arrives in 2026 instead: end-of-sample predictive tests show H1 2026
+deviating from the 2021–2025 plateau on both output (F=5.85) and concentration (F=2.66), both
+p<0.001 — coinciding with reasoning-grade AI4Math rather than chat assistants. Paper-level
 evidence from the Kaggle arXiv metadata snapshot (`process_metadata.py`, ~449k unique math
 papers) adds the mechanism: AI-related content in the data-rich cluster grew 2.9% → 13.5% of
 papers (steepest 2017–2020), and subfield growth correlates with rising AI share (Spearman

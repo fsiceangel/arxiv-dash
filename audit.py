@@ -167,9 +167,40 @@ quoted = {
 }
 for k, v in quoted.items():
     check(f"quoted: {k}", v)
-for s in ["24.2 to 23.5", "+128%", "0.425", "2.9% → 13.5%", "Oct 2020",
-          "5.41", "1.68", "+22.5%", "30 of 32", "z = 5.8", "448,970"]:
+for s in ["24.2 to 23.5", "+128%", "0.425", "2.9% → 13.5%", "October 2020",
+          "5.41", "1.68", "+22.5%", "30 of 32", "z = 5.8", "448,970",
+          "F = 5.85", "F = 2.66"]:
     check(f"string present in html: '{s}'", s in html)
+
+# 2026 predictive-failure test: reproduce independently
+pred = SD.get("pred_2026")
+check("pred_2026 present in stats_data", pred is not None)
+if pred:
+    fit_idx = [i for i, m in enumerate(mvalid) if "2021-01" <= m <= "2025-12"]
+    tst_idx = [i for i, m in enumerate(mvalid) if m >= "2026-01"]
+    tt = np.arange(len(mvalid), dtype=float)
+    Ea = np.array(Efresh)
+    Xf = np.column_stack([np.ones(len(fit_idx)), tt[fit_idx]])
+    b, *_ = np.linalg.lstsq(Xf, Ea[fit_idx], rcond=None)
+    rf = Ea[fit_idx] - Xf @ b
+    s2 = float(rf @ rf) / (len(fit_idx) - 2)
+    e = Ea[tst_idx] - (b[0] + b[1] * tt[tst_idx])
+    F_E = float(e @ e) / len(tst_idx) / s2
+    check("pred F(E) reproduces", abs(F_E - pred["E"]["F"]) < 0.05,
+          f"fresh={F_E:.2f} published={pred['E']['F']}")
+    tot = np.array([sum(counts[(c, m)] for c in cats) for m in mvalid], dtype=float)
+    y = np.log(tot)
+    b2, *_ = np.linalg.lstsq(Xf, y[fit_idx], rcond=None)
+    rf2 = y[fit_idx] - Xf @ b2
+    s22 = float(rf2 @ rf2) / (len(fit_idx) - 2)
+    e2 = y[tst_idx] - (b2[0] + b2[1] * tt[tst_idx])
+    F_T = float(e2 @ e2) / len(tst_idx) / s22
+    check("pred F(log total) reproduces", abs(F_T - pred["log_total"]["F"]) < 0.05,
+          f"fresh={F_T:.2f} published={pred['log_total']['F']}")
+    check("2026 concentration deviates DOWN", pred["E"]["mean_dev"] < -0.2,
+          f"mean_dev={pred['E']['mean_dev']}")
+    check("2026 output deviates UP", pred["log_total"]["mean_dev"] > 0.08,
+          f"mean_dev={pred['log_total']['mean_dev']}")
 
 # controls quoted values
 CD = load_js("controls_data.js")
