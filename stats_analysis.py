@@ -164,6 +164,35 @@ def annual_boot(cats, months, M, reps=2000):
                    "hi": round(float(np.percentile(Eb, 97.5)), 3)}
     return out
 
+def predictive_failure(y, months, fit_lo="2021-01", fit_hi="2025-12",
+                       test_lo="2026-01", n_boot=2000, block=6):
+    """Chow-type predictive failure test: fit linear trend on [fit_lo, fit_hi],
+    test whether observations from test_lo jointly deviate. p-value by
+    moving-block bootstrap of in-sample residuals (respects autocorrelation)."""
+    idx_fit = [i for i, m in enumerate(months) if fit_lo <= m <= fit_hi]
+    idx_tst = [i for i, m in enumerate(months) if m >= test_lo]
+    t = np.arange(len(months), dtype=float)
+    Xf = np.column_stack([np.ones(len(idx_fit)), t[idx_fit]])
+    b, *_ = np.linalg.lstsq(Xf, y[idx_fit], rcond=None)
+    res_fit = y[idx_fit] - Xf @ b
+    s2 = float(res_fit @ res_fit) / (len(idx_fit) - 2)
+    pred = b[0] + b[1] * t[idx_tst]
+    e = y[idx_tst] - pred
+    m = len(idx_tst)
+    F = float(e @ e) / m / s2
+    # bootstrap null: m-length moving blocks of in-sample residuals
+    n_res = len(res_fit)
+    count = 0
+    for _ in range(n_boot):
+        s = RNG.integers(0, n_res - m + 1)
+        eb = res_fit[s:s + m]
+        Fb = float(eb @ eb) / m / s2
+        if Fb >= F:
+            count += 1
+    return {"F": round(F, 2), "p_boot": round((count + 1) / (n_boot + 1), 4),
+            "mean_dev": round(float(e.mean()), 3), "m": m,
+            "window": f"{fit_lo}..{fit_hi}"}
+
 def main():
     cats, months, M = load_matrix()
     E = eff_subfields_series(M)
@@ -188,9 +217,18 @@ def main():
     post_idx = [i for i, ym in enumerate(months) if ym >= "2023-01"]
     gap = float(np.mean(E[post_idx] - proj[post_idx]))
 
+    # end-of-sample predictive failure for 2026 (concentration + log output)
+    total = M.sum(axis=0)
+    pred26 = {
+        "E": predictive_failure(E, months),
+        "log_total": predictive_failure(np.log(total), months),
+        "cand_window_end": months[int(len(months) * 0.85) - 1],
+    }
+
     out = {
         "months": months,
         "E_monthly": [round(float(x), 3) for x in E],
+        "pred_2026": pred26,
         "proj_pre_trend": [round(float(x), 3) for x in proj],
         "break": {"month": months[tau], "supF": round(supF, 2), "p_boot": round(p_sup, 4),
                   "F_covid_2020_03": f_covid, "F_llm_2022_12": f_llm},
@@ -206,6 +244,9 @@ def main():
     print(f"months: {months[0]}..{months[-1]} ({len(months)})")
     print(f"BREAK: best={months[tau]} supF={supF:.1f} p_boot={p_sup:.4f} "
           f"| F@2020-03={f_covid} F@2022-12={f_llm}")
+    print(f"BREAK candidate window ends: {pred26['cand_window_end']}")
+    print(f"PRED-2026 E: {pred26['E']}")
+    print(f"PRED-2026 log_total: {pred26['log_total']}")
     print(f"DiD treat×post(2022-12): {did['treat_post']}")
     print(f"DiD treat×covid       : {did['treat_covid']}")
     print("Event study (base 2022):")
