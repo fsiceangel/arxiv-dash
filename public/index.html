@@ -106,6 +106,10 @@
 
 <div class="wrap view active" id="view-dash">
 
+  <div class="controls" style="margin:18px 0 -8px">
+    <button id="btnPartial">Show current month (incomplete) / 显示当前月份（未完成）</button>
+  </div>
+
   <!-- DASHBOARD 1: NORMALIZED -->
   <div class="card">
     <h2>1 · Normalized Growth Index <span class="zh">归一化增长指数</span></h2>
@@ -154,8 +158,8 @@
 
   <footer>
     Counts are taken from arXiv's public monthly listing pages and include cross-listed papers, so categories should not be summed
-    (a paper may appear in several categories). The current, still-incomplete month is hidden and will appear once it ends.
-    <br>数据取自 arXiv 公开的每月列表页，包含交叉列出（cross-list）的论文，因此各分类之间不应直接相加（同一篇论文可能出现在多个分类中）。当前尚未结束的月份已隐藏，月末后将自动显示。
+    (a paper may appear in several categories). The current, still-incomplete month is hidden by default — use the toggle at the top to show it; it joins permanently once the month ends.
+    <br>数据取自 arXiv 公开的每月列表页，包含交叉列出（cross-list）的论文，因此各分类之间不应直接相加（同一篇论文可能出现在多个分类中）。当前尚未结束的月份默认隐藏——可用顶部开关显示，月末后将自动并入。
   </footer>
 </div><!-- /view-dash -->
 
@@ -806,16 +810,29 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
 const D = window.ARXIV_DATA;
 const MONTHS = D.months;
 
-/* hide the current (incomplete) calendar month — a partial month reads as a
-   plunge in every chart; it reappears automatically once the month is over */
-(function(){
+/* the current (incomplete) calendar month reads as a plunge in every chart,
+   so it is hidden by default and stashed here; a toggle can re-show it */
+let showPartial=false;
+const PARTIAL=(function(){
   const d=new Date();
   const cur=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
-  if(MONTHS[MONTHS.length-1]===cur){
-    MONTHS.pop();
-    D.series.forEach(s=>{s.raw.pop();s.norm.pop();});
-  }
+  if(MONTHS[MONTHS.length-1]!==cur) return null;
+  const stash={ym:cur,
+    raw:D.series.map(s=>s.raw[s.raw.length-1]),
+    norm:D.series.map(s=>s.norm[s.norm.length-1])};
+  MONTHS.pop(); D.series.forEach(s=>{s.raw.pop();s.norm.pop();});
+  return stash;
 })();
+function applyPartial(){
+  if(!PARTIAL) return;
+  const hasIt=MONTHS[MONTHS.length-1]===PARTIAL.ym;
+  if(showPartial && !hasIt){
+    MONTHS.push(PARTIAL.ym);
+    D.series.forEach((s,i)=>{s.raw.push(PARTIAL.raw[i]);s.norm.push(PARTIAL.norm[i]);});
+  }else if(!showPartial && hasIt){
+    MONTHS.pop(); D.series.forEach(s=>{s.raw.pop();s.norm.pop();});
+  }
+}
 const palette = ['#5b9bff','#ff8a5b','#5bd6a8','#d98aff','#ffd45b','#ff6b9d','#7be0ff',
   '#a0e85b','#ff5b5b','#5b6bff','#ffb15b','#5be0c0','#c05bff','#e8d05b','#ff8ac0',
   '#8ac0ff','#b0ff8a','#ff7b7b','#8a9bff','#ffc78a','#8af0d8','#d0a0ff','#f0e08a',
@@ -824,8 +841,8 @@ const palette = ['#5b9bff','#ff8a5b','#5bd6a8','#d98aff','#ffd45b','#ff6b9d','#7
 function color(i){return palette[i%palette.length];}
 function label(s){return s.code+' · '+s.en+' / '+s.zh;}
 
-/* header date range derived from data so it never goes stale */
-(function(){
+/* header date range derived from the displayed months so it never goes stale */
+function updateRange(){
   const EN_M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const fmtEn=ym=>EN_M[+ym.slice(5)-1]+' '+ym.slice(0,4);
   const fmtZh=ym=>ym.slice(0,4)+'年'+(+ym.slice(5))+'月';
@@ -834,7 +851,8 @@ function label(s){return s.code+' · '+s.en+' / '+s.zh;}
   for(const [id,txt] of [['rangeEn',en],['rangeEn2',en],['rangeZh',zh]]){
     const el=document.getElementById(id); if(el) el.textContent=txt;
   }
-})();
+}
+updateRange();
 
 /* trailing 12-month moving average; first 11 months are null (window not full) */
 function movingAvg(arr,w){
@@ -936,6 +954,19 @@ document.getElementById('miniCtl').addEventListener('click',e=>{
   miniMA=!miniMA;
   miniCharts.forEach((c,i)=>c.setOption({series:miniSeries(D.series[i],i)}));
   e.target.classList.toggle('active',miniMA);
+});
+
+/* toggle: show/hide the current incomplete month across all dashboards */
+const btnPartial=document.getElementById('btnPartial');
+if(!PARTIAL){ btnPartial.style.display='none'; }
+else btnPartial.addEventListener('click',()=>{
+  showPartial=!showPartial;
+  applyPartial();
+  btnPartial.classList.toggle('active',showPartial);
+  updateRange();
+  normChart.setOption(normOption());
+  rawChart.setOption(rawOption());
+  miniCharts.forEach((c,i)=>c.setOption({xAxis:{data:MONTHS},series:miniSeries(D.series[i],i)}));
 });
 
 /* ---------- controls ---------- */
