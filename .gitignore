@@ -9,3 +9,10 @@ update.log
 
 # Kaggle metadata snapshot (5+ GB, not committed)
 meta/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
