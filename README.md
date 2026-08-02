@@ -59,6 +59,16 @@ that subfield's growth index (green = up year, red = down). Reproducible via `an
 `stats_analysis.py` + `process_metadata.py` (numpy; the metadata script needs the Kaggle
 snapshot: `kaggle datasets download Cornell-University/arxiv --unzip -p meta/`).
 
+### 🆕 Note: The 2026 Breakout / 短文：2026 爆发
+
+A companion tab that drops year-over-year and reads the **raw monthly levels since January 2025**.
+The picture is two-regime: 2025 is flat (totals in a ~5,700–7,400 band, effective subfields ~23.5),
+then from **March 2026** output breaks out — total monthly submissions hit series highs (July's
+*partial* month already exceeds every complete prior month), combinatorics' share climbs 8% → 11.3%,
+and effective subfields dip to a series-low 22.7 across Mar–May — all coincident with the shaded
+spring-2026 AI-for-math tooling wave (annotated on the monthly figures here and in the study's Fig 4).
+Computed client-side from `data.js`, so it stays current with the daily refresh.
+
 ## Data
 
 Counts come from arXiv's public monthly listing pages
