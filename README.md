@@ -35,15 +35,21 @@ then tests the timing formally (`stats_analysis.py`): structural-break search wi
 block-bootstrap p-values on the monthly series, multinomial bootstrap CIs on annual
 concentration, and a two-way fixed-effects DiD with a yearly event study for the data-rich
 cluster. The finding: the concentration is real (CIs cleanly separated) but **pandemic-era,
-not LLM-era** — the best break candidate is Oct 2020 (itself insignificant, sup-F p ≈ 0.43),
+not LLM-era** — the best break candidate is Oct 2020 (itself insignificant, sup-F p ≈ 0.44),
 the trend plateaued by 2021, and post-ChatGPT event-study coefficients are ≈ 0 through
-2025. The LLM-era break arrives in 2026 instead: end-of-sample predictive tests show H1 2026
-deviating from the 2021–2025 plateau on both output (F=5.85) and concentration (F=2.66), both
-p<0.001 — coinciding with reasoning-grade AI4Math rather than chat assistants. Paper-level
+2025. The LLM-era break arrives in 2026 instead: with July complete, end-of-sample predictive
+tests show 2026 deviating from the 2021–2025 plateau on both output (F=7.74, +15% above trend)
+and concentration (F=2.45, below trend), both p<0.001 — coinciding with reasoning-grade AI4Math
+rather than chat assistants. The study's Discussion (§5) integrates this with the monthly-levels
+companion tab into a **two-regime account**: Regime I (2017–2021, deep-learning era) = AI-as-topic,
+gradual concentration toward data-rich subfields but rising inter-subfield connection; Regime II
+(2026–, AI-for-math era) = AI-as-tool, a field-wide production surge led by combinatorics/logic
+(not the data-rich cluster), only weakly correlated with AI-as-topic — a mode outside the
+citation-era framework of the Nature paper. Paper-level
 evidence from the Kaggle arXiv metadata snapshot (`process_metadata.py`, ~449k unique math
 papers) adds the mechanism: AI-related content in the data-rich cluster grew 2.9% → 13.5% of
 papers (steepest 2017–2020), and subfield growth correlates with rising AI share (Spearman
-0.425, permutation p ≈ 0.016) — while co-listing engagement between subfields *rose* (the
+0.42, permutation p ≈ 0.017) — while co-listing engagement between subfields *rose* (the
 opposite of the natural-science "lonely crowds" pattern). Mathematics reads as an early
 deep-learning adopter that plateaued — until **February 2026**, when a field-wide output surge
 began: 30 of 32 subfields up >10% YoY in H1 2026 (median +22.5% vs +1.8% baseline), led by
