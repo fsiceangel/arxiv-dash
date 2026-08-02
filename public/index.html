@@ -101,6 +101,7 @@
   <div class="tabs">
     <button class="tab active" data-view="dash">📊 Dashboards <span class="zh">仪表盘</span></button>
     <button class="tab" data-view="report">📄 Study: Focus Contraction <span class="zh">研究：聚焦收缩</span></button>
+    <button class="tab" data-view="essay2">🆕 Note: The 2026 Breakout <span class="zh">短文：2026 爆发</span></button>
   </div>
 </header>
 
@@ -492,8 +493,9 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
       收缩在 2021 年前已完成，此后<b>趋于平稳</b>。2023 年后的水平低于疫情前趋势外推值，是持续的水平位移，而非继续下滑。</span>
     </p>
     <div class="rchart" id="rcMonthly"></div>
-    <div class="cap">Figure 4. Monthly effective number of subfields, with the 2017–19 trend projection (dashed)
-      and the COVID / ChatGPT dates marked. 图4 · 月度有效子领域数，虚线为 2017–19 趋势外推，标注疫情与 ChatGPT 时点。</div>
+    <div class="cap">Figure 4. Monthly effective number of subfields, with the 2017–19 trend projection (dashed),
+      the COVID / ChatGPT dates marked, and the spring-2026 AI-for-math tooling wave shaded (ref. [9,10]).
+      图4 · 月度有效子领域数，虚线为 2017–19 趋势外推，标注疫情与 ChatGPT 时点，阴影为 2026 年春季 AI4Math 工具浪潮。</div>
     <p>
       <b>The cluster’s rise predates LLMs.</b> A two-way fixed-effects difference-in-differences
       (log monthly counts; category and month fixed effects; SEs clustered by category) puts the
@@ -792,6 +794,15 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
         <i>J. Hum. Resour.</i> <b>50</b>, 317–372 (2015).</li>
       <li>Pielou, E.C. The measurement of diversity in different types of biological
         collections. <i>J. Theor. Biol.</i> <b>13</b>, 131–144 (1966).</li>
+      <li>MathArena. arXivLean: a benchmark for research-level theorem proving in Lean, first
+        release drawn from papers posted March 2026.
+        <a href="https://matharena.ai/arxivlean/" target="_blank">matharena.ai/arxivlean</a>
+        (accessed July 2026).</li>
+      <li>Reported March 2026 AI-for-mathematics developments (Lean formalization of the
+        24-dimensional sphere-packing proof; autonomous proof-search agents), summarized in
+        <a href="https://arxiv.org/abs/2603.15914" target="_blank">arXiv:2603.15914</a> and
+        contemporaneous coverage. Cited as the approximate onset of the 2026 tooling wave, not a
+        single dated event.</li>
     </ol>
     <div class="cite" style="margin-top:16px">
       <b>Reproducibility / 可复现性.</b> All data and code are in the repository
@@ -806,9 +817,114 @@ attention mechanism · transformer (model|network|architecture) · \bLLMs?\b</sp
   </div>
 </div><!-- /view-report -->
 
+<!-- ============ ESSAY 2: THE 2026 BREAKOUT ============ -->
+<div class="wrap view" id="view-essay2">
+  <div class="report">
+    <h2 style="border-left:none;padding-left:0;font-size:23px">
+      Note: The 2026 Breakout — Mathematics Since January 2025, Month by Month
+      <span class="zh" style="display:block;margin-left:0;margin-top:4px">短文：2026 爆发——2025 年 1 月以来的数学，逐月观察</span></h2>
+    <p class="vline">
+      A companion note to the Focus-Contraction study · levels, not year-over-year ·
+      data through <span id="e2Range">Jul 2026</span> (current month partial)
+    </p>
+    <div class="abstract">
+      <div class="h">In brief</div>
+      The main study works in annual and year-over-year terms and finds mathematics’ focus
+      contraction to be a pandemic-era phenomenon that plateaued. This note zooms into the raw
+      monthly trajectory since January 2025 and asks a narrower question: what is actually
+      happening right now? The answer is a clean two-regime picture. Through all of 2025, monthly
+      output is <b>flat</b> — total submissions oscillate in a ~5,700–7,400 band with no trend,
+      and the effective number of subfields holds near 23.5. From <b>March 2026</b> the level
+      <b>breaks out</b>: total monthly submissions reach the highest values in the series
+      (<span id="e2TotJun">—</span> in June; July’s <i>partial</i> count already exceeds every
+      complete prior month), combinatorics roughly doubles its monthly volume and lifts its share
+      of all mathematics from ~8% to <span id="e2CoShare">—</span>, and — inside the same
+      March–June window — the effective number of subfields falls to a series low of
+      <span id="e2EffLow">—</span>. Volume and concentration move together, and they move inside
+      the spring-2026 AI-for-math tooling wave. Read in levels rather than growth rates, 2025 was
+      the calm and 2026 is the break.
+    </p>
+    <div class="abstract">
+      <div class="h">摘要</div>
+      主研究以年度与同比口径分析，发现数学的聚焦收缩是一个已进入平台期的疫情时期现象。本短文聚焦 2025 年 1 月以来的
+      <b>原始月度轨迹</b>，只问一个更窄的问题：眼下究竟在发生什么？答案是清晰的两段式图景。整个 2025 年，月度产出<b>持平</b>
+      ——投稿总量在约 5,700–7,400 区间内波动、无趋势，有效子领域数稳定在 23.5 附近。自 <b>2026 年 3 月</b>起，水平<b>爆发</b>：
+      月度投稿总量创出序列新高（6 月最高；7 月<i>不完整</i>的计数已超过此前任何完整月份），组合数学的月度体量近乎翻倍、
+      其占全数学的份额由约 8% 升至约 11%，而在同一 3–6 月窗口内，有效子领域数跌至序列低点。产出与集中度同向移动，
+      且都落在 2026 年春季 AI4Math 工具浪潮之内。以水平而非增长率来看，2025 年是平静，2026 年是断裂。
+    </div>
+
+    <h3 class="sub">1 · 2025 was flat <span class="zh">2025 年是平的</span></h3>
+    <p>
+      In levels, 2025 shows no trend. Monthly totals rise and fall with arXiv’s usual seasonal
+      rhythm (autumn peaks, summer dips) but stay inside a stable band, and the effective number
+      of subfields — the study’s concentration measure — sits between 23.3 and 23.8 all year.
+      This is the plateau of the main study, seen at monthly resolution: whatever reshaped
+      mathematics in 2017–2021 had, by 2025, stopped moving.
+      <span class="zh">以水平计，2025 年没有趋势。月度总量随 arXiv 一贯的季节节奏起伏（秋高夏低），但始终在稳定区间内，
+      有效子领域数全年介于 23.3–23.8。这正是主研究平台期的月度呈现：2017–2021 年重塑数学的力量，到 2025 年已停止移动。</span>
+    </p>
+    <div class="rchart" id="e2Total"></div>
+    <div class="cap">Figure N1. Total monthly submissions across the 32 subfields since January 2025 (all listings,
+      incl. cross-lists). Shaded: spring-2026 AI-for-math tooling wave; hollow marker = current partial month.
+      图N1 · 2025 年 1 月以来 32 个子领域的月度投稿总量；阴影为 2026 春季 AI4Math 工具浪潮；空心点为当前不完整月份。</div>
+
+    <h3 class="sub">2 · 2026 breaks out — led by combinatorics
+      <span class="zh">2026 爆发——组合数学领跑</span></h3>
+    <p>
+      From March 2026 the level steps up and keeps climbing. Combinatorics is the clearest case:
+      a monthly volume that spent 2025 near 450–600 runs 676 (March) → 805 (May) → 851 (June),
+      and July’s partial month is already the highest point in the whole series. Its share of all
+      mathematics — flat near 8% for years — lifts past 11%. The move is broad, not a single
+      outlier: <span id="e2Highs">—</span> of the 32 subfields set an 18-month high in June 2026.
+      <span class="zh">自 2026 年 3 月起，水平抬升并持续攀升。组合数学最为清晰：2025 年月度体量约在 450–600，
+      随后为 676（3 月）→ 805（5 月）→ 851（6 月），而 7 月的不完整月份已是整个序列的最高点。其占全数学的份额
+      ——多年稳定在约 8%——升破 11%。这一变动是广泛的，而非个别异常：2026 年 6 月有多个子领域创出 18 个月新高。</span>
+    </p>
+    <div class="rchart" id="e2Co"></div>
+    <div class="cap">Figure N2. Combinatorics monthly volume (bars, left) and its share of all 32 subfields (line, right)
+      since January 2025. 图N2 · 组合数学月度体量（柱，左轴）与其占 32 个子领域的份额（线，右轴），2025 年 1 月起。</div>
+
+    <h3 class="sub">3 · Concentration turns down inside the wave
+      <span class="zh">集中度在浪潮内转向下行</span></h3>
+    <p>
+      The breakout is not only about volume. The effective number of subfields — steady near 23.5
+      through 2025 — drops to <b id="e2EffLow2">—</b> across March–May 2026, its lowest in the
+      window shown, before a partial rebound. The main study’s end-of-sample test confirms this is
+      a real deviation from the 2021–2025 plateau (p &lt; 0.001). So the spring-2026 window carries
+      both signals at once: more papers, and a field pulling toward fewer active centers — the
+      first sign since 2021 that mathematics’ composition, not just its size, is moving again.
+      <span class="zh">爆发不仅关乎数量。有效子领域数——2025 年全年稳定在约 23.5——在 2026 年 3–5 月跌至所示窗口的最低，
+      随后部分回升。主研究的样本末端检验确认这是相对 2021–2025 平台期的真实偏离（p &lt; 0.001）。因此 2026 春季窗口
+      同时携带两个信号：论文更多，且领域向更少的活跃中心集聚——这是自 2021 年以来，数学的构成而非仅其规模再次移动的首个迹象。</span>
+    </p>
+    <div class="rchart" id="e2Eff"></div>
+    <div class="cap">Figure N3. Monthly effective number of subfields since January 2025; shaded spring-2026 wave.
+      图N3 · 2025 年 1 月以来的月度有效子领域数；阴影为 2026 春季浪潮。</div>
+
+    <div class="callout">
+      <b>Reading / 解读.</b> This note deliberately trades the main study’s rigor for immediacy:
+      raw monthly levels are seasonal and the current month is partial, so nothing here is a
+      significance test — §4.2 of the study supplies that. What levels buy is a clear picture of
+      <i>now</i>: 2025 flat, 2026 breaking out from March, combinatorics leading, concentration
+      resuming — all coincident with, though not proven to be caused by, the spring-2026
+      AI-for-math tooling wave. Whether this is a durable regime change or a burst will be
+      settled by the second half of 2026, which the dashboard tracks daily.
+      <span class="zh">本短文有意以严谨换取即时：原始月度水平含季节性、当前月份不完整，故此处没有任何显著性检验
+      ——那由主研究 §4.2 提供。水平所换来的是对<i>当下</i>的清晰刻画：2025 平、2026 自 3 月爆发、组合数学领跑、
+      集中度重启——皆与 2026 春季 AI4Math 工具浪潮同期（但未证明因果）。这究竟是持久的体制转变还是一阵脉冲，
+      将由 2026 下半年给出答案，仪表盘每日追踪。</span>
+    </div>
+  </div>
+</div><!-- /view-essay2 -->
+
 <script>
 const D = window.ARXIV_DATA;
 const MONTHS = D.months;
+/* full untrimmed snapshot (before the partial-month trim below) for Essay 2 */
+const FULLM=[...D.months];
+const FULLRAW=D.series.map(s=>[...s.raw]);
+const FULLCODE=D.series.map(s=>s.code);
 
 /* the current (incomplete) calendar month reads as a plunge in every chart,
    so it is hidden by default and stashed here; a toggle can re-show it */
@@ -1169,7 +1285,11 @@ function buildReport(){
                 label:{formatter:'COVID',color:'#ffd45b',rotate:0,position:'insideEndTop',fontSize:11}},
               {xAxis:'2022-12',lineStyle:{color:'#ff8a5b',type:'dashed'},
                 label:{formatter:'ChatGPT',color:'#ff8a5b',rotate:0,position:'insideEndTop',fontSize:11}}
-            ]}},
+            ]},
+          markArea:{silent:true,itemStyle:{color:'rgba(214,138,255,0.12)'},
+            label:{show:true,color:'#d98aff',fontSize:10,position:'insideTop',
+              formatter:'AI-for-math\ntooling wave'},
+            data:[[{xAxis:'2026-03'},{xAxis:'2026-06'}]]}},
         {name:'2017–19 trend projection / 趋势外推',type:'line',data:S.proj_pre_trend,
           showSymbol:false,lineStyle:{width:1.6,color:'#9aa3b2',type:'dashed'},
           itemStyle:{color:'#9aa3b2'}}
@@ -1423,12 +1543,102 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   const v = t.dataset.view;
   document.getElementById('view-'+v).classList.add('active');
   if(v==='report'){ buildReport(); setTimeout(()=>reportCharts.forEach(c=>c.resize()),30); }
+  else if(v==='essay2'){ buildEssay2(); setTimeout(()=>essayCharts.forEach(c=>c.resize()),30); }
   else { setTimeout(()=>{normChart.resize();rawChart.resize();miniCharts.forEach(c=>c.resize());},30); }
   window.scrollTo(0,0);
 }));
 
+/* ---------- Essay 2: monthly levels since 2025 ---------- */
+const essayCharts=[];
+let essayBuilt=false;
+function buildEssay2(){
+  if(essayBuilt) return; essayBuilt=true;
+  const from=FULLM.indexOf('2025-01');
+  const ms=FULLM.slice(from);
+  const idxCO=FULLCODE.indexOf('math.CO');
+  const CL=['cs.IT','math.OC','math.NA','math.ST','math.PR'].map(c=>FULLCODE.indexOf(c));
+  const partialYm=(PARTIAL?PARTIAL.ym:null);
+  const isPartial=ym=>ym===partialYm;
+  const total=ms.map((m,k)=>{const j=from+k;return FULLRAW.reduce((a,s)=>a+s[j],0);});
+  const co=ms.map((m,k)=>FULLRAW[idxCO][from+k]);
+  const coShare=ms.map((m,k)=>+(co[k]/total[k]*100).toFixed(2));
+  const effM=ms.map((m,k)=>{const j=from+k;const t=total[k];
+    let H=0;FULLRAW.forEach(s=>{const p=s[j]/t;if(p>0)H-=p*Math.log2(p);});return +(2**H).toFixed(2);});
+  // fill essay spans
+  const EN_M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const put=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  const li=ms.length-1;
+  put('e2Range',EN_M[+ms[li].slice(5)-1]+' '+ms[li].slice(0,4));
+  put('e2TotJun',(total[ms.indexOf('2026-06')]||'').toLocaleString());
+  put('e2CoShare',(coShare[ms.indexOf('2026-07')>=0?ms.indexOf('2026-07'):li])+'%');
+  const effLow=Math.min(...effM.filter((_,k)=>ms[k]>='2026-03'&&ms[k]<='2026-05'));
+  put('e2EffLow',effLow); put('e2EffLow2',effLow);
+  // 18-month high count for 2026-06 (using full history in ARXIV_DATA + partial)
+  const jJun=FULLM.indexOf('2026-06');
+  let highs=0;
+  if(jJun>=18){FULLRAW.forEach(s=>{let mx=0;for(let q=jJun-18;q<jJun;q++)mx=Math.max(mx,s[q]);
+    if(s[jJun]>mx)highs++;});}
+  put('e2Highs',highs);
+
+  const band={silent:true,itemStyle:{color:'rgba(214,138,255,0.12)'},
+    label:{show:true,color:'#d98aff',fontSize:10,position:'insideTop',formatter:'AI-for-math wave'},
+    data:[[{xAxis:'2026-03'},{xAxis:'2026-06'}]]};
+  const xAxis=Object.assign({type:'category',data:ms,boundaryGap:false,
+    axisLabel:{interval:1,fontSize:10,rotate:0}},axisCommon);
+
+  // N1: total monthly
+  const e1=echarts.init(document.getElementById('e2Total'),'dark');
+  e1.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis',valueFormatter:v=>v.toLocaleString()+' entries'},rtt),
+    grid:{left:64,right:24,top:20,bottom:56},
+    xAxis:Object.assign({},xAxis,{axisLabel:{fontSize:9,rotate:60}}),
+    yAxis:Object.assign({type:'value',name:'total / 月度总量',nameTextStyle:{color:'#9aa3b2'}},axisCommon),
+    series:[{type:'line',data:total,smooth:false,lineStyle:{width:2.4,color:'#5b9bff'},
+      itemStyle:{color:'#5b9bff'},
+      symbol:(v,p)=>isPartial(ms[p.dataIndex])?'circle':'none',
+      symbolSize:(v,p)=>isPartial(ms[p.dataIndex])?11:0,
+      markArea:band,
+      areaStyle:{color:'rgba(91,155,255,0.08)'}}]});
+  essayCharts.push(e1);
+
+  // N2: combinatorics volume + share
+  const e2=echarts.init(document.getElementById('e2Co'),'dark');
+  e2.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis'},rtt),
+    legend:{top:0,textStyle:{color:'#9aa3b2'},data:['CO volume / 组合数学体量','CO share % / 份额']},
+    grid:{left:56,right:56,top:38,bottom:56},
+    xAxis:Object.assign({},xAxis,{axisLabel:{fontSize:9,rotate:60}}),
+    yAxis:[Object.assign({type:'value',name:'papers',nameTextStyle:{color:'#5bd6a8'}},axisCommon),
+      Object.assign({type:'value',name:'share %',min:6,max:12,position:'right',
+        nameTextStyle:{color:'#ff8a5b'}},axisCommon)],
+    series:[
+      {name:'CO volume / 组合数学体量',type:'bar',data:co,
+        itemStyle:{color:(p)=>isPartial(ms[p.dataIndex])?'rgba(91,214,168,0.45)':'#5bd6a8'},
+        markArea:band},
+      {name:'CO share % / 份额',type:'line',yAxisIndex:1,data:coShare,smooth:true,
+        lineStyle:{width:2.4,color:'#ff8a5b'},itemStyle:{color:'#ff8a5b'},symbolSize:6}
+    ]});
+  essayCharts.push(e2);
+
+  // N3: effective subfields monthly
+  const e3=echarts.init(document.getElementById('e2Eff'),'dark');
+  e3.setOption({backgroundColor:'transparent',
+    tooltip:Object.assign({trigger:'axis'},rtt),
+    grid:{left:56,right:24,top:20,bottom:56},
+    xAxis:Object.assign({},xAxis,{axisLabel:{fontSize:9,rotate:60}}),
+    yAxis:Object.assign({type:'value',name:'eff. subfields',min:22,max:24,
+      nameTextStyle:{color:'#9aa3b2'}},axisCommon),
+    series:[{type:'line',data:effM,smooth:true,lineStyle:{width:2.4,color:'#d98aff'},
+      itemStyle:{color:'#d98aff'},
+      symbol:(v,p)=>isPartial(ms[p.dataIndex])?'circle':'none',
+      symbolSize:(v,p)=>isPartial(ms[p.dataIndex])?11:0,
+      markArea:band}]});
+  essayCharts.push(e3);
+}
+
 window.addEventListener('resize',()=>{normChart.resize();rawChart.resize();
-  miniCharts.forEach(c=>c.resize());reportCharts.forEach(c=>c.resize());});
+  miniCharts.forEach(c=>c.resize());reportCharts.forEach(c=>c.resize());
+  essayCharts.forEach(c=>c.resize());});
 </script>
 </body>
 </html>
