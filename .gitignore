@@ -9,3 +9,6 @@ update.log
 
 # Kaggle metadata snapshot (5+ GB, not committed)
 meta/
+
+# local Task Scheduler wrapper (machine-specific absolute paths)
+run_daily.bat

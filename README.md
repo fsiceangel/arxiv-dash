@@ -1,5 +1,7 @@
 # arXiv Mathematics Submissions Dashboard · arXiv 数学论文投稿仪表盘
 
+**🔗 Live / 在线访问: https://arxiv-dash.sorapinkice.top/**
+
 A bilingual (English / 中文) static dashboard of monthly arXiv submission counts across the
 **32 Mathematics subject categories** (the `math.*` set plus `cs.IT`), from **January 2017 onward** (refreshed daily).
 

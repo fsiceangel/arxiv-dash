@@ -38,7 +38,7 @@ def months(start=(2017, 1), end=(2026, 6)):
             y += 1
 
 TOTAL_RE = re.compile(r"Total of ([\d,]+) entries", re.I)
-UA = "arxiv-dash-research/1.0 (mailto:maintainer)"
+UA = "arxiv-dash-research/1.0 (+https://github.com/fsiceangel/arxiv-dash)"
 
 lock = threading.Lock()
 
